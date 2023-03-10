@@ -1,0 +1,17 @@
+{
+
+  "manifest_version": 2,
+  "name": "Borderify",
+  "version": "1.0",
+
+  "description": "Autofills repetitive information in KFS Requisition forms",
+
+  "content_scripts": [
+    {
+      "matches": ["https://systems.oit.uci.edu/kfs/purapRequisition.do*"],
+      "js": ["autofill.js"]
+    }
+  ],
+
+  "permissions" : ["storage"]
+}
