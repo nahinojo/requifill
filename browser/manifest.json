@@ -7,7 +7,7 @@
   "description": "Autofills repetitive information in KFS Requisition forms",
 
   "browser_action" : {
-    "default_popup" : "popup/index.html"
+    "default_popup" : "browser/popup/index.html"
   },
 
   "content_scripts": [
