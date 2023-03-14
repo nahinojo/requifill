@@ -4,7 +4,7 @@
   "name": "Requifill",
   "version": "0.0.0",
 
-  "description": "Autofills repetitive information in KFS Requisition forms",
+  "description": "Autofills KFS Requisition forms",
 
   "browser_action" : {
     "default_popup" : "browser/popup/index.html"
