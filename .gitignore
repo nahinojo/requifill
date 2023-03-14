@@ -1,0 +1,29 @@
+# Node.js
+node_modules/
+
+# Build output
+dist/
+build/
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Thumbnails
+._*
+
+# Logs
+npm-debug.log*
+
+# Optional eslint cache
+.eslintcache
+
+# dotenv environment variables file
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
