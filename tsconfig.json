@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es5",
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node"
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build",
+        "index.js" // exclude index.js from the default include pattern
+    ]
+}
