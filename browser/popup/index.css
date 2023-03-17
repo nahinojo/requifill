@@ -1,0 +1,30 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+html {
+  border-radius: 5px;
+}
+
+body {
+    background-color: #111213;
+    width: 400px;
+    height: 500px;
+  }
+
+#title-background {
+  background-color: #34373D;
+  width: 400px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#title {
+  font-weight: bold;
+  color: white;
+  margin-top: 2px;
+}
