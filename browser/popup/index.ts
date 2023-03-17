@@ -1,3 +1,5 @@
+import button from "./button";
+
 // create the header element
 const header = document.createElement('header');
 
@@ -9,3 +11,4 @@ header.appendChild(headerText);
 
 // append the header element to the document body
 document.body.appendChild(header);
+document.body.appendChild(button)
