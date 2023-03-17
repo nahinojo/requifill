@@ -2,8 +2,13 @@ const path = require('path')
 
 module.exports = {
     entry: './browser/popup/',
+    mode: 'development',
     module: {
         rules: [
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader']
+            },
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
@@ -17,5 +22,12 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
-    }
-}
+    },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'dist'),
+        },
+        compress: true,
+        port: 9000,
+    },
+};
