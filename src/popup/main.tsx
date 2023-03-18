@@ -1,19 +1,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import './index.css'
-
-const Title: React.FC = () => {
-  return (
-    <div id='title-background'>
-      <h1 id='title'>Requifill</h1>
-    </div>
-  );
-};
-const App: React.FC = () => {
-  return (
-    <Title />
-  )
-}
+import './css/index.css'
+import App from './components/App'
 
 const root = document.getElementById('root');
 if (root) {
