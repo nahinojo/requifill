@@ -5,13 +5,15 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack serve"
+    "build": "webpack --stats-children",
+    "build:serve": "webpack serve"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.2",
     "ts-loader": "^9.4.2",
     "webpack": "^5.76.2",
