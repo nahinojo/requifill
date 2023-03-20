@@ -1,0 +1,23 @@
+.values-field-wrapper {
+    background-color: #34373D;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(100% -10px);
+    height: 36px;
+    display: grid;
+    grid-template-columns: calc(50% - 5px) calc(50% - 5px);
+    justify-items: flex-start;
+    align-items: center;
+}
+
+.values-field-label{
+    width: 100%;
+    padding-left: 0%;
+}
+
+.values-field-input{
+    padding-left: 0%;
+
+}
+
