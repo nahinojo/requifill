@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: './src/popup/main.tsx',
+    entry: './src/popup/index.tsx',
     mode: 'development',
     module: {
         rules: [
