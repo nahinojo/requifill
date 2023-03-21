@@ -4,9 +4,10 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --stats-children",
-    "build:serve": "webpack serve"
+    "build": "webpack --mode=production --stats-children",
+    "test:extension": "npm run build && web-ext run --source-dir ./dist/ --devtools",
+    "dev:serve": "webpack serve",
+    "dev:extension": "npm run test:extension && nodemon --watch src --ext js,jsx,ts,tsx,css --exec \"npm run test:extension\""
   },
   "keywords": [],
   "author": "",
@@ -14,8 +15,10 @@
   "devDependencies": {
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^2.0.21",
     "style-loader": "^3.3.2",
     "ts-loader": "^9.4.2",
+    "web-ext-plugin": "^2.7.0",
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.0"
