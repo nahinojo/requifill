@@ -21,9 +21,8 @@ const App: React.FC = () => {
         />
         <Field 
           id="commodity-code"
-          type="text"
+          type="number"
           name="Commodity Code"
-          inputMode="numeric"
         />
       </div>
     </React.StrictMode>

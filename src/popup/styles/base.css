@@ -15,3 +15,8 @@ body {
   width: 360px;
   height: 600px;
 }
+
+input[type=number] {
+  -moz-appearance:textfield;
+  appearance: textfield;
+}
