@@ -5,20 +5,77 @@ import
     InputHTMLAttributes, 
     LabelHTMLAttributes, 
     useState,
-    FC
+    FC,
+    ReactEventHandler,
+    ChangeEvent
   }
 from 'react';
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, "className" | "id">;
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor">;
-type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>, "type" | "inputMode">;
+type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>, "type" | "onChange">;
 
 interface FieldProps extends HTMLProps, LabelProps, InputProps {
   name: string
 };
 
 const Field: FC<FieldProps> = (props) => {
-  const [value, setValue] = useState<string>('')
+  
+  const [inputValue, setInputValue] = useState('')
+  
+  const onAnyChange: ReactEventHandler<HTMLElement> = (
+    ev: ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log('Calling onAnyChange()...')
+    setInputValue(ev.target.value)
+  };
+
+  const onNumberChange: ReactEventHandler<HTMLInputElement> = (
+    ev: ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log('Calling onNumberChange()...')
+    const newValue = ev.target.value
+    const lastCharIsNumeric = !isNaN(Number(newValue[newValue.length - 1]))
+    console.log('newValue: ', newValue)
+    console.log('lastCharIsNumeric', lastCharIsNumeric)
+    if (lastCharIsNumeric || newValue === '') {
+      console.log('Setting to newValue:', newValue)
+      setInputValue(newValue)
+    } else {
+      console.log('Setting to inputValue:', inputValue)
+      setInputValue(inputValue)
+    }
+    return
+  };
+
+  const onPhoneChange: ReactEventHandler<HTMLInputElement> = (
+    ev: ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log('onPhoneChange() is WIP...')
+    return 
+  };
+
+
+  // Delete for production
+  const onLogChange: ReactEventHandler<HTMLElement> = (
+    ev: ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log('Executing onLogChange()...')
+    console.log(ev)
+  };
+
+
+  let onInputChange = onAnyChange
+  switch (props.type) {
+    case 'number':
+      onInputChange = onNumberChange;
+      break;
+    case 'tel':
+      onInputChange = onPhoneChange
+  };
+
+
+
   
   return (
     <div className="field-wrapper">
@@ -31,7 +88,8 @@ const Field: FC<FieldProps> = (props) => {
         className="field-input"
         id={props.id+"-input"}
         type={props.type}
-        inputMode={props.inputMode}
+        value={inputValue}
+        onChange={onInputChange}
       />
     </div>
   );
