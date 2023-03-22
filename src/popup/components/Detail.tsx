@@ -1,21 +1,29 @@
-import React, { ChangeEvent } from 'react';
+import React, { HTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes,  ReactEventHandler, ChangeEvent, useState} from 'react';
 
-interface DetailProps {
-  name: string
-  value: string
-  type: string
-}
+type HTMLProps = Pick<HTMLAttributes<HTMLElement>, "className" | "id">;
+type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>, "type">;
+type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor">;
 
-function onHandleNumberChange(e: ChangeEvent<HTMLInputElement>) {
-  let { value } = e.target
-  console.log(value)
+interface DetailProps extends HTMLProps, InputProps, LabelProps {
+  field: string
 }
 
 const Detail: React.FC<DetailProps> = (props) => {
+  const [value, setValue] = useState<string>('')
+  
   return (
     <div className="detail-wrapper">
-      <label className="detail-label" htmlFor="detail-input">{props.name}</label>
-      <input className="detail-input" type={props.type} defaultValue={props.value} onChange={onHandleNumberChange} />
+      <label 
+        className="detail-label"
+        id={props.id+"-label"} 
+        htmlFor="detail-input"
+        >{props.field}</label>
+      <input
+        className="detail-input"
+        id={props.id+"-input"}
+        type={props.type}
+        defaultValue={value}
+      />
     </div>
   );
 };

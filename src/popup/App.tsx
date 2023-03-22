@@ -9,9 +9,21 @@ const App: React.FC = () => {
       <Title />
       <div className="details-container">
         <DetailHeader text="Default Values" />
-        <Detail name="Requestor Phone #" value="1234567890" type="tel"/>
-        <Detail name="Ad Hoc User ID" value="adarami" type="text"/>
-        <Detail name="Commodity Code" value="31160000" type="number"/>
+        <Detail 
+          id="requestor-person-phone-number"
+          type="tel"
+          field="Requestor Phone #" 
+        />
+        <Detail
+          id="ad-hoc-user-id"
+          type="text" 
+          field="Ad Hoc User ID"
+        />
+        <Detail 
+          id="commodity-code"
+          type="number"
+          field="Commodity Code" 
+        />
       </div>
     </React.StrictMode>
   )
