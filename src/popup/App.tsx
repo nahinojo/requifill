@@ -1,28 +1,29 @@
 import React from "react";
 import Title from "./components/Title"
-import DetailHeader from './components/DetailHeader'
-import Detail from "./components/Detail";
+import FieldHeader from './components/FieldHeader'
+import Field from "./components/Field";
 
 const App: React.FC = () => {
   return (
     <React.StrictMode>
       <Title />
-      <div className="details-container">
-        <DetailHeader text="Default Values" />
-        <Detail 
+      <div className="field-container">
+        <FieldHeader text="Default Values" />
+        <Field 
           id="requestor-person-phone-number"
           type="tel"
-          field="Requestor Phone #" 
+          name="Requestor Phone #" 
         />
-        <Detail
+        <Field
           id="ad-hoc-user-id"
           type="text" 
-          field="Ad Hoc User ID"
+          name="Ad Hoc User ID"
         />
-        <Detail 
+        <Field 
           id="commodity-code"
-          type="number"
-          field="Commodity Code" 
+          type="text"
+          name="Commodity Code"
+          inputMode="numeric"
         />
       </div>
     </React.StrictMode>
