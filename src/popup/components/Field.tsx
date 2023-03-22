@@ -4,11 +4,10 @@ import
     HTMLAttributes, 
     InputHTMLAttributes, 
     LabelHTMLAttributes, 
-    ReactEventHandler, 
-    ChangeEvent, 
     useState,
     FC
-  } from 'react';
+  }
+from 'react';
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, "className" | "id">;
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor">;
@@ -16,7 +15,7 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>, "type" | "inputMod
 
 interface FieldProps extends HTMLProps, LabelProps, InputProps {
   name: string
-}
+};
 
 const Field: FC<FieldProps> = (props) => {
   const [value, setValue] = useState<string>('')
