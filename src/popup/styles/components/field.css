@@ -1,6 +1,6 @@
 .field-header {
-    color: #34373D;
-    font-size: 12pt;
+    color: #5E636E;
+    font-size: 11pt;
     margin-top: 10px;
     margin-left: 5px;
   }
@@ -26,7 +26,7 @@
 
 .field-input{
     background-color: #5E636E;
-    font-size: 12pt;
+    font-size: 14pt;
     height: calc(60% - 2px);
     padding-top: 2px;
     width: 90%;
