@@ -93,8 +93,6 @@ const Field: FC<FieldProps> = (props) => {
         id={props.id+"-input"}
         type={props.type}
         value={inputValue}
-        onBeforeInput={onLogEvent}
-        onChange={onLogEvent}
       />
     </div>
   );
