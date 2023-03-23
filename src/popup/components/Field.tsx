@@ -22,30 +22,32 @@ interface FieldProps extends HTMLProps, LabelProps, InputProps {
 const Field: FC<FieldProps> = (props) => {
   const [inputValue, setInputValue] = useState('')
   
-  const onInputChangeAny: ReactEventHandler<HTMLElement> = (
-    ev: ChangeEvent<HTMLInputElement>
+  const onAnyChange: ReactEventHandler<HTMLElement> = (
+    ev: any
   ) => {
     console.log('Calling onAnyChange()...')
+    setInputValue(inputValue+ev.data)
   };
 
-  const onInputChangeNumber: ReactEventHandler<HTMLInputElement> = (
+  const onNumberChange: ReactEventHandler<HTMLInputElement> = (
     ev: any
   ) => {
     console.log('Calling onNumberChange()...')
     const { data } = ev
+    console.log("Event:", ev)
     console.log('data: ', data)
     console.log('inputValue', inputValue)
-    if (data !== ''){
-      console.log('setting input')
-      setInputValue(data)
-    } else {
+    if (isNaN(data)){
       console.log('preventing default')
       ev.preventDefault()
+    } else {
+      console.log('inputValue+data: ', inputValue+data)
+      setInputValue(inputValue+data)
     }
   };
 
-  const onInputChangePhone: ReactEventHandler<HTMLInputElement> = (
-    ev: ChangeEvent<HTMLInputElement>
+  const onPhoneChange: ReactEventHandler<HTMLInputElement> = (
+    ev: any
   ) => {
     console.log('onPhoneChange() is WIP...')
     return 
@@ -57,16 +59,16 @@ const Field: FC<FieldProps> = (props) => {
   ) => {
     console.log('Executing onLogEvent()...')
     console.log(ev)
-    return
+
   };
 
-  let onInputChange = onInputChangeAny
+  let onInputChange = onAnyChange
   switch (props.type) {
     case 'number':
-      onInputChange = onInputChangeNumber;
+      onInputChange = onNumberChange;
       break;
     case 'tel':
-      onInputChange = onInputChangePhone;
+      onInputChange = onPhoneChange;
   };
 
   // reference 
@@ -91,7 +93,8 @@ const Field: FC<FieldProps> = (props) => {
         id={props.id+"-input"}
         type={props.type}
         value={inputValue}
-        onBeforeInputCapture={onInputChangeNumber}
+        onBeforeInput={onLogEvent}
+        onChange={onLogEvent}
       />
     </div>
   );
