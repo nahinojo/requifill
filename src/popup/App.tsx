@@ -27,5 +27,5 @@ const App: React.FC = () => {
       </div>
     </React.StrictMode>
   )
-}
+};
 export default App;
