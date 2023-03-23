@@ -7,78 +7,80 @@ import
     useState,
     FC,
     ReactEventHandler,
-    ChangeEvent
+    ChangeEvent,
+    SyntheticEvent,
   }
 from 'react';
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, "className" | "id">;
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor">;
 type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>, "type" | "onChange">;
-
 interface FieldProps extends HTMLProps, LabelProps, InputProps {
   name: string
 };
 
 const Field: FC<FieldProps> = (props) => {
-  
   const [inputValue, setInputValue] = useState('')
   
-  const onAnyChange: ReactEventHandler<HTMLElement> = (
+  const onInputChangeAny: ReactEventHandler<HTMLElement> = (
     ev: ChangeEvent<HTMLInputElement>
   ) => {
     console.log('Calling onAnyChange()...')
-    setInputValue(ev.target.value)
   };
 
-  const onNumberChange: ReactEventHandler<HTMLInputElement> = (
-    ev: ChangeEvent<HTMLInputElement>
+  const onInputChangeNumber: ReactEventHandler<HTMLInputElement> = (
+    ev: any
   ) => {
     console.log('Calling onNumberChange()...')
-    const newValue = ev.target.value
-    const lastCharIsNumeric = !isNaN(Number(newValue[newValue.length - 1]))
-    console.log('newValue: ', newValue)
-    console.log('lastCharIsNumeric', lastCharIsNumeric)
-    if (lastCharIsNumeric || newValue === '') {
-      console.log('Setting to newValue:', newValue)
-      setInputValue(newValue)
+    const { data } = ev
+    console.log('data: ', data)
+    console.log('inputValue', inputValue)
+    if (data !== ''){
+      console.log('setting input')
+      setInputValue(data)
     } else {
-      console.log('Setting to inputValue:', inputValue)
-      setInputValue(inputValue)
+      console.log('preventing default')
+      ev.preventDefault()
     }
-    return
   };
 
-  const onPhoneChange: ReactEventHandler<HTMLInputElement> = (
+  const onInputChangePhone: ReactEventHandler<HTMLInputElement> = (
     ev: ChangeEvent<HTMLInputElement>
   ) => {
     console.log('onPhoneChange() is WIP...')
     return 
   };
 
-
   // Delete for production
-  const onLogChange: ReactEventHandler<HTMLElement> = (
+  const onLogEvent: ReactEventHandler<HTMLElement> = (
     ev: ChangeEvent<HTMLInputElement>
   ) => {
-    console.log('Executing onLogChange()...')
+    console.log('Executing onLogEvent()...')
     console.log(ev)
+    return
   };
 
-
-  let onInputChange = onAnyChange
+  let onInputChange = onInputChangeAny
   switch (props.type) {
     case 'number':
-      onInputChange = onNumberChange;
+      onInputChange = onInputChangeNumber;
       break;
     case 'tel':
-      onInputChange = onPhoneChange
+      onInputChange = onInputChangePhone;
   };
 
+  // reference 
+  const eventPreventDefault: ReactEventHandler<HTMLInputElement> = (
+    ev: SyntheticEvent
+  ) => {
+    ev.preventDefault()
+  }
 
-
-  
   return (
-    <div className="field-wrapper">
+    <div 
+      className="field-wrapper"
+      id={props.id}
+    >
       <label 
         className="field-label"
         id={props.id+"-label"} 
@@ -89,10 +91,11 @@ const Field: FC<FieldProps> = (props) => {
         id={props.id+"-input"}
         type={props.type}
         value={inputValue}
-        onChange={onInputChange}
+        onBeforeInputCapture={onInputChangeNumber}
       />
     </div>
   );
 };
+
 
 export default Field;
