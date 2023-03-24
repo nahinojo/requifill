@@ -1,9 +1,28 @@
-import React from "react";
+import React, { ChangeEvent, FC, FormEvent, KeyboardEvent, ReactEventHandler, SyntheticEvent } from 'react';
 import Title from "./components/Title"
 import FieldHeader from './components/FieldHeader'
 import Field from "./components/Field";
 
-const App: React.FC = () => {
+interface beforeInputEvent extends SyntheticEvent {
+  data: string
+}
+
+const App: FC = () => {
+
+  const verifyIsNumber: ReactEventHandler<HTMLInputElement> = (
+    ev: SyntheticEvent
+  ) => {
+    console.log("Event: ", ev)
+    const keypress = ev
+    console.log("keypress: ", keypress)
+    console.log("typeof keypress: ", typeof keypress)
+    // const isNotValidNumber = isNaN(keypress) || keypress == ' '
+    // if (isNotValidNumber) {
+    //   ev.preventDefault()
+    //   return
+    // }
+  };
+
   return (
     <React.StrictMode>
       <Title />
@@ -23,6 +42,7 @@ const App: React.FC = () => {
           id="commodity-code"
           type="number"
           name="Commodity Code"
+          onBeforeInput={verifyIsNumber}
         />
       </div>
     </React.StrictMode>
