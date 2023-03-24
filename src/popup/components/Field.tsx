@@ -3,19 +3,14 @@ import
   { 
     HTMLAttributes, 
     InputHTMLAttributes, 
-    LabelHTMLAttributes, 
-    useState,
+    LabelHTMLAttributes,
     FC,
-    ReactEventHandler,
-    ChangeEvent,
-    SyntheticEvent,
-    FormEvent,
   }
 from 'react';
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, "className" | "id">;
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor">;
-type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>, "type" | "onBeforeInput">;
+type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>, "type" | "pattern">;
 interface FieldProps extends HTMLProps, LabelProps, InputProps {
   name: string
 };
@@ -36,7 +31,6 @@ const Field: FC<FieldProps> = (props) => {
         className="field-input"
         id={props.id+"-input"}
         type={props.type}
-        onBeforeInput={props.onBeforeInput}
       />
     </div>
   );
