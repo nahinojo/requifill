@@ -6,7 +6,7 @@ Using type="number" may also cause issues if the budget code includes leading ze
 
 You can also add the pattern attribute to the `<input>` element to enforce the input to be only numeric characters, like this:
 
-`<input type="text" pattern="[0-9]+" required>`
+`<input type="text" pattern="[0-9]+">`
 
 The pattern="[0-9]+" attribute ensures that only numeric characters are allowed and the required attribute makes it mandatory for the user to enter a value before submitting the form.
 
