@@ -18,10 +18,10 @@ type LabelProps = Pick<
 >;
 type InputProps = Pick<
   InputHTMLAttributes<HTMLInputElement>, 
-  "type" | "pattern" | "value" | "onChange"
+  "type" | "pattern" | "value" | "onChange" | "name" | "inputMode"
 >;
 interface FieldProps extends HTMLProps, LabelProps, InputProps {
-  name: string
+  title: string
 };
 
 const Field: FC<FieldProps> = (props) => {
@@ -35,14 +35,16 @@ const Field: FC<FieldProps> = (props) => {
         className="field-label"
         id={props.id+"-label"} 
         htmlFor="field-input"
-        >{props.name}</label>
+        >{props.title}</label>
       <input
         className="field-input"
+        name={props.name}
         id={props.id+"-input"}
         type={props.type}
         pattern={props.pattern}
         value={props.value}
         onChange={props.onChange}
+        inputMode={props.inputMode}
       />
     </div>
   );

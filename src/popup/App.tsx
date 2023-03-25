@@ -4,18 +4,41 @@ import FieldHeader from './components/FieldHeader'
 import Field from "./components/Field";
 
 interface FieldDict {
-  requestorPersonPhoneNumber: String,
-  adHocUserID: String,
-  commodityCode: String,
+  requestorPersonPhoneNumber: string,
+  adHocUserID: string,
+  commodityCode: string,
 }
 
 const App: FC = () => {
 
-  const [inputValues, setInputValues] = useState<FieldDict>({
+  const [fieldValues, setFieldValues] = useState<FieldDict>({
     requestorPersonPhoneNumber: '',
     adHocUserID: '',
     commodityCode: ''
-  })
+  });
+
+  const handleAnyChange: ReactEventHandler<HTMLInputElement> = (
+    evt: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = evt.target
+    setFieldValues( prevFieldValues => ({
+      ...prevFieldValues,
+      [name]: value
+    }))
+  };
+
+  const handlePatternChange: ReactEventHandler<HTMLInputElement> = (
+    evt: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value, pattern } = evt.target
+    const regex = new RegExp(pattern)
+    if (regex.test(value)) {
+      setFieldValues( prevFieldValues => ({
+        ...prevFieldValues,
+        [name]: value
+      }))
+    }
+  }
 
   return (
     <React.StrictMode>
@@ -23,20 +46,31 @@ const App: FC = () => {
       <div className="field-container">
         <FieldHeader text="Default Values" />
         <Field 
-          name="Requestor Phone #" 
+          name="requestorPersonPhoneNumber"
+          title="Requestor Phone #" 
           id="requestor-person-phone-number"
           type="tel"
+          pattern="^[\d+\-()\s]*$"
+          value={fieldValues.requestorPersonPhoneNumber}
+          onChange={handlePatternChange}
         />
         <Field
-          name="Ad Hoc User ID"
+          name="adHocUserID"
+          title="Ad Hoc User ID"
           id="ad-hoc-user-id"
           type="text" 
+          value={fieldValues.adHocUserID}
+          onChange={handleAnyChange}
         />
         <Field 
-          name="Commodity Code"
+          name="commodityCode"
+          title="Commodity Code"
           id="commodity-code"
           type="text"
-          pattern="[0-9]+"
+          pattern="^\d+|^$"
+          inputMode="numeric"
+          value={fieldValues.commodityCode}
+          onChange={handlePatternChange}
         />
       </div>
     </React.StrictMode>
