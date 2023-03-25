@@ -1,10 +1,21 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC, ReactEventHandler, useState } from 'react';
 import Title from "./components/Title"
 import FieldHeader from './components/FieldHeader'
 import Field from "./components/Field";
 
+interface FieldDict {
+  requestorPersonPhoneNumber: String,
+  adHocUserID: String,
+  commodityCode: String,
+}
 
 const App: FC = () => {
+
+  const [inputValues, setInputValues] = useState<FieldDict>({
+    requestorPersonPhoneNumber: '',
+    adHocUserID: '',
+    commodityCode: ''
+  })
 
   return (
     <React.StrictMode>
@@ -24,7 +35,8 @@ const App: FC = () => {
         <Field 
           name="Commodity Code"
           id="commodity-code"
-          type="number"
+          type="text"
+          pattern="[0-9]+"
         />
       </div>
     </React.StrictMode>
