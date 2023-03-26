@@ -50,7 +50,7 @@ const App: FC = () => {
           title="Requestor Phone #" 
           id="requestor-person-phone-number"
           type="tel"
-          pattern="^[\d+\-()\s]*$"
+          pattern="^[\d\+\-\)\( ]*$"
           value={fieldValues.requestorPersonPhoneNumber}
           onChange={handlePatternChange}
         />
@@ -67,7 +67,7 @@ const App: FC = () => {
           title="Commodity Code"
           id="commodity-code"
           type="text"
-          pattern="^\d+|^$"
+          pattern="^\d*$"
           inputMode="numeric"
           value={fieldValues.commodityCode}
           onChange={handlePatternChange}
