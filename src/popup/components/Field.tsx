@@ -45,6 +45,7 @@ const Field: FC<FieldProps> = (props) => {
         value={props.value}
         onChange={props.onChange}
         inputMode={props.inputMode}
+        onBlur={(e)=>(console.log(e))}
       />
     </div>
   );
