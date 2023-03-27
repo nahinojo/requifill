@@ -3,8 +3,12 @@
   "manifest_version": 2,
   "name": "Requifill",
   "version": "0.0.0",
-
   "description": "Autofills KFS Requisition forms",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@example.com"
+    }
+  },
 
   "browser_action" : {
     "default_popup" : "/index.html"
