@@ -34,13 +34,10 @@ const FillItem: FC<FillItemProps> = (props) => {
   const saveValue: ReactEventHandler<HTMLInputElement> = async (
     evt: OnBlurEvent
   ) => {
-    console.log(evt)
-    console.log("Object name: ", evt.target.name)
     const { name } = evt.target
-    const syncStorage = await browser.storage.sync.set({
-      [name]: props.value
-    })
-  }
+    await browser.storage.sync.set({[name]: props.value})
+  };
+
   return (
     <div 
       className="fill-item-wrapper"
