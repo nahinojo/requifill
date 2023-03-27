@@ -1,11 +1,11 @@
-.field-header {
+.fill-header {
     color: #5E636E;
     font-size: 11pt;
     margin-top: 10px;
     margin-left: 5px;
   }
 
-.field-wrapper {
+.fill-item-wrapper {
     background-color: #34373D;
     border-radius: 4px;
     margin-left: 5px;
@@ -19,12 +19,12 @@
     align-items: center;
 }
 
-.field-label{
+.fill-item-label{
     font-size: 13pt;
     margin-left: 5%;
 }
 
-.field-input{
+.fill-item-input{
     background-color: #5E636E;
     font-size: 13pt;
     height: calc(60% - 3px);

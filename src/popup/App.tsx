@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, ReactEventHandler, useState } from 'react';
 import Title from "./components/Title"
-import FieldHeader from './components/FieldHeader'
-import Field from "./components/Field";
+import FillHeader from './components/FillHeader'
+import FillItem from "./components/FillItem";
 
 interface FieldDict {
   requestorPersonPhoneNumber: string,
@@ -43,9 +43,9 @@ const App: FC = () => {
   return (
     <React.StrictMode>
       <Title />
-      <div className="field-container">
-        <FieldHeader text="Default Values" />
-        <Field 
+      <div className="fill-container">
+        <FillHeader text="Default Values" />
+        <FillItem 
           name="requestorPersonPhoneNumber"
           title="Requestor Phone #" 
           id="requestor-person-phone-number"
@@ -54,7 +54,7 @@ const App: FC = () => {
           value={fieldValues.requestorPersonPhoneNumber}
           onChange={handlePatternChange}
         />
-        <Field
+        <FillItem
           name="adHocUserID"
           title="Ad Hoc User ID"
           id="ad-hoc-user-id"
@@ -62,7 +62,7 @@ const App: FC = () => {
           value={fieldValues.adHocUserID}
           onChange={handleAnyChange}
         />
-        <Field 
+        <FillItem 
           name="commodityCode"
           title="Commodity Code"
           id="commodity-code"

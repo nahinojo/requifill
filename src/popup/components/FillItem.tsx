@@ -20,24 +20,24 @@ type InputProps = Pick<
   InputHTMLAttributes<HTMLInputElement>, 
   "type" | "pattern" | "value" | "onChange" | "name" | "inputMode"
 >;
-interface FieldProps extends HTMLProps, LabelProps, InputProps {
+interface FillItemProps extends HTMLProps, LabelProps, InputProps {
   title: string
 };
 
-const Field: FC<FieldProps> = (props) => {
+const FillItem: FC<FillItemProps> = (props) => {
 
   return (
     <div 
-      className="field-wrapper"
+      className="fill-item-wrapper"
       id={props.id}
     >
       <label 
-        className="field-label"
+        className="fill-item-label"
         id={props.id+"-label"} 
-        htmlFor="field-input"
+        htmlFor="fill-item-input"
         >{props.title}</label>
       <input
-        className="field-input"
+        className="fill-item-input"
         name={props.name}
         id={props.id+"-input"}
         type={props.type}
@@ -51,4 +51,4 @@ const Field: FC<FieldProps> = (props) => {
   );
 };
 
-export default Field;
+export default FillItem;
