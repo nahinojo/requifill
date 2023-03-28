@@ -11,13 +11,13 @@
   },
 
   "browser_action" : {
-    "default_popup" : "/index.html"
+    "default_popup" : "/dist/index.html"
   },
 
   "content_scripts": [
     {
       "matches": ["https://systems.oit.uci.edu/kfs/purapRequisition.do*"],
-      "js": ["context_scripts/autofill.js"]
+      "js": ["/src/context_scripts/autofill.js"]
     }
   ],
 
