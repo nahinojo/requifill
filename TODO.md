@@ -1,6 +1,5 @@
 # **TODO.md**
 ## **Issues**
-- When enter is pressed on Input field, onBlur should take effect.
 
 ## **Features**
 ### CI/CD
