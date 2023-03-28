@@ -1,6 +1,13 @@
-# Issues
+# **TODO.md**
+## **Issues**
+- When enter is pressed on Input field, onBlur should take effect.
 
+## **Features**
+### CI/CD
+- Integrate final code into /dist/.  
+Manifest.json should be in /dist/, as well as the context_scripts. This will require significant tampering with the compilers' config options.
+- Setup eslinter as well as gitlinter
+- Setup Github deployment of production branch to firefox extension webstore.  
 
-# Features
-- storage overwrite event-handler for input's onBlur event. 
-- Popup for deciding what information to autofill
+### Product Capabilites
+- Simply copy/paste from merchandise store (Amazon, Newegg, Digikey) to KFS document
