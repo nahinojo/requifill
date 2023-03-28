@@ -1,8 +1,24 @@
+const syncStorage = browser.storage.sync
 
-// This script saves the phone number then injects it from the browsers storage. The .set() command only needs to be called once.
-userStorage = browser.storage.local
-requestorPhoneInput = document.getElementById("document.requestorPersonPhoneNumber")
-userStorage.get(["requestorPhone"]).then(result => {
-    requestorPhoneInput.value = result.requestorPhone
-});
+const nameToIdDict = {
+    adHocUserId: "newAdHocRoutePerson.id",
+    commodityCode: "newPurchasingItemLine.purchasingCommodityCode",
+    requestorPersonPhoneNumber: "document.requestorPersonPhoneNumber"  
+}
+
+const fillRequisitionForm = async() => {
+    const storedFillValues = await syncStorage.get(null)
+    for (let name in storedFillValues) {
+        const fillValue = storedFillValues[name]
+        const targetInput = document.getElementById(nameToIdDict[name])
+        if (targetInput.value !== fillValue) {
+            targetInput.value = storedFillValues[name]
+        }
+    }
+};
+
+fillRequisitionForm();
+syncStorage.onChanged.addListener(fillRequisitionForm);
+
+
 
