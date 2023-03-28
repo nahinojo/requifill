@@ -6,8 +6,10 @@ import
     LabelHTMLAttributes,
     FC,
     ReactEventHandler,
+    FormEventHandler,
     ChangeEvent,
     SyntheticEvent,
+    useRef,
   }
 from 'react';
 
@@ -26,16 +28,33 @@ type InputProps = Pick<
 interface FillItemProps extends HTMLProps, LabelProps, InputProps {
   title: string
 };
+interface OnBlurEvent extends SyntheticEvent<HTMLInputElement>{
+  target: HTMLInputElement & {
+    name : string
+  } 
+};
+interface OnKeydownEvent extends SyntheticEvent<HTMLInputElement>{
+  key : string
+};
 
-interface OnBlurEvent extends ChangeEvent<HTMLInputElement> {};
 
 const FillItem: FC<FillItemProps> = (props) => {
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const saveValue: ReactEventHandler<HTMLInputElement> = async (
+  const handleSaveValue: ReactEventHandler<HTMLInputElement> = async (
     evt: OnBlurEvent
   ) => {
     const { name } = evt.target
     await browser.storage.sync.set({[name]: props.value})
+  };
+
+  const handleEnterKeydown: ReactEventHandler<HTMLInputElement> = async (
+    evt: OnKeydownEvent
+  ) => {
+    const { key } = evt
+    if (key==="Enter") {
+      inputRef.current?.blur()
+    }
   };
 
   return (
@@ -53,11 +72,13 @@ const FillItem: FC<FillItemProps> = (props) => {
         name={props.name}
         id={props.id+"-input"}
         value={props.value}
+        ref={inputRef}
         type={props.type}
         pattern={props.pattern}
         inputMode={props.inputMode}
         onChange={props.onChange}
-        onBlur={saveValue}
+        onBlur={handleSaveValue}
+        onKeyDown={handleEnterKeydown}
       />
     </div>
   );
