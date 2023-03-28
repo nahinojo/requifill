@@ -5,7 +5,7 @@ import FillItem from "./components/FillItem";
 
 interface FieldDict {
   requestorPersonPhoneNumber: string,
-  adHocUserID: string,
+  adHocUserId: string,
   commodityCode: string,
 }
 
@@ -13,7 +13,7 @@ const App: FC = () => {
 
   const [fillValues, setFillValues] = useState<FieldDict>({
     requestorPersonPhoneNumber: '',
-    adHocUserID: '',
+    adHocUserId: '',
     commodityCode: ''
   });
 
@@ -64,11 +64,11 @@ const App: FC = () => {
           onChange={handlePatternChange}
         />
         <FillItem
-          name="adHocUserID"
+          name="adHocUserId"
           title="Ad Hoc User ID"
           id="ad-hoc-user-id"
           type="text" 
-          value={fillValues.adHocUserID}
+          value={fillValues.adHocUserId}
           onChange={handleAnyChange}
         />
         <FillItem 
