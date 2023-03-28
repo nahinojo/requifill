@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, ReactEventHandler, useState } from 'react';
+import React, { ChangeEvent, FC, ReactEventHandler, useState, useEffect } from 'react';
 import Title from "./components/Title"
 import FillHeader from './components/FillHeader'
 import FillItem from "./components/FillItem";
@@ -11,20 +11,32 @@ interface FieldDict {
 
 const App: FC = () => {
 
-  const [fieldValues, setFieldValues] = useState<FieldDict>({
+  const [fillValues, setFillValues] = useState<FieldDict>({
     requestorPersonPhoneNumber: '',
     adHocUserID: '',
     commodityCode: ''
   });
 
+  useEffect(() => {
+    browser.storage.sync.get(null).then((fillValuesSync) => {
+      for (let name in fillValuesSync) {
+        updateFillValues(name, fillValuesSync[name])
+      } 
+    }
+  )}, []);
+
+  const updateFillValues = (name: string, value: string) => {
+    setFillValues( prevFieldValues => ({
+      ...prevFieldValues,
+      [name]: value
+    }))
+  };
+
   const handleAnyChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = evt.target
-    setFieldValues( prevFieldValues => ({
-      ...prevFieldValues,
-      [name]: value
-    }))
+    updateFillValues(name, value)
   };
 
   const handlePatternChange: ReactEventHandler<HTMLInputElement> = (
@@ -33,12 +45,9 @@ const App: FC = () => {
     const { name, value, pattern } = evt.target
     const regex = new RegExp(pattern)
     if (regex.test(value)) {
-      setFieldValues( prevFieldValues => ({
-        ...prevFieldValues,
-        [name]: value
-      }))
+      updateFillValues(name, value)
     }
-  }
+  };
 
   return (
     <React.StrictMode>
@@ -51,7 +60,7 @@ const App: FC = () => {
           id="requestor-person-phone-number"
           type="tel"
           pattern="^[\d\+\-\)\( ]*$"
-          value={fieldValues.requestorPersonPhoneNumber}
+          value={fillValues.requestorPersonPhoneNumber}
           onChange={handlePatternChange}
         />
         <FillItem
@@ -59,7 +68,7 @@ const App: FC = () => {
           title="Ad Hoc User ID"
           id="ad-hoc-user-id"
           type="text" 
-          value={fieldValues.adHocUserID}
+          value={fillValues.adHocUserID}
           onChange={handleAnyChange}
         />
         <FillItem 
@@ -69,11 +78,11 @@ const App: FC = () => {
           type="text"
           pattern="^\d*$"
           inputMode="numeric"
-          value={fieldValues.commodityCode}
+          value={fillValues.commodityCode}
           onChange={handlePatternChange}
         />
       </div>
     </React.StrictMode>
-  )
+  );
 };
 export default App;
