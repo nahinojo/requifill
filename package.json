@@ -7,7 +7,7 @@
     "build": "webpack --stats-children",
     "build:watch": "webpack --watch --stats-children",
     "dev:serve": "webpack serve",
-    "dev:extension": "concurrently \"npm run build:watch\" \"web-ext run --devtools\""
+    "dev:extension": "concurrently \"npm run build:watch\" \"web-ext run --source-dir ./dist/ --devtools\""
   },
   "keywords": [],
   "author": "",
