@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/*
 !dist/manifest.json
+!dist/context_scripts
 build/
 
 # IDE/Editor files
