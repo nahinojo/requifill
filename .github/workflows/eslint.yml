@@ -3,16 +3,17 @@ on:
   push:
   workflow_dispatch:
 jobs: 
-  name: Execute ESLint and Webpack
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-    - name: Install Dependences
-      run: npm ci
-    - name: Lint with ESLint
-      run: npm run lint
-      continue-on-error: false
-    - name: Build with Webpack
-      run: npm run build
-      continue-on-error: false
+  execute:
+    name: Execute ESLint and Webpack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Install Dependences
+        run: npm ci
+      - name: Lint with ESLint
+        run: npm run lint
+        continue-on-error: false
+      - name: Build with Webpack
+        run: npm run build
+        continue-on-error: false
