@@ -8,7 +8,7 @@ const nameToIdDict = {
   requestorPersonPhoneNumber: 'document.requestorPersonPhoneNumber'
 }
 
-const fillRequisitionForm = (): undefined => {
+const fillRequisitionForm = (): void => {
   syncStorage.get()
     .then(storedFillValues => {
       for (const name in storedFillValues) {

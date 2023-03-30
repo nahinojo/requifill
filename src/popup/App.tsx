@@ -26,7 +26,7 @@ const App: FC = () => {
       }).catch(error => { console.log(error) })
   }, [])
 
-  const updateFillValues = (name: string, value: string): undefined => {
+  const updateFillValues = (name: string, value: string): void => {
     setFillValues(prevFieldValues => ({
       ...prevFieldValues,
       [name]: value
