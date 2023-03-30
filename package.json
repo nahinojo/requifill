@@ -7,7 +7,9 @@
     "build": "webpack --stats-children",
     "build:watch": "webpack --watch --stats-children",
     "dev:serve": "webpack serve",
-    "dev:extension": "concurrently \"npm run build:watch\" \"web-ext run --source-dir ./dist/ --devtools\""
+    "dev:extension": "concurrently \"npm run build:watch\" \"web-ext run --source-dir ./dist/ --devtools\"",
+    "lint": "npx eslint ./src/** --ext .ts,.tsx",
+    "lint:debug": "npx eslint ./src/** --ext .ts,.tsx --debug"
   },
   "keywords": [],
   "author": "",
