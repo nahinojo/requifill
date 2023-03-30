@@ -3,7 +3,7 @@ on:
   push:
   workflow_dispatch:
 jobs: 
-  name: Verify Syntax and Readability
+  name: Execute ESLint and Webpack
   runs-on: ubuntu-latest
   steps:
     - name: Checkout Code
@@ -15,4 +15,4 @@ jobs:
       continue-on-error: false
     - name: Build with Webpack
       run: npm run build
-      
+      continue-on-error: false
