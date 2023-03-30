@@ -12,7 +12,7 @@ jobs:
       - name: Install Dependences
         run: npm ci
       - name: Lint with ESLint
-        run: npm run lint
+        run: npm run lint:debug
         continue-on-error: false
       - name: Build with Webpack
         run: npm run build
