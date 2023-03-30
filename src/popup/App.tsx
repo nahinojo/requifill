@@ -5,18 +5,16 @@ import FillHeader from './components/FillHeader'
 import FillItem from './components/FillItem'
 
 interface FieldDict {
-  requestorPersonPhoneNumber: string
+  roomNumber: string
   adHocUserId: string
   commodityCode: string
-  budgetCode: string
 }
 
 const App: FC = () => {
   const [fillValues, setFillValues] = useState<FieldDict>({
-    requestorPersonPhoneNumber: '',
+    roomNumber: '',
     adHocUserId: '',
-    commodityCode: '',
-    budgetCode: ''
+    commodityCode: ''
   })
 
   useEffect(() => {
@@ -58,21 +56,13 @@ const App: FC = () => {
       <div className='fill-container'>
         <FillHeader text='Default Values' />
         <FillItem
-          name='requestorPersonPhoneNumber'
-          title='Requestor Phone #'
-          id='requestor-person-phone-number'
+          name='roomNumber'
+          title='Room Number'
+          id='room-number'
           type='tel'
-          pattern='^[\d\+\-\)\( ]*$'
-          value={fillValues.requestorPersonPhoneNumber}
+          pattern='^\d*$'
+          value={fillValues.roomNumber}
           onChange={handlePatternChange}
-        />
-        <FillItem
-          name='adHocUserId'
-          title='Ad Hoc User ID'
-          id='ad-hoc-user-id'
-          type='text'
-          value={fillValues.adHocUserId}
-          onChange={handleAnyChange}
         />
         <FillItem
           name='commodityCode'
@@ -85,11 +75,11 @@ const App: FC = () => {
           onChange={handlePatternChange}
         />
         <FillItem
-          name='budgetCode'
-          title='Budget Code'
-          id='budget-code'
+          name='adHocUserId'
+          title='Ad Hoc User ID'
+          id='ad-hoc-user-id'
           type='text'
-          value={fillValues.budgetCode}
+          value={fillValues.adHocUserId}
           onChange={handleAnyChange}
         />
       </div>

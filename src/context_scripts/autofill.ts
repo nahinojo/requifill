@@ -1,12 +1,11 @@
 const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync
 
-type NameToIdDictKey = 'adHocUserId' | 'commodityCode' | 'requestorPersonPhoneNumber' | 'budgetCode'
+type NameToIdDictKey = 'adHocUserId' | 'commodityCode' | 'roomNumber'
 
 const nameToIdDict = {
   adHocUserId: 'newAdHocRoutePerson.id',
   commodityCode: 'newPurchasingItemLine.purchasingCommodityCode',
-  requestorPersonPhoneNumber: 'document.requestorPersonPhoneNumber',
-  budgetCode: 'document.documentHeader.organizationDocumentNumber'
+  roomNumber: 'document.deliveryBuildingRoomNumber'
 }
 
 const fillRequisitionForm = (): void => {
