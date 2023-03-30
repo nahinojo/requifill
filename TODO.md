@@ -3,7 +3,7 @@
 
 ## **Features**
 ### CI/CD
-- Setup eslinter as well as gitlinter
+- Setup gitlinter
 - Setup Github deployment of production branch to firefox extension webstore.  
 
 ### Product Capabilites
