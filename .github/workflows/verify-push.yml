@@ -1,10 +1,17 @@
 name: Verify Syntax and Readability
 on: 
   push:
+    paths:
+      - '.github/workflows/verify-push.yml'
+      - 'src/**'
+      - '.eslintrc.js'
+      - 'package**'
+      - 'ts.config.js'
+      - 'webpack.config.js'
   workflow_dispatch:
 jobs: 
   execute:
-    name: Execute ESLint and Webpack
+    name: Execute ESLint and Webpack Verification
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
