@@ -10,9 +10,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Install Dependences
-        uses: npm ci
+        run: npm ci
       - name: Lint with ESLint
-        uses: npm run lint
+        run: npm run lint
         continue-on-error: true
       - name: Cancel Commit if Issues Found
         run: |
