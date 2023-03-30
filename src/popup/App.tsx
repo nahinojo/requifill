@@ -8,13 +8,15 @@ interface FieldDict {
   requestorPersonPhoneNumber: string
   adHocUserId: string
   commodityCode: string
+  budgetCode: string
 }
 
 const App: FC = () => {
   const [fillValues, setFillValues] = useState<FieldDict>({
     requestorPersonPhoneNumber: '',
     adHocUserId: '',
-    commodityCode: ''
+    commodityCode: '',
+    budgetCode: ''
   })
 
   useEffect(() => {
@@ -81,6 +83,14 @@ const App: FC = () => {
           inputMode='numeric'
           value={fillValues.commodityCode}
           onChange={handlePatternChange}
+        />
+        <FillItem
+          name='budgetCode'
+          title='Budget Code'
+          id='budget-code'
+          type='text'
+          value={fillValues.budgetCode}
+          onChange={handleAnyChange}
         />
       </div>
     </React.StrictMode>
