@@ -1,5 +1,7 @@
 name: Verify Code with ESLint
-on: [push]
+on: 
+  push:
+  workflow_dispatch:
 jobs: 
   exec-eslint:
     name: Verify using ESLint
