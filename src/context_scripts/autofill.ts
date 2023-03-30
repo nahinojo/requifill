@@ -1,28 +1,28 @@
 const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync
 
-interface NameToIdDict {
-    [key: string]: string;
+type NameToIdDictKey = 'adHocUserId' | 'commodityCode' | 'requestorPersonPhoneNumber'
+
+const nameToIdDict = {
+  adHocUserId: 'newAdHocRoutePerson.id',
+  commodityCode: 'newPurchasingItemLine.purchasingCommodityCode',
+  requestorPersonPhoneNumber: 'document.requestorPersonPhoneNumber'
 }
 
-const nameToIdDict: NameToIdDict = {
-    adHocUserId: "newAdHocRoutePerson.id",
-    commodityCode: "newPurchasingItemLine.purchasingCommodityCode",
-    requestorPersonPhoneNumber: "document.requestorPersonPhoneNumber"  
-}
-
-const fillRequisitionForm = async(): Promise<void> => {
-    const storedFillValues = await syncStorage.get(null)
-    for (let name in storedFillValues) {
+const fillRequisitionForm = (): undefined => {
+  syncStorage.get()
+    .then(storedFillValues => {
+      for (const name in storedFillValues) {
         const fillValue = storedFillValues[name]
-        const targetInput = document.getElementById(nameToIdDict[name]) as HTMLInputElement
+        const targetInput = document.getElementById(nameToIdDict[name as NameToIdDictKey]) as HTMLInputElement
         if (targetInput.value !== fillValue) {
-            targetInput.value = storedFillValues[name]
+          targetInput.value = storedFillValues[name]
         }
-    }
-};
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
 
-fillRequisitionForm();
-syncStorage.onChanged.addListener(fillRequisitionForm);
-
-
-
+fillRequisitionForm()
+syncStorage.onChanged.addListener(fillRequisitionForm)

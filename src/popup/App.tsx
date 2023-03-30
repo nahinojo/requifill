@@ -1,43 +1,44 @@
-import React, { ChangeEvent, FC, ReactEventHandler, useState, useEffect } from 'react';
-import Title from "./components/Title"
+import React, { useState, useEffect } from 'react'
+import type { FC, ReactEventHandler, ChangeEvent } from 'react'
+import Title from './components/Title'
 import FillHeader from './components/FillHeader'
-import FillItem from "./components/FillItem";
+import FillItem from './components/FillItem'
 
 interface FieldDict {
-  requestorPersonPhoneNumber: string,
-  adHocUserId: string,
-  commodityCode: string,
+  requestorPersonPhoneNumber: string
+  adHocUserId: string
+  commodityCode: string
 }
 
 const App: FC = () => {
-
   const [fillValues, setFillValues] = useState<FieldDict>({
     requestorPersonPhoneNumber: '',
     adHocUserId: '',
     commodityCode: ''
-  });
+  })
 
   useEffect(() => {
-    browser.storage.sync.get(null).then((fillValuesSync) => {
-      for (let name in fillValuesSync) {
-        updateFillValues(name, fillValuesSync[name])
-      } 
-    }
-  )}, []);
+    browser.storage.sync.get()
+      .then((fillValuesSync) => {
+        for (const name in fillValuesSync) {
+          updateFillValues(name, fillValuesSync[name])
+        }
+      }).catch(error => { console.log(error) })
+  }, [])
 
-  const updateFillValues = (name: string, value: string) => {
-    setFillValues( prevFieldValues => ({
+  const updateFillValues = (name: string, value: string): undefined => {
+    setFillValues(prevFieldValues => ({
       ...prevFieldValues,
       [name]: value
     }))
-  };
+  }
 
   const handleAnyChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = evt.target
     updateFillValues(name, value)
-  };
+  }
 
   const handlePatternChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
@@ -47,42 +48,43 @@ const App: FC = () => {
     if (regex.test(value)) {
       updateFillValues(name, value)
     }
-  };
+  }
 
   return (
     <React.StrictMode>
       <Title />
-      <div className="fill-container">
-        <FillHeader text="Default Values" />
-        <FillItem 
-          name="requestorPersonPhoneNumber"
-          title="Requestor Phone #" 
-          id="requestor-person-phone-number"
-          type="tel"
-          pattern="^[\d\+\-\)\( ]*$"
+      <div className='fill-container'>
+        <FillHeader text='Default Values' />
+        <FillItem
+          name='requestorPersonPhoneNumber'
+          title='Requestor Phone #'
+          id='requestor-person-phone-number'
+          type='tel'
+          pattern='^[\d\+\-\)\( ]*$'
           value={fillValues.requestorPersonPhoneNumber}
           onChange={handlePatternChange}
         />
         <FillItem
-          name="adHocUserId"
-          title="Ad Hoc User ID"
-          id="ad-hoc-user-id"
-          type="text" 
+          name='adHocUserId'
+          title='Ad Hoc User ID'
+          id='ad-hoc-user-id'
+          type='text'
           value={fillValues.adHocUserId}
           onChange={handleAnyChange}
         />
-        <FillItem 
-          name="commodityCode"
-          title="Commodity Code"
-          id="commodity-code"
-          type="text"
-          pattern="^\d*$"
-          inputMode="numeric"
+        <FillItem
+          name='commodityCode'
+          title='Commodity Code'
+          id='commodity-code'
+          type='text'
+          pattern='^\d*$'
+          inputMode='numeric'
           value={fillValues.commodityCode}
           onChange={handlePatternChange}
         />
       </div>
     </React.StrictMode>
-  );
-};
-export default App;
+  )
+}
+
+export default App

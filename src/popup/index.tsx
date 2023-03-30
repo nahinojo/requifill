@@ -1,9 +1,9 @@
-import React from 'react';
-import {createRoot} from 'react-dom/client';
+import React from 'react'
+import { createRoot } from 'react-dom/client'
 import App from './App'
 import './styles/popup.css'
 
-// // PRODCUTION USE ONLY
+// // DEVELOPMENT USE ONLY
 // function logAllEvents() {
 //   for (const eventType in window) {
 //     if (eventType.startsWith("on")) {
@@ -13,8 +13,9 @@ import './styles/popup.css'
 //     }
 //   }
 // }
-
 // logAllEvents();
 
-const root = document.getElementById('root') as HTMLDivElement | null;
-root && createRoot(root).render(<App />);
+const root = document.getElementById('root') as HTMLDivElement | null
+if (root !== null) {
+  createRoot(root).render(<App />)
+}
