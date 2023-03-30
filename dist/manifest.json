@@ -17,7 +17,7 @@
   "content_scripts": [
     {
       "matches": ["https://systems.oit.uci.edu/kfs/purapRequisition.do*"],
-      "js": ["/context_scripts/autofill.js"]
+      "js": ["/context_scripts/autofill.js", "/context_scripts/enhance.js"]
     }
   ],
 

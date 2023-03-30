@@ -10,6 +10,10 @@ module.exports = {
     autofill: {
       import: './src/context_scripts/autofill.ts',
       filename: 'context_scripts/autofill.js'
+    },
+    enchance: {
+      import: './src/context_scripts/enhance.ts',
+      filename: 'context_scripts/enhance.js'
     }
   },
   output: {
