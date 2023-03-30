@@ -3,7 +3,6 @@
 
 ## **Features**
 ### CI/CD
-- Setup GitHub actions to run eslint before commits are successfuly pushed
 - Setup gitlinter
 - Setup GitHub deployment of production branch to firefox extension webstore.  
 
