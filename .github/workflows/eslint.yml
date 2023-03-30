@@ -15,6 +15,7 @@ jobs:
         run: npm run lint
       - name: Cancel Commit if Issues Found
         run: |
+          echo [ ${{ steps.eslint.outcome }}]
           if [ ${{ steps.eslint.outcome != 'failure' }}]; then
             echo "ESLint found issues. Cancelling commit"
             exit 1
