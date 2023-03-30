@@ -31,3 +31,18 @@ const App: FC = () => {
 ```
 
 Since `ev.nativeEvent` and `KeyboardEvent` vary greatly, you have to use the `unknown` command to allow such a harsh definition.
+# Logging All Events on a HTML Element
+To view all events on an HTML Element:
+```
+function logAllEvents (): void {
+  const quantityInput = document.getElementById('newPurchasingItemLine.itemQuantity') as HTMLInputElement
+  for (const eventType in quantityInput) {
+    quantityInput.addEventListener(eventType.substring(2), function (event) {
+      console.log(eventType.substring(2) + ' event:', event)
+    })
+  }
+}
+logAllEvents()
+```
+
+You may also change ```document.getElementbyId...``` to ```window``` view all events on he page.
