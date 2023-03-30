@@ -1,0 +1,20 @@
+name: Verify Code with ESLint
+on: [push]
+jobs: 
+  exec-eslint:
+    name: Verify using ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Install Dependences
+        uses: npm ci
+      - name: Lint with ESLint
+        uses: npm run lint
+        continue-on-error: true
+      - name: Cancel Commit if Issues Found
+        run: |
+          if [ ${{ steps.eslint.outcome == 'failure' }}]; then
+            echo "ESLint found issues. Cancelling commit"
+            exit 1
+          fi
