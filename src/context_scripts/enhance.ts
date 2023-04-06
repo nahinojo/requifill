@@ -4,17 +4,17 @@ Enhance UOM Input
 Scrolling alters selection between 'UN' and 'PK'
 */
 const uomInput = document.getElementById('newPurchasingItemLine.itemUnitOfMeasureCode') as HTMLInputElement
-const setQuantityValue = (val: string): void => {
+const setUOMValue = (val: string): void => {
   uomInput.value = val
   uomInput.select()
 }
-setQuantityValue('UN')
+setUOMValue('UN')
 uomInput.addEventListener('wheel', (evt) => {
   evt.preventDefault()
   if (uomInput.value === 'UN') {
-    setQuantityValue('PK')
+    setUOMValue('PK')
   } else {
-    setQuantityValue('UN')
+    setUOMValue('UN')
   }
 })
 

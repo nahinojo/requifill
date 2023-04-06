@@ -1,6 +1,6 @@
 const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync
 
-type NameToIdDictKey = 'adHocUserId' | 'commodityCode' | 'roomNumber'
+type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
 
 const nameToIdDict = {
   adHocUserId: 'newAdHocRoutePerson.id',
@@ -13,7 +13,7 @@ const fillRequisitionForm = (): void => {
     .then(storedFillValues => {
       for (const name in storedFillValues) {
         const fillValue = storedFillValues[name]
-        const targetInput = document.getElementById(nameToIdDict[name as NameToIdDictKey]) as HTMLInputElement
+        const targetInput = document.getElementById(nameToIdDict[name as NameToIdDictKeys]) as HTMLInputElement
         if (targetInput.value !== fillValue) {
           targetInput.value = storedFillValues[name]
         }
