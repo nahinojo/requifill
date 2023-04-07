@@ -1,5 +1,11 @@
 # **TODO.md**
 ## **Issues**
+### UI Bugs
+- Differentiatie upwards and downwards scrolling for the list-scroll enhancement. 
+
+### Git
+- Ignore the files within the dist/context_scripts folder
+
 
 ## **Features**
 ### CI/CD
