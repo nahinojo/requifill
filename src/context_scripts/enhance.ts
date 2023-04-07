@@ -1,39 +1,43 @@
 /*
-Enhance UOM Input
+Enchance any list-based input
 
-Scrolling alters selection between 'UN' and 'PK'
+Scrolling cycles through items in list
 */
-const uomInput = document.getElementById('newPurchasingItemLine.itemUnitOfMeasureCode') as HTMLInputElement
-const setUOMValue = (val: string): void => {
-  uomInput.value = val
-  uomInput.select()
+const setTargetInputValue = (value: any, targetInput: HTMLInputElement): void => {
+  targetInput.value = value
+  targetInput.select()
 }
-setUOMValue('UN')
-uomInput.addEventListener('wheel', (evt) => {
-  evt.preventDefault()
-  if (uomInput.value === 'UN') {
-    setUOMValue('PK')
-  } else {
-    setUOMValue('UN')
+
+const addOptionsScroller = (id: string, options: string[], setDefault: boolean): void => {
+  const targetInput = document.getElementById(id) as HTMLInputElement
+  let currentIdx = 0
+  if (setDefault) {
+    setTargetInputValue(options[0], targetInput)
+    currentIdx += 1
   }
-})
-
-/*
-Enhance Budget Code Input
-
-Scrolling alters selection between '8081p' and '080p'
-*/
-const budgetCodeInput = document.getElementById('document.documentHeader.organizationDocumentNumber') as HTMLInputElement
-const setBudgetCodeValue = (val: string): void => {
-  budgetCodeInput.value = val
-  budgetCodeInput.select()
+  targetInput.addEventListener('wheel', (evt) => {
+    evt.preventDefault()
+    setTargetInputValue(options[currentIdx], targetInput)
+    currentIdx = (currentIdx + 1) % options.length
+  })
 }
-setBudgetCodeValue('081p')
-budgetCodeInput.addEventListener('wheel', (evt) => {
-  evt.preventDefault()
-  if (budgetCodeInput.value === '081p') {
-    setBudgetCodeValue('080p')
-  } else {
-    setBudgetCodeValue('081p')
-  }
-})
+
+// Enhancing UOM Input
+addOptionsScroller(
+  'newPurchasingItemLine.itemUnitOfMeasureCode',
+  ['UN', 'PK'],
+  true
+)
+
+// Enchancing Budget Code Input
+addOptionsScroller(
+  'document.documentHeader.organizationDocumentNumber',
+  ['080p', '081p'],
+  true)
+
+// Enchancing Description Input
+addOptionsScroller(
+  'document.documentHeader.documentDescription',
+  ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg'],
+  false
+)

@@ -13,9 +13,17 @@ const fillRequisitionForm = (): void => {
     .then(storedFillValues => {
       for (const name in storedFillValues) {
         const fillValue = storedFillValues[name]
-        const targetInput = document.getElementById(nameToIdDict[name as NameToIdDictKeys]) as HTMLInputElement
-        if (targetInput.value !== fillValue) {
-          targetInput.value = storedFillValues[name]
+        const targetInput = document.getElementById(
+          nameToIdDict[
+            name as NameToIdDictKeys
+          ]
+        ) as HTMLInputElement
+        const neglectAdHocUserId = (
+          name === 'adHocUserId' &&
+          document.getElementById('adHocRoutePerson[0].id') !== null
+        )
+        if (targetInput.value !== fillValue && !neglectAdHocUserId) {
+          targetInput.value = fillValue
         }
       }
     })
