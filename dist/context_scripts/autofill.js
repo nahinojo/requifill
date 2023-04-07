@@ -1,1 +1,0 @@
-(()=>{const e=browser.storage.sync,o={adHocUserId:"newAdHocRoutePerson.id",commodityCode:"newPurchasingItemLine.purchasingCommodityCode",roomNumber:"document.deliveryBuildingRoomNumber"},n=()=>{e.get().then((e=>{for(const n in e){const d=e[n],t=document.getElementById(o[n]);t.value!==d&&(t.value=e[n])}})).catch((e=>{console.log(e)}))};n(),e.onChanged.addListener(n)})();
