@@ -8,17 +8,29 @@ const setTargetInputValue = (value: any, targetInput: HTMLInputElement): void =>
   targetInput.select()
 }
 
+const modulo = (m: number, n: number): number => {
+  return ((n % m) + m) % m
+}
+
 const addOptionsScroller = (id: string, options: string[], setDefault: boolean): void => {
   const targetInput = document.getElementById(id) as HTMLInputElement
   let currentIdx = 0
   if (setDefault) {
     setTargetInputValue(options[0], targetInput)
-    currentIdx += 1
   }
   targetInput.addEventListener('wheel', (evt) => {
     evt.preventDefault()
+    if (!options.includes(targetInput.value)) {
+      currentIdx = 0
+    } else {
+      if (evt.deltaY > 0) {
+        currentIdx = modulo((currentIdx + 1), options.length)
+      } else {
+        currentIdx = modulo((currentIdx - 1), options.length)
+      }
+    }
     setTargetInputValue(options[currentIdx], targetInput)
-    currentIdx = (currentIdx + 1) % options.length
+    console.log('currentIdx (final):', currentIdx)
   })
 }
 
@@ -41,3 +53,13 @@ addOptionsScroller(
   ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg'],
   false
 )
+
+const logAllEvents = (): void => {
+  const quantityInput = document.getElementById('newPurchasingItemLine.itemQuantity') as HTMLInputElement
+  for (const eventType in quantityInput) {
+    quantityInput.addEventListener(eventType.substring(2), (event) => {
+      console.log(eventType.substring(2) + ' event:', event)
+    })
+  }
+}
+logAllEvents()
