@@ -1,10 +1,7 @@
 # **TODO.md**
 ## **Issues**
-### UI Bugs
-- Differentiatie upwards and downwards scrolling for the list-scroll enhancement. 
-
-### Git
-- Ignore the files within the dist/context_scripts folder
+### Code Logic
+- setTargetInputValue probably shouldn't require the targetInput variable. Maybe turn into class?
 
 
 ## **Features**
@@ -18,7 +15,4 @@
 
 ### Extension Window
 - Allow user to add/remove items from default values list
-
-### Enchance
-- Set the quantity value default to one, and allow the value to be numerically scrollable 
 
