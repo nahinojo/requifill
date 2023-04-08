@@ -1,9 +1,10 @@
 /*
 Enchance any list-based input
 
-Scrolling cycles through items in list
+Scrolling up or down cycles through items in list
 */
-const setTargetInputValue = (value: any, targetInput: HTMLInputElement): void => {
+
+const setInputValue = (value: any, targetInput: HTMLInputElement): void => {
   targetInput.value = value
   targetInput.select()
 }
@@ -16,21 +17,44 @@ const addOptionsScroller = (id: string, options: string[], setDefault: boolean):
   const targetInput = document.getElementById(id) as HTMLInputElement
   let currentIdx = 0
   if (setDefault) {
-    setTargetInputValue(options[0], targetInput)
+    setInputValue(options[0], targetInput)
   }
   targetInput.addEventListener('wheel', (evt) => {
     evt.preventDefault()
-    if (!options.includes(targetInput.value)) {
-      currentIdx = 0
-    } else {
+    if (options.includes(targetInput.value)) {
       if (evt.deltaY > 0) {
-        currentIdx = modulo((currentIdx + 1), options.length)
+        currentIdx = modulo(options.length, (currentIdx + 1))
       } else {
-        currentIdx = modulo((currentIdx - 1), options.length)
+        currentIdx = modulo(options.length, (currentIdx - 1))
       }
+    } else {
+      currentIdx = 0
     }
-    setTargetInputValue(options[currentIdx], targetInput)
-    console.log('currentIdx (final):', currentIdx)
+    setInputValue(options[currentIdx], targetInput)
+  })
+}
+
+const addNumericScroller = (id: string, defaultNumber: number, setDefault: boolean): void => {
+  const targetInput = document.getElementById(id) as HTMLInputElement
+  let currentNumber = defaultNumber
+  if (setDefault) {
+    setInputValue(String(currentNumber), targetInput)
+  }
+  targetInput.addEventListener('wheel', (evt) => {
+    evt.preventDefault()
+    const inputContainsValidNumber = (
+      Number(targetInput.value) !== null &&
+      Number(targetInput.value) >= defaultNumber)
+    if (inputContainsValidNumber) {
+      if (evt.deltaY > 0) {
+        currentNumber += 1
+      } else if (Number(targetInput.value) !== defaultNumber) {
+        currentNumber -= 1
+      }
+    } else {
+      currentNumber = defaultNumber
+    }
+    setInputValue(currentNumber, targetInput)
   })
 }
 
@@ -54,12 +78,14 @@ addOptionsScroller(
   false
 )
 
-const logAllEvents = (): void => {
-  const quantityInput = document.getElementById('newPurchasingItemLine.itemQuantity') as HTMLInputElement
-  for (const eventType in quantityInput) {
-    quantityInput.addEventListener(eventType.substring(2), (event) => {
-      console.log(eventType.substring(2) + ' event:', event)
-    })
-  }
-}
-logAllEvents()
+addNumericScroller(
+  'newPurchasingItemLine.itemQuantity',
+  1,
+  true
+)
+
+addNumericScroller(
+  'newPurchasingItemLine.itemUnitPrice',
+  0,
+  false
+)
