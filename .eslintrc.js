@@ -8,6 +8,7 @@ module.exports = {
     'plugin:react/recommended',
     'standard-with-typescript'
   ],
+  ignorePatterns: ['dist/**'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
