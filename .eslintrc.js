@@ -8,8 +8,6 @@ module.exports = {
     'plugin:react/recommended',
     'standard-with-typescript'
   ],
-  overrides: [
-  ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -18,6 +16,10 @@ module.exports = {
   plugins: [
     'react'
   ],
+  rules: {
+    'max-len': 'error',
+    'arrow-body-style': ['error', 'always']
+  },
   settings: {
     react: {
       version: 'detect'
