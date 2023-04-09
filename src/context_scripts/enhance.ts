@@ -1,24 +1,34 @@
 /*
-Enchance any list-based input
-
-Scrolling up or down cycles through items in list
+Wrapper function for setting value of target <input>
 */
+type InputSetter = (value: string | number) => void
 
-const focusInputValue = (targetInput: HTMLInputElement) =>
-  (value: string | number): void => {
+const focusInputValue = (targetInput: HTMLInputElement): InputSetter => {
+  return (value: string | number): void => {
     if (!isNaN(value as number)) {
       value = String(value)
     }
     targetInput.value = value as string
     targetInput.select()
   }
+}
 
-// Ensures cyclical indexing through 'options' list.
+/*
+Aids the cyclical indexing of Arrays
+*/
 const modulo = (m: number, n: number): number => {
   return ((n % m) + m) % m
 }
 
-const addOptionsScroller = (id: string, options: string[], setDefault: boolean): void => {
+/*
+Enchance any list-based input
+
+Scrolling up or down cycles through items in list
+*/
+
+const addOptionsScroller = (
+  id: string, options: string[], setDefault: boolean
+): void => {
   const targetInput = document.getElementById(id) as HTMLInputElement
   const setInputValue = focusInputValue(targetInput)
   let currentIdx = 0
@@ -40,12 +50,14 @@ const addOptionsScroller = (id: string, options: string[], setDefault: boolean):
   })
 }
 
-const addNumericScroller = (id: string, defaultNumber: number, setDefault: boolean): void => {
+const addNumericScroller = (
+  id: string, defaultNumber: number, setDefault: boolean
+): void => {
   const targetInput = document.getElementById(id) as HTMLInputElement
   const setInputValue = focusInputValue(targetInput)
   let currentNumber = defaultNumber
   if (setDefault) {
-    setInputValue(String(currentNumber))
+    setInputValue(currentNumber)
   }
   targetInput.addEventListener('wheel', (evt) => {
     evt.preventDefault()
