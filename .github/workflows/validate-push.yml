@@ -1,4 +1,4 @@
-name: Verify Syntax and Buildability
+name: Validate Syntax and Buildability
 on: 
   push:
     paths:
