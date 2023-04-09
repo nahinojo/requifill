@@ -1,8 +1,6 @@
 # **TODO.md**
 ## **Issues**
-### ESLint
-- Prevent ESLint from linting bundled js files in dist/.
-- Require ESLint to lint the eslintrc.js file.
+
 ## **Features**
 ### Application Settings
 - Add an icon for the extension
