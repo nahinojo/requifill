@@ -1,6 +1,8 @@
 name: Validate Syntax and Buildability
 on: 
   push:
+    branches:
+      - master
     paths:
       - '.github/workflows/verify-push.yml'
       - 'src/**'
