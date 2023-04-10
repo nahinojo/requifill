@@ -5,7 +5,9 @@ type InputSetter = (value: string | number) => void
 
 const focusInputValue = (targetInput: HTMLInputElement): InputSetter => {
   return (value: string | number): void => {
-    if (!isNaN(value as number)) {
+    if (!isNaN(
+      value as number
+    )) {
       value = String(value)
     }
     targetInput.value = value as string
@@ -27,7 +29,9 @@ Scrolling up or down cycles through items in list
 */
 
 const addOptionsScroller = (
-  id: string, options: string[], setDefault: boolean
+  id: string,
+  options: string[],
+  setDefault: boolean
 ): void => {
   const targetInput = document.getElementById(id) as HTMLInputElement
   const setInputValue = focusInputValue(targetInput)
@@ -51,7 +55,9 @@ const addOptionsScroller = (
 }
 
 const addNumericScroller = (
-  id: string, defaultNumber: number, setDefault: boolean
+  id: string,
+  defaultNumber: number,
+  setDefault: boolean
 ): void => {
   const targetInput = document.getElementById(id) as HTMLInputElement
   const setInputValue = focusInputValue(targetInput)
@@ -88,7 +94,8 @@ addOptionsScroller(
 addOptionsScroller(
   'document.documentHeader.organizationDocumentNumber',
   ['080p', '081p'],
-  true)
+  true
+)
 
 // Enchancing Description Input
 addOptionsScroller(

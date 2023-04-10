@@ -1,10 +1,22 @@
 import React, { useRef } from 'react'
-import type { HTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, FC, ReactEventHandler, SyntheticEvent } from 'react'
+import type {
+  HTMLAttributes,
+  InputHTMLAttributes,
+  LabelHTMLAttributes,
+  FC,
+  ReactEventHandler,
+  SyntheticEvent
+} from 'react'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'
 >
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
-type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>, 'type' | 'pattern' | 'value' | 'onChange' | 'name' | 'inputMode'>
+type InputProps = Pick<
+
+InputHTMLAttributes<HTMLInputElement>,
+'type' | 'pattern' | 'value' | 'onChange' | 'name' | 'inputMode'
+>
+
 interface FillItemProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
@@ -24,7 +36,8 @@ const FillItem: FC<FillItemProps> = (props) => {
     throw new Error('React component id not found.')
   }
 
-  const handleSaveValue: ReactEventHandler<HTMLInputElement> = (evt: OnBlurEvent) => {
+  const handleSaveValue: ReactEventHandler<HTMLInputElement> =
+  (evt: OnBlurEvent) => {
     const { name } = evt.target
     browser.storage.sync
       .set({ [name]: props.value })
@@ -49,7 +62,7 @@ const FillItem: FC<FillItemProps> = (props) => {
         className='fill-item-label'
         id={`${id}-label`}
         htmlFor={`${id}-input`}
-        >{props.title}</label>
+      >{props.title}</label>
       <input
         className='fill-item-input'
         name={props.name}

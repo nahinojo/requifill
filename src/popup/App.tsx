@@ -5,16 +5,16 @@ import FillHeader from './components/FillHeader'
 import FillItem from './components/FillItem'
 
 interface FieldDict {
-  roomNumber: string
   adHocUserId: string
   commodityCode: string
+  roomNumber: string
 }
 
 const App: FC = () => {
   const [fillValues, setFillValues] = useState<FieldDict>({
-    roomNumber: '',
     adHocUserId: '',
-    commodityCode: ''
+    commodityCode: '',
+    roomNumber: ''
   })
 
   useEffect(() => {
@@ -27,10 +27,12 @@ const App: FC = () => {
   }, [])
 
   const updateFillValues = (name: string, value: string): void => {
-    setFillValues(prevFieldValues => ({
-      ...prevFieldValues,
-      [name]: value
-    }))
+    setFillValues(prevFieldValues => {
+      return {
+        ...prevFieldValues,
+        [name]: value
+      }
+    })
   }
 
   const handleAnyChange: ReactEventHandler<HTMLInputElement> = (

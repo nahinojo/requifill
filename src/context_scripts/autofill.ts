@@ -14,9 +14,7 @@ const fillRequisitionForm = (): void => {
       for (const name in storedFillValues) {
         const fillValue = storedFillValues[name]
         const targetInput = document.getElementById(
-          nameToIdDict[
-            name as NameToIdDictKeys
-          ]
+          nameToIdDict[name as NameToIdDictKeys]
         ) as HTMLInputElement
         const neglectAdHocUserId = (
           name === 'adHocUserId' &&
