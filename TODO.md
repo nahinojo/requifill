@@ -14,15 +14,10 @@
 
 ### Linting
 - Setup gitlinter.
-- Setup JS comment linter
 - Setup Markdown (linter if possible)
 
-##### ESLint
-- Set the line length and indentation rules of longer experessions.
-- Enforce ES6 concise function declarations.
-
 ### CI/CD
-- Setup some kind of Github/Firefox workflow to provide real-time updates to the extension for new releases.
+- Setup the extension to be permanently installable, with real-time updates on its release.
 
 ### Capabilites
 - Copy/paste from merchandise store (Amazon, Newegg, Digikey) to KFS document.
