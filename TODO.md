@@ -2,29 +2,30 @@
 ## **Issues**
 
 ## **Features**
-### Application Settings
+### Metadata
 - Add an icon for the extension
 
 ### Document & Advertise
 - Fill out the README.md in detail.
 - Make a website for this extension.
 
-### UI
-- Add a visual indicator that the input field contains scrollable values. Maybe an icon or change of styling?
+[ Wait until project is more fleshed out before completeing ]
 
-### Linting
-- Setup gitlinter.
-- Setup Markdown (linter if possible)
+### DOM Manipulation
+- Add a visual indicator that the input field contains scrollable values. Maybe an icon or change of styling?
 
 ### CI/CD
 - Setup the extension to be permanently installable, with real-time updates on its release.
 
-### Capabilites
+[ Requires a different version of Firefox. Install on work PC. ] 
+
+### Popup Features
+- Allow user to add/remove items from Default Values list.
+
+### New Capabilites
 - Copy/paste from merchandise store (Amazon, Newegg, Digikey) to KFS document.
 - Copy/paste from submitted KFS document to purchase logbook.
 
-### Extension Window
-- Allow user to add/remove items from Default Values list.
 
 
 ## **Considerations**
