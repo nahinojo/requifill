@@ -18,6 +18,7 @@ const App: FC = () => {
   })
 
   useEffect(() => {
+  // Ensures browser storage is up tp date.
     browser.storage.sync.get()
       .then((fillValuesSync) => {
         for (const name in fillValuesSync) {
