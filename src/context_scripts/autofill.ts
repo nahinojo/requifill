@@ -16,6 +16,7 @@ const fillRequisitionForm = (): void => {
         const targetInput = document.getElementById(
           nameToIdDict[name as NameToIdDictKeys]
         ) as HTMLInputElement
+        // Prevent duplicate injections of adHocUserId
         const neglectAdHocUserId = (
           name === 'adHocUserId' &&
           document.getElementById('adHocRoutePerson[0].id') !== null
