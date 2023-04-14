@@ -6,7 +6,7 @@
   "description": "Autofills KFS Requisition forms",
   "browser_specific_settings": {
     "gecko": {
-      "id": "addon@example.com"
+      "id": "requifill@example.com"
     }
   },
 
