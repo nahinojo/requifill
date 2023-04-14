@@ -16,7 +16,7 @@ const focusInputValue = (targetInput: HTMLInputElement): InputSetter => {
 }
 
 /*
-Aids the cyclical indexing of Arrays
+Assists the cyclical indexing of Arrays
 */
 const modulo = (m: number, n: number): number => {
   return ((n % m) + m) % m
@@ -30,15 +30,11 @@ Scrolling up or down cycles through items in list
 
 const addOptionsScroller = (
   id: string,
-  options: string[],
-  setDefault: boolean
+  options: string[]
 ): void => {
   const targetInput = document.getElementById(id) as HTMLInputElement
   const setInputValue = focusInputValue(targetInput)
   let currentIdx = 0
-  if (setDefault) {
-    setInputValue(options[0])
-  }
   targetInput.addEventListener('wheel', (evt) => {
     evt.preventDefault()
     if (options.includes(targetInput.value)) {
@@ -56,15 +52,11 @@ const addOptionsScroller = (
 
 const addNumericScroller = (
   id: string,
-  defaultNumber: number,
-  setDefault: boolean
+  defaultNumber: number
 ): void => {
   const targetInput = document.getElementById(id) as HTMLInputElement
   const setInputValue = focusInputValue(targetInput)
   let currentNumber = defaultNumber
-  if (setDefault) {
-    setInputValue(currentNumber)
-  }
   targetInput.addEventListener('wheel', (evt) => {
     evt.preventDefault()
     const inputContainsValidNumber = (
@@ -86,32 +78,27 @@ const addNumericScroller = (
 // Enhancing UOM Input
 addOptionsScroller(
   'newPurchasingItemLine.itemUnitOfMeasureCode',
-  ['UN', 'PK'],
-  true
+  ['UN', 'PK']
 )
 
 // Enchancing Budget Code Input
 addOptionsScroller(
   'document.documentHeader.organizationDocumentNumber',
-  ['080p', '081p'],
-  true
+  ['080p', '081p']
 )
 
 // Enchancing Description Input
 addOptionsScroller(
   'document.documentHeader.documentDescription',
-  ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg'],
-  false
+  ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg']
 )
 
 addNumericScroller(
   'newPurchasingItemLine.itemQuantity',
-  1,
-  true
+  1
 )
 
 addNumericScroller(
   'newPurchasingItemLine.itemUnitPrice',
-  0,
-  false
+  0
 )
