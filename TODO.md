@@ -1,8 +1,7 @@
 # **TODO.md**
 ## **Issues**
 
-### Autofill
-- Certain autofill injections do not work. It seems that the returned input element is null and theherefore value cannot be overwritten
+### Enchance
 - Scrollables reset to default after 'Calculate' button is clicked.
 
 ## **Features**
