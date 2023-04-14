@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack --stats-children",
-    "build:watch": "webpack --watch --stats-children",
+    "build:webpack": "webpack --stats-children",
+    "build:webpack:watch": "webpack --watch --stats-children",
+    "build:firefox": "web-ext build --source-dir ./dist --artifacts-dir ./dist",
     "dev:serve": "webpack serve",
     "dev:extension": "concurrently \"npm run build:watch\" \"web-ext run --source-dir ./dist/\"",
     "dev:extension:devtools": "concurrently \"npm run build:watch\" \"web-ext run --source-dir ./dist/ --devtools\"",
