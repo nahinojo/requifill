@@ -2,7 +2,7 @@
 ## **Issues**
 
 ### Enchance
-- Scrollables reset to default after 'Calculate' button is clicked.
+- Allow default value to be assigned, yet not reasssigned on page refresh.
 
 ## **Features**
 ### Metadata
