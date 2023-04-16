@@ -23,5 +23,5 @@ jobs:
         run: npm run lint:debug
         continue-on-error: false
       - name: Build with Webpack
-        run: npm run build
+        run: npm run build:webpack
         continue-on-error: false
