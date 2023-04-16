@@ -1,13 +1,11 @@
 /*
-Wrapper function for setting value of target <input>
+Wrapper function for setting value of target <input> element
 */
 type InputSetter = (value: string | number) => void
 
 const focusInputValue = (targetInput: HTMLInputElement): InputSetter => {
   return (value: string | number): void => {
-    if (!isNaN(
-      value as number
-    )) {
+    if (!isNaN(value as number)) {
       value = String(value)
     }
     targetInput.value = value as string
@@ -34,7 +32,9 @@ const addOptionsScroller = (
 ): void => {
   const targetInput = document.getElementById(id) as HTMLInputElement
   const setInputValue = focusInputValue(targetInput)
-  let currentIdx = 0
+  let currentIdx = (
+    options.includes(targetInput.value) ? options.indexOf(targetInput.value) : 0
+  )
   targetInput.addEventListener('wheel', (evt) => {
     evt.preventDefault()
     if (options.includes(targetInput.value)) {
