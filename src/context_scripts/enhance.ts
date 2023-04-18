@@ -30,7 +30,10 @@ const addOptionsScroller = (
   id: string,
   options: string[]
 ): void => {
+  console.log('id', id)
   const targetInput = document.getElementById(id) as HTMLInputElement
+  console.log('targetInput', targetInput)
+  console.log('targetInput.value:', targetInput.value)
   const setInputValue = focusInputValue(targetInput)
   let currentIdx = (
     options.includes(targetInput.value) ? options.indexOf(targetInput.value) : 0
