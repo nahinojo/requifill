@@ -13,24 +13,17 @@ interface FieldDict {
 }
 
 const App: FC = () => {
-  const [fillValues, setFillValues] = useState<FieldDict>({
+  const [fields, setFields] = useState<FieldDict>({
     adHocUserId: '',
     commodityCode: '',
     roomNumber: ''
   })
 
-  useEffect(() => {
-  // Ensures browser storage is up to date.
-    syncStorage.get()
-      .then((fillValuesSync) => {
-        for (const name in fillValuesSync) {
-          updateFillValues(name, fillValuesSync[name])
-        }
-      }).catch(error => { console.log(error) })
-  }, [])
-
-  const updateFillValues = (name: string, value: string): void => {
-    setFillValues(prevFieldValues => {
+  /*
+  Abstraction of changing one specific key-value in fields.
+  */
+  const updateFields = (name: string, value: string): void => {
+    setFields(prevFieldValues => {
       return {
         ...prevFieldValues,
         [name]: value
@@ -38,20 +31,40 @@ const App: FC = () => {
     })
   }
 
+  /*
+  Synchronizes field state to match browser storage on refresh
+  */
+  useEffect(() => {
+    syncStorage.get()
+      .then((fieldsStorage) => {
+        for (const name in fieldsStorage) {
+          updateFields(name, fieldsStorage[name])
+        }
+      }).catch(error => { console.log(error) })
+  }, [])
+
+  /*
+  Synchronizes field input value with fields stored by browser.
+  */
   const handleAnyChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = evt.target
-    updateFillValues(name, value)
+    updateFields(name, value)
   }
 
+  /*
+  Synchronizes field input value with fields stored by browser.
+
+  Strictly enforces pattern property
+  */
   const handlePatternChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value, pattern } = evt.target
     const regex = new RegExp(pattern)
     if (regex.test(value)) {
-      updateFillValues(name, value)
+      updateFields(name, value)
     }
   }
 
@@ -66,7 +79,7 @@ const App: FC = () => {
           id='room-number'
           type='tel'
           pattern='^\d*$'
-          value={fillValues.roomNumber}
+          value={fields.roomNumber}
           onChange={handlePatternChange}
         />
         <FillItem
@@ -76,7 +89,7 @@ const App: FC = () => {
           type='text'
           pattern='^\d*$'
           inputMode='numeric'
-          value={fillValues.commodityCode}
+          value={fields.commodityCode}
           onChange={handlePatternChange}
         />
         <FillItem
@@ -84,7 +97,7 @@ const App: FC = () => {
           title='Ad Hoc User ID'
           id='ad-hoc-user-id'
           type='text'
-          value={fillValues.adHocUserId}
+          value={fields.adHocUserId}
           onChange={handleAnyChange}
         />
       </div>

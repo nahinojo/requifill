@@ -8,15 +8,11 @@ import type {
   SyntheticEvent
 } from 'react'
 
-type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'
->
+type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
-type InputProps = Pick<
-
-InputHTMLAttributes<HTMLInputElement>,
+type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 'type' | 'pattern' | 'value' | 'onChange' | 'name' | 'inputMode'
 >
-
 interface FieldItemProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
@@ -33,9 +29,12 @@ const FieldItem: FC<FieldItemProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const { id } = props
   if (id === undefined) {
-    throw new Error('React component id not found.')
+    throw new Error('React component ID not found.')
   }
 
+  /*
+  Synchronizes input value with fields stored by browser
+  */
   const handleSaveValue: ReactEventHandler<HTMLInputElement> =
   (evt: OnBlurEvent) => {
     const { name } = evt.target
