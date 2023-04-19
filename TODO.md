@@ -2,7 +2,6 @@
 ## **Issues**
 
 ### Enchance
-- Resolve Type errors. For some reason targetInput is yielding a null value.
 - Allow default value to be assigned, yet not reasssigned on page refresh.
 
 ## **Features**
