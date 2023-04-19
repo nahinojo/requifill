@@ -7,6 +7,7 @@ import type {
   ReactEventHandler,
   SyntheticEvent
 } from 'react'
+import { syncStorage } from '../../content_scripts/constants'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
@@ -16,11 +17,11 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 interface FieldItemProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
-interface OnBlurEvent extends SyntheticEvent<HTMLInputElement> {
-  target: HTMLInputElement & {
-    name: string
-  }
-}
+// interface OnBlurEvent extends SyntheticEvent<HTMLInputElement> {
+//   target: HTMLInputElement & {
+//     name: string
+//   }
+// }
 interface OnKeydownEvent extends SyntheticEvent<HTMLInputElement> {
   key: string
 }
@@ -33,16 +34,33 @@ const FieldItem: FC<FieldItemProps> = (props) => {
   }
 
   /*
-  Synchronizes input value with fields stored by browser
+  Synchronizes browser storage with values within input elements.
   */
   const handleSaveValue: ReactEventHandler<HTMLInputElement> =
-  (evt: OnBlurEvent) => {
-    const { name } = evt.target
-    browser.storage.sync
-      .set({ [name]: props.value })
-      .catch(error => { console.log(error) })
+  () => {
+    const { name } = props
+    const newData = { [String(name)]: props.value }
+    syncStorage
+      .get('fieldData')
+      .then(result => {
+        const previousData = result.fieldData !== 'undefined'
+          ? result.fieldData
+          : {}
+        const currentData = { ...previousData, ...newData }
+        syncStorage
+          .set({
+            fieldData: currentData
+          }).catch(
+            error => { console.log(error) }
+          )
+      }).catch(
+        error => { console.log(error) }
+      )
   }
 
+  /*
+  Triggers handleSaveValue() listener on input elements.
+  */
   const handleEnterKeydown: ReactEventHandler<HTMLInputElement> = (
     evt: OnKeydownEvent
   ) => {
