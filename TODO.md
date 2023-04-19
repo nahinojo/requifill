@@ -11,6 +11,7 @@
 ### Document & Advertise
 - Fill out the README.md in detail.
 - Make a website for this extension.
+
 [ Wait until project is more fleshed out before completing ]
 
 ### DOM Manipulation
