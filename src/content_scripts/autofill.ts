@@ -1,11 +1,10 @@
 /*
-Injects fill values stored in the browser into the requisition form's input
+Injects field values in browser storage into the requisition form's input
 elements.
 */
-import { isProperURL } from './constants'
+import { isProperURL, syncStorage } from './constants'
 
 if (isProperURL) {
-  const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync
   type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
   const nameToIdDict = {
     adHocUserId: 'newAdHocRoutePerson.id',
@@ -15,19 +14,20 @@ if (isProperURL) {
 
   const fillRequisitionForm = (): void => {
     syncStorage.get()
-      .then(storedFillValues => {
-        for (const name in storedFillValues) {
-          const fillValue = storedFillValues[name]
+      .then(storage => {
+        const { fieldData } = storage
+        for (const fieldName in fieldData) {
+          const fieldValue = fieldData[fieldName]
           const targetInput = document.getElementById(
-            nameToIdDict[name as NameToIdDictKeys]
+            nameToIdDict[fieldName as NameToIdDictKeys]
           ) as HTMLInputElement
           // Prevent duplicate injections of adHocUserId
           const neglectAdHocUserId = (
-            name === 'adHocUserId' &&
+            fieldName === 'adHocUserId' &&
             document.getElementById('adHocRoutePerson[0].id') !== null
           )
-          if (targetInput.value !== fillValue && !neglectAdHocUserId) {
-            targetInput.value = fillValue
+          if (targetInput.value !== fieldValue && !neglectAdHocUserId) {
+            targetInput.value = fieldValue
           }
         }
       })

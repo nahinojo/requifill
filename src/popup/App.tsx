@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import Title from './components/Title'
-import FillHeader from './components/FieldHeader'
-import FillItem from './components/Field'
-
-const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync
+import FieldHeader from './components/FieldHeader'
+import Field from './components/Field'
+import { syncStorage } from '../content_scripts/constants'
 
 interface FieldDict {
   adHocUserId: string
@@ -36,9 +35,11 @@ const App: FC = () => {
   */
   useEffect(() => {
     syncStorage.get()
-      .then((fieldsStorage) => {
-        for (const name in fieldsStorage) {
-          updateFields(name, fieldsStorage[name])
+      .then((storage) => {
+        const { fieldData } = storage
+        for (const fieldName in fieldData) {
+          const fieldValue = fieldData[fieldName]
+          updateFields(fieldName, fieldValue)
         }
       }).catch(error => { console.log(error) })
   }, [])
@@ -71,9 +72,9 @@ const App: FC = () => {
   return (
     <React.StrictMode>
       <Title />
-      <div className='fill-container'>
-        <FillHeader text='Default Values' />
-        <FillItem
+      <div className='field-container'>
+        <FieldHeader text='Default Values' />
+        <Field
           name='roomNumber'
           title='Room Number'
           id='room-number'
@@ -82,7 +83,7 @@ const App: FC = () => {
           value={fields.roomNumber}
           onChange={handlePatternChange}
         />
-        <FillItem
+        <Field
           name='commodityCode'
           title='Commodity Code'
           id='commodity-code'
@@ -92,7 +93,7 @@ const App: FC = () => {
           value={fields.commodityCode}
           onChange={handlePatternChange}
         />
-        <FillItem
+        <Field
           name='adHocUserId'
           title='Ad Hoc User ID'
           id='ad-hoc-user-id'
