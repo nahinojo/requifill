@@ -1,13 +1,12 @@
 # **TODO.md**
 ## **Issues**
 
-### Enchance
-- Allow default value to be assigned, yet not reasssigned on page refresh.
-This will require some kind of variable to be stored in the browser's sync storage that holds the prior data of the requisition. It needs to verify prior form based on the document number. Also, you will also need some kind of constants file to access the sync storage variable across multiple scripts. Good luck! 
-
 ## **Features**
 ### Metadata
 - Add an icon for the extension
+
+### Storage
+- Consider abstracting the get(), then(), and set() calls from storage.
 
 ### Document & Advertise
 - Fill out the README.md in detail.
