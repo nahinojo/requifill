@@ -8,12 +8,12 @@ module.exports = {
       filename: 'bundle.js'
     },
     autofill: {
-      import: './src/context_scripts/autofill.ts',
-      filename: 'context_scripts/autofill.js'
+      import: './src/content_scripts/autofill.ts',
+      filename: 'content_scripts/autofill.js'
     },
     enchance: {
-      import: './src/context_scripts/enhance.ts',
-      filename: 'context_scripts/enhance.js'
+      import: './src/content_scripts/enhance.ts',
+      filename: 'content_scripts/enhance.js'
     }
   },
   output: {
