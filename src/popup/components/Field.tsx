@@ -17,7 +17,7 @@ InputHTMLAttributes<HTMLInputElement>,
 'type' | 'pattern' | 'value' | 'onChange' | 'name' | 'inputMode'
 >
 
-interface FillItemProps extends HTMLProps, LabelProps, InputProps {
+interface FieldItemProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
 interface OnBlurEvent extends SyntheticEvent<HTMLInputElement> {
@@ -29,7 +29,7 @@ interface OnKeydownEvent extends SyntheticEvent<HTMLInputElement> {
   key: string
 }
 
-const FillItem: FC<FillItemProps> = (props) => {
+const FieldItem: FC<FieldItemProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const { id } = props
   if (id === undefined) {
@@ -55,16 +55,16 @@ const FillItem: FC<FillItemProps> = (props) => {
 
   return (
     <div
-      className='fill-item-wrapper'
+      className='field-item-wrapper'
       id={props.id}
     >
       <label
-        className='fill-item-label'
+        className='field-item-label'
         id={`${id}-label`}
         htmlFor={`${id}-input`}
       >{props.title}</label>
       <input
-        className='fill-item-input'
+        className='field-item-input'
         name={props.name}
         id={`${id}-input`}
         value={props.value}
@@ -80,4 +80,4 @@ const FillItem: FC<FillItemProps> = (props) => {
   )
 }
 
-export default FillItem
+export default FieldItem

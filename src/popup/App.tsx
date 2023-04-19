@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import Title from './components/Title'
-import FillHeader from './components/FillHeader'
-import FillItem from './components/FillItem'
+import FillHeader from './components/FieldHeader'
+import FillItem from './components/Field'
+
+const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync
 
 interface FieldDict {
   adHocUserId: string
@@ -18,8 +20,8 @@ const App: FC = () => {
   })
 
   useEffect(() => {
-  // Ensures browser storage is up tp date.
-    browser.storage.sync.get()
+  // Ensures browser storage is up to date.
+    syncStorage.get()
       .then((fillValuesSync) => {
         for (const name in fillValuesSync) {
           updateFillValues(name, fillValuesSync[name])

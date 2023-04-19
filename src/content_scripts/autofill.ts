@@ -1,7 +1,10 @@
+/*
+Injects fill values stored in the browser into the requisition form's input
+elements.
+*/
 import { isProperURL } from './constants'
 
 if (isProperURL) {
-  console.log('Executing autofill.ts')
   const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync
   type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
   const nameToIdDict = {

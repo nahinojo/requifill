@@ -1,11 +1,14 @@
+/*
+Improves the DOM elements of requisition form, such as allowing integer
+scrolling of numeric inputs.
+*/
 import { isProperURL } from './constants'
 
 if (isProperURL) {
   /*
-  Wrapper function for setting value of target <input> element
+  Wrapper function for setting value of target <input> element.
   */
   type InputSetter = (value: string | number) => void
-
   const focusInputValue = (targetInput: HTMLInputElement): InputSetter => {
     return (value: string | number): void => {
       if (!isNaN(value as number)) {
@@ -17,18 +20,16 @@ if (isProperURL) {
   }
 
   /*
-  Assists the cyclical indexing of Arrays
+  Assists the cyclical indexing of Arrays.
   */
   const modulo = (m: number, n: number): number => {
     return ((n % m) + m) % m
   }
 
   /*
-  Enchance any list-based input
-
-  Scrolling up or down cycles through items in list
+  Enchance any list-based input.
+  Scrolling cycles through list within target input element.
   */
-
   const addOptionsScroller = (
     id: string,
     options: string[]
@@ -55,6 +56,10 @@ if (isProperURL) {
     })
   }
 
+  /*
+  Enchance any numeric input.
+  Scrolling increases or decreases target input element by 1.
+  */
   const addNumericScroller = (
     id: string,
     defaultNumber: number
@@ -80,19 +85,16 @@ if (isProperURL) {
     })
   }
 
-  // Enhancing UOM Input
   addOptionsScroller(
     'newPurchasingItemLine.itemUnitOfMeasureCode',
     ['UN', 'PK']
   )
 
-  // Enchancing Budget Code Input
   addOptionsScroller(
     'document.documentHeader.organizationDocumentNumber',
     ['080p', '081p']
   )
 
-  // Enchancing Description Input
   addOptionsScroller(
     'document.documentHeader.documentDescription',
     ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg']

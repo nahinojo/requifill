@@ -1,3 +1,6 @@
+/*
+Constants utilized by other content scripts.
+*/
 import { minimatch } from 'minimatch'
 
 /*
