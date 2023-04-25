@@ -87,11 +87,9 @@ const FieldItem: FC<FieldItemProps> = (props) => {
         value={props.value}
         ref={inputRef}
         type={props.type}
-        pattern={props.pattern}
-        inputMode={props.inputMode}
         onChange={props.onChange}
-        onBlur={handleSaveValue}
         onKeyDown={handleEnterKeydown}
+        onBlur={handleSaveValue}
       />
     </div>
   )

@@ -47,26 +47,11 @@ const App: FC = () => {
   /*
   Synchronizes field input value with fields stored by browser.
   */
-  const handleAnyChange: ReactEventHandler<HTMLInputElement> = (
+  const handleChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = evt.target
     updateFields(name, value)
-  }
-
-  /*
-  Synchronizes field input value with fields stored by browser.
-
-  Strictly enforces pattern property
-  */
-  const handlePatternChange: ReactEventHandler<HTMLInputElement> = (
-    evt: ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value, pattern } = evt.target
-    const regex = new RegExp(pattern)
-    if (regex.test(value)) {
-      updateFields(name, value)
-    }
   }
 
   return (
@@ -74,33 +59,35 @@ const App: FC = () => {
       <Title />
       <div className='field-container'>
         <FieldHeader text='Default Values' />
-        <Field
-          name='roomNumber'
-          title='Room Number'
-          id='room-number'
-          type='tel'
-          pattern='^\d*$'
-          value={fields.roomNumber}
-          onChange={handlePatternChange}
-        />
-        <Field
-          name='commodityCode'
-          title='Commodity Code'
-          id='commodity-code'
-          type='text'
-          pattern='^\d*$'
-          inputMode='numeric'
-          value={fields.commodityCode}
-          onChange={handlePatternChange}
-        />
-        <Field
-          name='adHocUserId'
-          title='Ad Hoc User ID'
-          id='ad-hoc-user-id'
-          type='text'
-          value={fields.adHocUserId}
-          onChange={handleAnyChange}
-        />
+        <form>
+          <Field
+            name='roomNumber'
+            title='Room Number'
+            id='room-number'
+            type='tel'
+            pattern='^\d*$'
+            value={fields.roomNumber}
+            onChange={handleChange}
+          />
+          <Field
+            name='commodityCode'
+            title='Commodity Code'
+            id='commodity-code'
+            type='text'
+            pattern='^\d*$'
+            inputMode='numeric'
+            value={fields.commodityCode}
+            onChange={handleChange}
+          />
+          <Field
+            name='adHocUserId'
+            title='Ad Hoc User ID'
+            id='ad-hoc-user-id'
+            type='text'
+            value={fields.adHocUserId}
+            onChange={handleChange}
+          />
+        </form>
       </div>
     </React.StrictMode>
   )
