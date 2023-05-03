@@ -60,7 +60,7 @@ if (isProperURL) {
   const addNumericScroller = (
     id: string,
     defaultNumber: number,
-    tenthsPlace: number
+    decimalPlace: number
   ): void => {
     const targetInput = document.getElementById(id) as HTMLInputElement
     const setInputValue = focusInputValue(targetInput)
@@ -80,22 +80,37 @@ if (isProperURL) {
       } else {
         currentNumber = defaultNumber
       }
-      setInputValue(currentNumber.toFixed(tenthsPlace))
+      setInputValue(currentNumber.toFixed(decimalPlace))
     })
   }
 
-  const addNumericScrollerSelector = (
-    // scrollerFunction: (
-    //   id: string,
-    //   options: string[]
-    // ) => void,
-    selectors: string
+  const addOptionsScrollerSelector = (
+    selector: string,
+    options: string[]
   ): void => {
-    console.log('Executing appendNumericScrollers')
-    const options = document.querySelectorAll(selectors)
-    console.log('options', options)
+    const elements = document.querySelectorAll(selector)
+    for (let i = 0; i < elements.length; i++) {
+      addOptionsScroller(
+        elements[i].id,
+        options
+      )
+    }
   }
-  addNumericScrollerSelector('[id^="document.item"]')
+
+  const addNumericScrollerSelector = (
+    selector: string,
+    defaultNumber: number,
+    decimalPlace: number
+  ): void => {
+    const elements = document.querySelectorAll(selector)
+    for (let i = 0; i < elements.length; i++) {
+      addNumericScroller(
+        elements[i].id,
+        defaultNumber,
+        decimalPlace
+      )
+    }
+  }
 
   addOptionsScroller(
     'document.documentHeader.documentDescription',
@@ -107,19 +122,19 @@ if (isProperURL) {
     ['080p', '081p']
   )
 
-  addNumericScroller(
-    'newPurchasingItemLine.itemQuantity',
+  addOptionsScrollerSelector(
+    '[id$=".itemUnitOfMeasureCode"]',
+    ['UN', 'PK']
+  )
+
+  addNumericScrollerSelector(
+    '[id$=".itemQuantity"]',
     1,
     0
   )
 
-  addOptionsScroller(
-    'newPurchasingItemLine.itemUnitOfMeasureCode',
-    ['UN', 'PK']
-  )
-
-  addNumericScroller(
-    'newPurchasingItemLine.itemUnitPrice',
+  addNumericScrollerSelector(
+    '[id$=".itemUnitPrice"]',
     0.99,
     2
   )
