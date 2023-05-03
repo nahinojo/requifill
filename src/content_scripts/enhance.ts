@@ -84,9 +84,22 @@ if (isProperURL) {
     })
   }
 
+  const addNumericScrollerSelector = (
+    // scrollerFunction: (
+    //   id: string,
+    //   options: string[]
+    // ) => void,
+    selectors: string
+  ): void => {
+    console.log('Executing appendNumericScrollers')
+    const options = document.querySelectorAll(selectors)
+    console.log('options', options)
+  }
+  addNumericScrollerSelector('[id^="document.item"]')
+
   addOptionsScroller(
-    'newPurchasingItemLine.itemUnitOfMeasureCode',
-    ['UN', 'PK']
+    'document.documentHeader.documentDescription',
+    ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg']
   )
 
   addOptionsScroller(
@@ -94,15 +107,15 @@ if (isProperURL) {
     ['080p', '081p']
   )
 
-  addOptionsScroller(
-    'document.documentHeader.documentDescription',
-    ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg']
-  )
-
   addNumericScroller(
     'newPurchasingItemLine.itemQuantity',
     1,
     0
+  )
+
+  addOptionsScroller(
+    'newPurchasingItemLine.itemUnitOfMeasureCode',
+    ['UN', 'PK']
   )
 
   addNumericScroller(
