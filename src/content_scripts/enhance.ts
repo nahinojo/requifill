@@ -8,13 +8,10 @@ if (isProperURL) {
   /*
   Wrapper function for setting value of target <input> element.
   */
-  type InputSetter = (value: string | number) => void
+  type InputSetter = (value: string) => void
   const focusInputValue = (targetInput: HTMLInputElement): InputSetter => {
-    return (value: string | number): void => {
-      if (!isNaN(value as number)) {
-        value = String(value)
-      }
-      targetInput.value = value as string
+    return (value: string): void => {
+      targetInput.value = value
       targetInput.select()
     }
   }
@@ -62,7 +59,8 @@ if (isProperURL) {
   */
   const addNumericScroller = (
     id: string,
-    defaultNumber: number
+    defaultNumber: number,
+    tenthsPlace: number
   ): void => {
     const targetInput = document.getElementById(id) as HTMLInputElement
     const setInputValue = focusInputValue(targetInput)
@@ -73,7 +71,8 @@ if (isProperURL) {
         Number(targetInput.value) !== null &&
         Number(targetInput.value) >= defaultNumber)
       if (inputContainsValidNumber) {
-        if (evt.deltaY > 0) {
+        currentNumber = Number(targetInput.value)
+        if (evt.deltaY < 0) {
           currentNumber += 1
         } else if (Number(targetInput.value) !== defaultNumber) {
           currentNumber -= 1
@@ -81,7 +80,7 @@ if (isProperURL) {
       } else {
         currentNumber = defaultNumber
       }
-      setInputValue(currentNumber)
+      setInputValue(currentNumber.toFixed(tenthsPlace))
     })
   }
 
@@ -102,11 +101,13 @@ if (isProperURL) {
 
   addNumericScroller(
     'newPurchasingItemLine.itemQuantity',
-    1
+    1,
+    0
   )
 
   addNumericScroller(
     'newPurchasingItemLine.itemUnitPrice',
-    0
+    0.99,
+    2
   )
 }
