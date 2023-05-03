@@ -64,7 +64,7 @@ const App: FC = () => {
             name='roomNumber'
             title='Room Number'
             id='room-number'
-            type='tel'
+            type='text'
             pattern='^\d*$'
             value={fields.roomNumber}
             onChange={handleChange}
