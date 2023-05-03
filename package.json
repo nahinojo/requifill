@@ -6,7 +6,7 @@
   "scripts": {
     "build:webpack": "webpack --stats-children",
     "build:webpack:watch": "webpack --watch --stats-children",
-    "build:extension": "web-ext build --source-dir ./dist --artifacts-dir ./dist  --overwrite-dest",
+    "build:extension": "npm run build:webpack && web-ext build --source-dir ./dist --artifacts-dir ./dist  --overwrite-dest",
     "dev:serve": "webpack serve",
     "dev:extension": "concurrently \"npm run build:webpack:watch\" \"web-ext run --source-dir ./dist/\"",
     "dev:extension:devtools": "concurrently \"npm run build:webpack:watch\" \"web-ext run --source-dir ./dist/ --devtools\"",
