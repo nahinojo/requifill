@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
-import Title from './components/Title'
+import Title from './components/Banner'
 import FieldHeader from './components/FieldHeader'
 import Field from './components/Field'
 import { syncStorage } from '../content_scripts/constants'

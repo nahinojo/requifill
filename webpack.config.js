@@ -1,57 +1,58 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: {
-    main: {
-      import: './src/popup/index.tsx',
-      filename: 'bundle.js'
-    },
-    autofill: {
-      import: './src/content_scripts/autofill.ts',
-      filename: 'content_scripts/autofill.js'
-    },
-    enchance: {
-      import: './src/content_scripts/enhance.ts',
-      filename: 'content_scripts/enhance.js'
+  devServer: {
+    compress: true,
+    port: 9000,
+    static: {
+      directory: path.join(__dirname, 'dist')
     }
   },
-  output: {
-    path: path.resolve(__dirname, 'dist')
+  entry: {
+    autofill: {
+      filename: 'content_scripts/autofill.js',
+      import: './src/content_scripts/autofill.ts'
+    },
+    enchance: {
+      filename: 'content_scripts/enhance.js',
+      import: './src/content_scripts/enhance.ts'
+    },
+    main: {
+      filename: 'bundle.js',
+      import: './src/popup/index.tsx'
+    }
   },
   mode: 'production',
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader', 'postcss-loader']
       },
       {
+        exclude: /node_modules/,
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        use: 'ts-loader'
       }
     ]
   },
-  resolve: {
-    aliasFields: ['browser'],
-    extensions: ['.tsx', '.ts', '.js']
+  output: {
+    path: path.resolve(__dirname, 'dist')
+  },
+  performance: {
+    maxAssetSize: 512000,
+    maxEntrypointSize: 512000
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/popup/index.html',
-      filename: 'index.html'
+      filename: 'index.html',
+      template: './src/popup/index.html'
     })
   ],
-  performance: {
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000
-  },
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist')
-    },
-    compress: true,
-    port: 9000
+  resolve: {
+    aliasFields: ['browser'],
+    extensions: ['.tsx', '.ts', '.js']
   }
 }
