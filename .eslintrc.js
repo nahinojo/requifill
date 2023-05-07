@@ -27,7 +27,6 @@ module.exports = {
     'function-paren-newline': ['error', 'multiline-arguments'],
     'implicit-arrow-linebreak': ['error', 'below'],
     indent: ['error', 2],
-    'max-len': 'error',
     'sort-keys': ['error', 'asc', { natural: true }]
   },
   settings: {
