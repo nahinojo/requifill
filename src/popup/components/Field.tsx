@@ -72,18 +72,18 @@ const FieldItem: FC<FieldItemProps> = (props) => {
 
   return (
     <div
-      className='field-item-wrapper'
       id={props.id}
+      className='bg-thunder rounded mx-1 mb-1 h-14 grid justify-start items-center grid-cols-2'
     >
       <label
-        className='field-item-label'
         id={`${id}-label`}
+        className='text-base ml-2'
         htmlFor={`${id}-input`}
       >{props.title}</label>
       <input
-        className='field-item-input'
-        name={props.name}
         id={`${id}-input`}
+        className='bg-iron text-base h-3/5 mx-3 rounded indent-1 pt-1'
+        name={props.name}
         value={props.value}
         ref={inputRef}
         type={props.type}

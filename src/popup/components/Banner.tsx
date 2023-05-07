@@ -1,18 +1,17 @@
 import React from 'react'
-// import Button from '@mui/material/Button'
 
-const Title: React.FC = () => {
+const Banner: React.FC = () => {
   return (
     <div
-      id='banner-background'
-      className='banner-background bg-red-50'
+      id='toggle-autofill-background'
+      className='bg-thunder w-full h-14 flex items-center'
     >
       <h1
-        id='toggle-autofill-text'
-        className='banner'
+        id='toggle-autofill-title'
+        className='font-bold'
       >Enable Autofill</h1>
     </div>
   )
 }
 
-export default Title
+export default Banner

@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './base.css';
-@import './components/title.css';
-@import './components/field.css';
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+  }
+
+html {
+  border-radius: 8px;
+}
+
+body {
+  background-color: #111113;
+  width: 360px;
+  height: 600px;
+}

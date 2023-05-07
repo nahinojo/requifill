@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
-import Title from './components/Banner'
-import FieldHeader from './components/FieldHeader'
+import Banner from './components/Banner'
 import Field from './components/Field'
 import { syncStorage } from '../content_scripts/constants'
 
@@ -56,9 +55,11 @@ const App: FC = () => {
 
   return (
     <React.StrictMode>
-      <Title />
+      <Banner />
       <div className='field-container'>
-        <FieldHeader text='Default Values' />
+        <header
+          className='text-silver text-xs mt-3 ml-1'
+        >Autofill Values</header>
         <form>
           <Field
             name='roomNumber'
