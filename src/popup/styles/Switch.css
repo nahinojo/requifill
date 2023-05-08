@@ -12,7 +12,7 @@
   width: 40px;
   height: 20px;
   background: #3b3e45;
-  border: 2px solid #d6d8dc;
+  border: 2px solid #ACB0B8;
   border-radius: 100px;
   position: relative;
   transition: 0.3s;
@@ -27,7 +27,7 @@
   height: 12px;
   border-radius: 14px;
   transition: 0.3s;
-  background-color: #d6d8dc;
+  background-color: #ACB0B8;
 }
 
 .toggle-switch:checked + .switch-track .switch-slider {
@@ -38,4 +38,5 @@
 
 .toggle-switch:checked + .switch-track {
   background-color: #d6d8dc;
+  border: 2px solid #d6d8dc;
 }
