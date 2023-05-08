@@ -10,17 +10,19 @@ You can also add the pattern attribute to the `<input>` element to enforce the i
 
 The pattern="[0-9]+" attribute ensures that only numeric characters are allowed and the required attribute makes it mandatory for the user to enter a value before submitting the form.
 
-# `BeforeInputEvent`: Solution
+## `BeforeInputEvent`: Solution
 
 ### `BeforeInputEvent` must be defined to include `data`
-```
+
+```tsx
 interface BeforeInputEvent extends SyntheticEvent, Partial<Pick<InputEvent, 'data'>> {};
 ```
 
 This is because event is not native.
 
 ### How to specify `BeforeInputEvent` is of type `KeyboardEvent`
-```
+
+```tsx
 const App: FC = () => {
 
   const inputHandler: ReactEventHandler<HTMLInputElement> = (
@@ -31,9 +33,12 @@ const App: FC = () => {
 ```
 
 Since `ev.nativeEvent` and `KeyboardEvent` vary greatly, you have to use the `unknown` command to allow such a harsh definition.
-# Logging All Events on a HTML Element
+
+## Logging All Events on a HTML Element
+
 To view all events on an HTML Element:
-```
+
+```tsx
 function logAllEvents (): void {
   const quantityInput = document.getElementById('newPurchasingItemLine.itemQuantity') as HTMLInputElement
   for (const eventType in quantityInput) {
@@ -46,3 +51,7 @@ logAllEvents()
 ```
 
 You may also change ```document.getElementbyId...``` to ```window``` view all events on he page.
+
+## Building a React Switch
+
+upmostly.com/tutorials/build-a-react-switch-toggle-component
