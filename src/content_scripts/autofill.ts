@@ -4,14 +4,14 @@ elements.
 */
 import { isProperURL, syncStorage } from './constants'
 
-if (isProperURL) {
-  type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
-  const nameToIdDict = {
-    adHocUserId: 'newAdHocRoutePerson.id',
-    commodityCode: 'newPurchasingItemLine.purchasingCommodityCode',
-    roomNumber: 'document.deliveryBuildingRoomNumber'
-  }
+type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
+const nameToIdDict = {
+  adHocUserId: 'newAdHocRoutePerson.id',
+  commodityCode: 'newPurchasingItemLine.purchasingCommodityCode',
+  roomNumber: 'document.deliveryBuildingRoomNumber'
+}
 
+const autofill = (): void => {
   const fillRequisitionForm = (): void => {
     syncStorage.get()
       .then(storage => {
@@ -38,4 +38,8 @@ if (isProperURL) {
 
   fillRequisitionForm()
   syncStorage.onChanged.addListener(fillRequisitionForm)
+}
+
+if (isProperURL) {
+  autofill()
 }
