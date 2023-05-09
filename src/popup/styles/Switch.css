@@ -21,16 +21,16 @@
 .switch-track .switch-slider {
   content: "";
   position: absolute;
-  left: 2px;
-  width: 12px;
-  height: 12px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
   border-radius: 14px;
   transition: 0.3s;
   background-color: #d6d8dc;
 }
 
 .toggle-switch:checked + .switch-track .switch-slider {
-  left: calc(100% - 2px);
+  left: calc(100% - 3px);
   transform: translateX(-100%);
   background-color: #3b3e45;
 }
