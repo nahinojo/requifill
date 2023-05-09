@@ -41,7 +41,6 @@ const App: FC = () => {
   }
 
   const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
-    console.log('Executing .handleAutofillChange()...')
     setIsAutofill(!isAutofill)
     syncStorage.set({
       settings: {
