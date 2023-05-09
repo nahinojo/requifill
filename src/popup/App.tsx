@@ -16,6 +16,7 @@ const App: FC = () => {
     commodityCode: '',
     roomNumber: ''
   })
+  const [isAutofill, setIsAutofill] = useState<boolean>(false)
 
   /*
   Abstraction of changing one specific key-value in fields.
@@ -27,6 +28,28 @@ const App: FC = () => {
         [name]: value
       }
     })
+  }
+
+  /*
+  Synchronizes field input value with fields stored by browser.
+  */
+  const handleFieldChange: ReactEventHandler<HTMLInputElement> = (
+    evt: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = evt.target
+    updateFields(name, value)
+  }
+
+  const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
+    console.log('Executing .handleAutofillChange()...')
+    setIsAutofill(!isAutofill)
+    syncStorage.set({
+      settings: {
+        isAutofill: !isAutofill
+      }
+    }).catch(
+      error => { console.log(error) }
+    )
   }
 
   /*
@@ -43,19 +66,12 @@ const App: FC = () => {
       }).catch(error => { console.log(error) })
   }, [])
 
-  /*
-  Synchronizes field input value with fields stored by browser.
-  */
-  const handleChange: ReactEventHandler<HTMLInputElement> = (
-    evt: ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = evt.target
-    updateFields(name, value)
-  }
-
   return (
     <React.StrictMode>
-      <Banner />
+      <Banner
+        isAutofill={isAutofill}
+        handleAutofillChange={handleAutofillChange}
+      />
       <div className='field-container'>
         <header
           className='text-silver text-xs mt-3 ml-1'
@@ -68,7 +84,7 @@ const App: FC = () => {
             type='text'
             pattern='^\d*$'
             value={fields.roomNumber}
-            onChange={handleChange}
+            onChange={handleFieldChange}
           />
           <Field
             name='commodityCode'
@@ -78,7 +94,7 @@ const App: FC = () => {
             pattern='^\d*$'
             inputMode='numeric'
             value={fields.commodityCode}
-            onChange={handleChange}
+            onChange={handleFieldChange}
           />
           <Field
             name='adHocUserId'
@@ -86,7 +102,7 @@ const App: FC = () => {
             id='ad-hoc-user-id'
             type='text'
             value={fields.adHocUserId}
-            onChange={handleChange}
+            onChange={handleFieldChange}
           />
         </form>
       </div>

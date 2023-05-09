@@ -1,19 +1,19 @@
 import React from 'react'
-import type { HTMLAttributes } from 'react'
+import type { HTMLAttributes, ReactEventHandler } from 'react'
 
 interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {
-  handleToggle: () => void
-  isOn: boolean
+  handleToggle: ReactEventHandler<HTMLInputElement>
+  isToggled: boolean
 }
 
-const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isOn }) => {
+const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isToggled }) => {
   return (
     <>
       <input
         className="toggle-switch"
         id='toggle-autofill'
         type="checkbox"
-        checked={isOn}
+        checked={isToggled}
         onChange={handleToggle}
       />
       <label

@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { type ReactEventHandler, type HTMLAttributes } from 'react'
 import Switch from './Switch'
 
-const Banner: React.FC = () => {
-  const [isAutofilling, setIsAutofilling] = useState<boolean>(true)
+interface BannerProps extends HTMLAttributes<HTMLInputElement> {
+  isAutofill: boolean
+  handleAutofillChange: ReactEventHandler<HTMLInputElement>
+}
+
+const Banner: React.FC<BannerProps> = ({ isAutofill, handleAutofillChange }) => {
   return (
     <div
       id='toggle-autofill-background'
@@ -10,10 +14,8 @@ const Banner: React.FC = () => {
     >
       <Switch
         className='ml-1'
-        isOn={isAutofilling}
-        handleToggle={
-          () => { setIsAutofilling(!isAutofilling) }
-        }
+        isToggled={isAutofill}
+        handleToggle={handleAutofillChange}
       />
       <h1
         id='toggle-autofill-title'
