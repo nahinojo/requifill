@@ -2,7 +2,7 @@
 Improves the DOM elements of requisition form, such as allowing integer
 scrolling of numeric inputs.
 */
-import { isProperURL } from './constants'
+import isProperURL from '../common/isProperURL'
 
 if (isProperURL) {
   /*

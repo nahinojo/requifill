@@ -7,7 +7,7 @@ import type {
   ReactEventHandler,
   SyntheticEvent
 } from 'react'
-import { syncStorage } from '../../content_scripts/constants'
+import syncStorage from '../../common/syncStorage'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
