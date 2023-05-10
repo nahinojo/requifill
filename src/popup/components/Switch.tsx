@@ -15,9 +15,14 @@ const Switch: React.FC<SwitchProps> = ({ className }) => {
     }).catch(
       error => { console.log(error) }
     )
-    setIsAutofill(!isAutofill)
+    toggleAutofill()
   }
 
+  const toggleAutofill = (): void => {
+    setIsAutofill(isAutofill => {
+      return !isAutofill
+    })
+  }
   useEffect(() => {
     console.log('Executing Switch.useEffect()...')
     syncStorage.get().then((storage) => {

@@ -41,7 +41,7 @@ const autofill = (): void => {
   syncStorage.onChanged.addListener(fillRequisitionForm)
 }
 
-const getIsAutofill = async (): Promise<boolean> => {
+export const getIsAutofill = async (): Promise<boolean> => {
   return await syncStorage.get('settings')
     .then(settings => {
       return settings.isAutofill
