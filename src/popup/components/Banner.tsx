@@ -1,12 +1,6 @@
-import React, { type ReactEventHandler, type HTMLAttributes } from 'react'
+import React from 'react'
 import Switch from './Switch'
-
-interface BannerProps extends HTMLAttributes<HTMLInputElement> {
-  isAutofill: boolean
-  handleAutofillChange: ReactEventHandler<HTMLInputElement>
-}
-
-const Banner: React.FC<BannerProps> = ({ isAutofill, handleAutofillChange }) => {
+const Banner: React.FC = () => {
   return (
     <div
       id='toggle-autofill-background'
@@ -14,8 +8,6 @@ const Banner: React.FC<BannerProps> = ({ isAutofill, handleAutofillChange }) => 
     >
       <Switch
         className='ml-1'
-        isToggled={isAutofill}
-        handleToggle={handleAutofillChange}
       />
       <h1
         id='toggle-autofill-title'
