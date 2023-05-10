@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import Banner from './components/Banner'
 import Field from './components/Field'
-import { syncStorage } from '../content_scripts/constants'
+import syncStorage from '../common/syncStorage'
 
 interface FieldDict {
   adHocUserId: string
@@ -16,7 +16,6 @@ const App: FC = () => {
     commodityCode: '',
     roomNumber: ''
   })
-  const [isAutofill, setIsAutofill] = useState<boolean>(false)
 
   /*
   Abstraction of changing one specific key-value in fields.
@@ -40,17 +39,6 @@ const App: FC = () => {
     updateFields(name, value)
   }
 
-  const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
-    setIsAutofill(!isAutofill)
-    syncStorage.set({
-      settings: {
-        isAutofill: !isAutofill
-      }
-    }).catch(
-      error => { console.log(error) }
-    )
-  }
-
   /*
   Synchronizes field state to match browser storage on refresh
   */
@@ -67,10 +55,7 @@ const App: FC = () => {
 
   return (
     <React.StrictMode>
-      <Banner
-        isAutofill={isAutofill}
-        handleAutofillChange={handleAutofillChange}
-      />
+      <Banner />
       <div className='field-container'>
         <header
           className='text-silver text-xs mt-3 ml-1'

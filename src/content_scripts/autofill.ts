@@ -2,7 +2,8 @@
 Injects field values in browser storage into the requisition form's input
 elements.
 */
-import { isProperURL, syncStorage } from './constants'
+import syncStorage from '../common/syncStorage'
+import isProperURL from '../common/isProperURL'
 
 type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
 const nameToIdDict = {
@@ -40,6 +41,28 @@ const autofill = (): void => {
   syncStorage.onChanged.addListener(fillRequisitionForm)
 }
 
+const getIsAutofill = async (): Promise<boolean> => {
+  return await syncStorage.get('settings')
+    .then(settings => {
+      return settings.isAutofill
+    }).catch(error => {
+      console.log(error)
+      return false
+    })
+}
+
 if (isProperURL) {
-  autofill()
+  syncStorage.onChanged.addListener(changes => {
+    console.log('Event heard: storage change')
+    console.log(changes)
+    console.log('Due to storage change, checking autofill conditional')
+    getIsAutofill().then(isAutofill => {
+      if (isProperURL && isAutofill) {
+        console.log('According to storage, autofill now enabled')
+        autofill()
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+  })
 }
