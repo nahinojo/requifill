@@ -8,9 +8,9 @@
     "build:webpack:watch": "webpack --watch --stats-children",
     "build:extension": "npm run build:webpack && web-ext build --source-dir ./dist --artifacts-dir ./dist  --overwrite-dest",
     "dev:extension": "concurrently \"npm run build:webpack:watch\" \"web-ext run --source-dir ./dist/\"",
-    "dev:extension:devtools": "concurrently \"npm run build:webpack:watch\" \"web-ext run --source-dir ./dist/ --devtools\"",
-    "lint": "npx eslint ./src/** --ext .ts,.tsx",
-    "lint:debug": "npx eslint ./src/** --ext .ts,.tsx --debug"
+    "dev:extension:debug": "concurrently \"npm run build:webpack:watch\" \"web-ext run --source-dir ./dist/ --devtools\"",
+    "lint": "npx eslint ./src/**/**.{ts,tsx}",
+    "lint:debug": "npx eslint ./src/**/**.{ts,tsx} --debug"
   },
   "keywords": [],
   "author": "",
