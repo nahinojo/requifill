@@ -52,9 +52,8 @@ const App: FC = () => {
         }
       }).catch(error => { console.log(error) })
   }, [])
-
   return (
-    <React.StrictMode>
+    <>
       <Banner />
       <div className='field-container'>
         <header
@@ -90,7 +89,7 @@ const App: FC = () => {
           />
         </form>
       </div>
-    </React.StrictMode>
+    </>
   )
 }
 
