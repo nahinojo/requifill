@@ -5,9 +5,10 @@ import syncStorage from '../../common/syncStorage'
 interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {}
 
 const Switch: React.FC<SwitchProps> = ({ className }) => {
+  console.log('Render ID:', Math.random())
+  // Consider passing in the stored isAutofill as a prop.
   const [isAutofill, setIsAutofill] = useState<boolean>(false)
   const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
-    console.log('Executing handleAutofillChange()...')
     syncStorage.set({
       settings: {
         isAutofill: !isAutofill
@@ -15,26 +16,22 @@ const Switch: React.FC<SwitchProps> = ({ className }) => {
     }).catch(
       error => { console.log(error) }
     )
-    toggleAutofill()
-  }
-
-  const toggleAutofill = (): void => {
     setIsAutofill(isAutofill => {
       return !isAutofill
     })
   }
+
   useEffect(() => {
-    console.log('Executing Switch.useEffect()...')
-    syncStorage.get().then((storage) => {
-      console.log('settings.isAutofill:', storage.settings.isAutofill)
-      console.log('settings:', storage.settings)
-      setIsAutofill(storage.settings.isAutofill)
+    syncStorage.get().then(storage => {
+      const isAutofillStorage: boolean = storage.settings.isAutofill
+      console.log('useEffect(): isAutofill:', isAutofill)
+      console.log('useEffect(): isAutofillStorage:', isAutofillStorage)
+      setIsAutofill(isAutofillStorage)
     }).catch(error => {
       console.log(error)
     })
-  }, [isAutofill])
+  }, [])
   console.log('isAutofill:', isAutofill)
-
   return (
     <>
       <input
