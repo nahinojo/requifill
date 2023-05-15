@@ -5,6 +5,9 @@ elements.
 import syncStorage from '../common/syncStorage'
 import isProperURL from '../common/isProperURL'
 
+console.log('Executing autofill.ts')
+console.log('IsProperURL:', isProperURL)
+
 type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
 const nameToIdDict = {
   adHocUserId: 'newAdHocRoutePerson.id',
@@ -42,6 +45,7 @@ const autofill = (): void => {
 }
 
 export const getIsAutofill = async (): Promise<boolean> => {
+  // Returning undefined for some reason.
   return await syncStorage.get('settings')
     .then(settings => {
       return settings.isAutofill
@@ -55,8 +59,9 @@ if (isProperURL) {
   syncStorage.onChanged.addListener(changes => {
     console.log('Event heard: storage change')
     console.log(changes)
-    console.log('Due to storage change, checking autofill conditional')
     getIsAutofill().then(isAutofill => {
+      console.log('Due to storage change, checking autofill conditional')
+      console.log('isAutofill:', isAutofill)
       if (isProperURL && isAutofill) {
         console.log('According to storage, autofill now enabled')
         autofill()
