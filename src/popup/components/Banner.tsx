@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import Switch from './Switch'
 import syncStorage from '../../common/syncStorage'
-import getIsAutofillStorage from '../../common/getIsAutofillStorage'
+import isAutofillStorage from '../../common/isAutofillStorage'
 import type { ReactEventHandler } from 'react'
 
 const Banner: React.FC = () => {
   const [isAutofill, setIsAutofill] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+
   /*
   Flips isAutofill for both component state and browser storage
   */
   const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
+    console.log('Executing handleAutofillChange()')
     syncStorage.set({
       settings: {
         isAutofill: !isAutofill
@@ -21,12 +23,15 @@ const Banner: React.FC = () => {
     setIsAutofill(isAutofill => {
       return !isAutofill
     })
+    console.log('Finished handleAutofillChange()')
   }
+
   /*
   Synchronizes component state with browser storage on initial render
   */
   useEffect(() => {
-    getIsAutofillStorage().then(isAutofillStorage => {
+    console.log('Executing Banner.useEffect()')
+    isAutofillStorage.then(isAutofillStorage => {
       setIsAutofill(isAutofillStorage)
       setIsLoading(false)
     }).catch(error => {

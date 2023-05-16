@@ -17,11 +17,7 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 interface FieldItemProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
-// interface OnBlurEvent extends SyntheticEvent<HTMLInputElement> {
-//   target: HTMLInputElement & {
-//     name: string
-//   }
-// }
+
 interface OnKeydownEvent extends SyntheticEvent<HTMLInputElement> {
   key: string
 }

@@ -7,15 +7,14 @@ interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {
   isToggled: boolean
 }
 
-// Issue: Component is only functional for isAutofill property
 const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isToggled, isLoading }) => {
   if (isLoading) return <div className={`switch-track ${className ?? ''}`}></div>
   return (
     <>
       <input
-        className="toggle-switch"
+        className='toggle-switch'
         id='toggle-autofill'
-        type="checkbox"
+        type='checkbox'
         checked={isToggled}
         onChange={handleToggle}
       />
