@@ -5,7 +5,7 @@ import syncStorage from '../../common/syncStorage'
 interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {}
 
 const Switch: React.FC<SwitchProps> = ({ className }) => {
-  console.log('Render ID:', Math.random())
+  console.log('Rendering Switch Component:', Math.random())
   // Consider passing in the stored isAutofill as a prop.
   const [isAutofill, setIsAutofill] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -24,7 +24,8 @@ const Switch: React.FC<SwitchProps> = ({ className }) => {
 
   useEffect(() => {
     syncStorage.get().then(storage => {
-      const isAutofillStorage: boolean = storage.settings.isAutofill
+      console.log('Getting and returning storage object.')
+      const isAutofillStorage = Boolean(storage.settings?.isAutofill)
       console.log('useEffect(): isAutofill:', isAutofill)
       console.log('useEffect(): isAutofillStorage:', isAutofillStorage)
       setIsAutofill(isAutofillStorage)

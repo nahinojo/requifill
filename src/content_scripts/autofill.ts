@@ -45,9 +45,11 @@ const autofill = (): void => {
 }
 
 export const getIsAutofill = async (): Promise<boolean> => {
+  console.log('Executing getIsAutofill()')
   // Returning undefined for some reason.
   return await syncStorage.get('settings')
     .then(settings => {
+      console.log('settings:', settings)
       return settings.isAutofill
     }).catch(error => {
       console.log(error)
