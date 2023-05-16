@@ -1,12 +1,13 @@
 /*
 Injects field values in browser storage into the requisition form's input
-elements.
+elements
 */
 import syncStorage from '../common/syncStorage'
 import isProperURL from '../common/isProperURL'
+import getIsAutofillStorage from '../common/getIsAutofillStorage'
 
 /*
-Since DOM IDs are absurdly long, a shorthand reference dict is utilized
+Since actualy DOM IDs are absurdly long, a shorthand translation dict is used
 */
 type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
 const nameToIdDict = {
@@ -16,23 +17,10 @@ const nameToIdDict = {
 }
 
 /*
-Retrieves isAutofill boolean for deciding to filling data to DOM
-*/
-export const getIsAutofill = async (): Promise<boolean> => {
-  return await syncStorage.get('settings')
-    .then(storage => {
-      return storage.settings.isAutofill
-    }).catch(error => {
-      console.log(error)
-      return false
-    })
-}
-
-/*
 Conditionally autofills data to DOM
 */
 const autofill = (): void => {
-  getIsAutofill().then(isAutofill => {
+  getIsAutofillStorage().then(isAutofill => {
     if (isAutofill && isProperURL) {
       syncStorage.get()
         .then(storage => {
@@ -42,10 +30,10 @@ const autofill = (): void => {
             const targetInput = document.getElementById(
               nameToIdDict[fieldName as NameToIdDictKeys]
             ) as HTMLInputElement
-            // Prevent duplicate injections of adHocUserId
+            // Prevents duplicate injections of adHocUserId
             const neglectAdHocUserId = (
               fieldName === 'adHocUserId' &&
-            document.getElementById('adHocRoutePerson[0].id') !== null
+              document.getElementById('adHocRoutePerson[0].id') !== null
             )
             if (targetInput.value !== fieldValue && !neglectAdHocUserId) {
               targetInput.value = fieldValue
