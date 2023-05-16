@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import type { HTMLAttributes, ReactEventHandler } from 'react'
 import syncStorage from '../../common/syncStorage'
+import getIsAutofillStorage from '../../common/getIsAutofillStorage'
 
 interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {}
 
+// Issue: Component is only functional for isAutofill property
 const Switch: React.FC<SwitchProps> = ({ className }) => {
-  console.log('Rendering Switch Component:', Math.random())
-  // Consider passing in the stored isAutofill as a prop.
   const [isAutofill, setIsAutofill] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
+
+  /*
+  Flips isAutofill for both component state and browser storage
+  */
+  const handleAutofillFieldChange: ReactEventHandler<HTMLInputElement> = () => {
     syncStorage.set({
       settings: {
         isAutofill: !isAutofill
@@ -22,19 +26,17 @@ const Switch: React.FC<SwitchProps> = ({ className }) => {
     })
   }
 
+  /*
+  Synchronizes component state with browser storage on initial render
+  */
   useEffect(() => {
-    syncStorage.get().then(storage => {
-      console.log('Getting and returning storage object.')
-      const isAutofillStorage = Boolean(storage.settings?.isAutofill)
-      console.log('useEffect(): isAutofill:', isAutofill)
-      console.log('useEffect(): isAutofillStorage:', isAutofillStorage)
+    getIsAutofillStorage().then(isAutofillStorage => {
       setIsAutofill(isAutofillStorage)
       setIsLoading(false)
     }).catch(error => {
       console.log(error)
     })
   }, [])
-  console.log('isAutofill:', isAutofill)
   if (isLoading) return <div className='w-10'></div>
   return (
     <>
@@ -43,7 +45,7 @@ const Switch: React.FC<SwitchProps> = ({ className }) => {
         id='toggle-autofill'
         type="checkbox"
         checked={isAutofill}
-        onChange={handleAutofillChange}
+        onChange={handleAutofillFieldChange}
       />
       <label
         className={`switch-track ${className ?? ''}`}
