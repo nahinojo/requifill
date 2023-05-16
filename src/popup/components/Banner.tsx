@@ -1,6 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Switch from './Switch'
+import syncStorage from '../../common/syncStorage'
+import getIsAutofillStorage from '../../common/getIsAutofillStorage'
+import type { ReactEventHandler } from 'react'
+
 const Banner: React.FC = () => {
+  const [isAutofill, setIsAutofill] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  /*
+  Flips isAutofill for both component state and browser storage
+  */
+  const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
+    syncStorage.set({
+      settings: {
+        isAutofill: !isAutofill
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+    setIsAutofill(isAutofill => {
+      return !isAutofill
+    })
+  }
+  /*
+  Synchronizes component state with browser storage on initial render
+  */
+  useEffect(() => {
+    getIsAutofillStorage().then(isAutofillStorage => {
+      setIsAutofill(isAutofillStorage)
+      setIsLoading(false)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [])
   return (
     <div
       id='toggle-autofill-background'
@@ -8,6 +40,9 @@ const Banner: React.FC = () => {
     >
       <Switch
         className='ml-1'
+        isLoading={isLoading}
+        isToggled={isAutofill}
+        handleToggle={handleAutofillChange}
       />
       <h1
         id='toggle-autofill-title'

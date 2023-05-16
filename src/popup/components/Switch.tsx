@@ -1,51 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import type { HTMLAttributes, ReactEventHandler } from 'react'
-import syncStorage from '../../common/syncStorage'
-import getIsAutofillStorage from '../../common/getIsAutofillStorage'
 
-interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {}
+interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {
+  handleToggle: ReactEventHandler<HTMLInputElement>
+  isLoading: boolean
+  isToggled: boolean
+}
 
 // Issue: Component is only functional for isAutofill property
-const Switch: React.FC<SwitchProps> = ({ className }) => {
-  const [isAutofill, setIsAutofill] = useState<boolean>(false)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-
-  /*
-  Flips isAutofill for both component state and browser storage
-  */
-  const handleAutofillFieldChange: ReactEventHandler<HTMLInputElement> = () => {
-    syncStorage.set({
-      settings: {
-        isAutofill: !isAutofill
-      }
-    }).catch(
-      error => { console.log(error) }
-    )
-    setIsAutofill(isAutofill => {
-      return !isAutofill
-    })
-  }
-
-  /*
-  Synchronizes component state with browser storage on initial render
-  */
-  useEffect(() => {
-    getIsAutofillStorage().then(isAutofillStorage => {
-      setIsAutofill(isAutofillStorage)
-      setIsLoading(false)
-    }).catch(error => {
-      console.log(error)
-    })
-  }, [])
-  if (isLoading) return <div className='w-10'></div>
+const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isToggled, isLoading }) => {
+  if (isLoading) return <div className={`switch-track ${className ?? ''}`}></div>
   return (
     <>
       <input
         className="toggle-switch"
         id='toggle-autofill'
         type="checkbox"
-        checked={isAutofill}
-        onChange={handleAutofillFieldChange}
+        checked={isToggled}
+        onChange={handleToggle}
       />
       <label
         className={`switch-track ${className ?? ''}`}
