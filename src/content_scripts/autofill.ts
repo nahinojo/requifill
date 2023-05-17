@@ -50,6 +50,8 @@ isAutofill.then(isAutofill => {
 }).catch(error => {
   console.log(error)
 })
+
+// Does not properly autofill on conditional
 syncStorage.onChanged.addListener(() => {
   isAutofill.then(isAutofill => {
     if (isAutofill && isProperURL) {
