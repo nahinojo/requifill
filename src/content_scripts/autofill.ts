@@ -4,7 +4,7 @@ elements
 */
 import syncStorage from '../common/syncStorage'
 import isProperURL from '../common/isProperURL'
-import isAutofill from '../common/isAutofillStorage'
+import getIsAutofillStorage from '../common/getIsAutofillStorage'
 
 /*
 Since actualy DOM IDs are absurdly long, a shorthand translation dict is used
@@ -15,7 +15,7 @@ const nameToIdDict = {
   commodityCode: 'newPurchasingItemLine.purchasingCommodityCode',
   roomNumber: 'document.deliveryBuildingRoomNumber'
 }
-console.log('autofill.ts')
+
 /*
 Uses field data from browser storage to autofill <input> elements
 */
@@ -43,7 +43,10 @@ const autofill = (): void => {
     })
 }
 
-isAutofill().then(isAutofill => {
+/*
+Executes on initial page load
+*/
+getIsAutofillStorage().then(isAutofill => {
   if (isAutofill && isProperURL) {
     autofill()
   }
@@ -51,11 +54,11 @@ isAutofill().then(isAutofill => {
   console.log(error)
 })
 
-// Does not properly autofill on conditional
+/*
+Executes when 'Enable Autofill' switch is toggled
+*/
 syncStorage.onChanged.addListener(() => {
-  console.log('Executing syncStorage.onChange listener')
-  isAutofill().then(isAutofill => {
-    console.log('isAutofill:', isAutofill)
+  getIsAutofillStorage().then(isAutofill => {
     if (isAutofill && isProperURL) {
       autofill()
     }

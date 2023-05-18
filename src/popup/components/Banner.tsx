@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Switch from './Switch'
 import syncStorage from '../../common/syncStorage'
-import isAutofillStorage from '../../common/isAutofillStorage'
+import getIsAutofillStorage from '../../common/getIsAutofillStorage'
 import type { ReactEventHandler } from 'react'
 
 const Banner: React.FC = () => {
@@ -28,14 +28,14 @@ const Banner: React.FC = () => {
   Synchronizes component state with browser storage on initial render
   */
   useEffect(() => {
-    console.log('Executing Banner.useEffect()')
-    isAutofillStorage().then(isAutofillStorage => {
+    getIsAutofillStorage().then(isAutofillStorage => {
       setIsAutofill(isAutofillStorage)
       setIsLoading(false)
     }).catch(error => {
       console.log(error)
     })
   }, [])
+
   return (
     <div
       id='toggle-autofill-background'
