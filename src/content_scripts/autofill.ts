@@ -43,7 +43,7 @@ const autofill = (): void => {
     })
 }
 
-isAutofill.then(isAutofill => {
+isAutofill().then(isAutofill => {
   if (isAutofill && isProperURL) {
     autofill()
   }
@@ -53,7 +53,9 @@ isAutofill.then(isAutofill => {
 
 // Does not properly autofill on conditional
 syncStorage.onChanged.addListener(() => {
-  isAutofill.then(isAutofill => {
+  console.log('Executing syncStorage.onChange listener')
+  isAutofill().then(isAutofill => {
+    console.log('isAutofill:', isAutofill)
     if (isAutofill && isProperURL) {
       autofill()
     }

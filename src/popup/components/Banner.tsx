@@ -12,7 +12,6 @@ const Banner: React.FC = () => {
   Flips isAutofill for both component state and browser storage
   */
   const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
-    console.log('Executing handleAutofillChange()')
     syncStorage.set({
       settings: {
         isAutofill: !isAutofill
@@ -23,7 +22,6 @@ const Banner: React.FC = () => {
     setIsAutofill(isAutofill => {
       return !isAutofill
     })
-    console.log('Finished handleAutofillChange()')
   }
 
   /*
@@ -31,7 +29,7 @@ const Banner: React.FC = () => {
   */
   useEffect(() => {
     console.log('Executing Banner.useEffect()')
-    isAutofillStorage.then(isAutofillStorage => {
+    isAutofillStorage().then(isAutofillStorage => {
       setIsAutofill(isAutofillStorage)
       setIsLoading(false)
     }).catch(error => {
