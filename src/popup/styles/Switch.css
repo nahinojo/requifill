@@ -15,6 +15,7 @@
   border-radius: 100px;
   position: relative;
   transition: 0.3s;
+  user-select: none;
 }
 
 .switch-track .switch-slider { 
@@ -24,7 +25,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  transition: 0.3s;
+  transition: 0.25s;
   background-color: #d6d8dc;
 }
 

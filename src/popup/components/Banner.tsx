@@ -42,7 +42,7 @@ const Banner: React.FC = () => {
       className='bg-thunder w-full h-16 flex items-center'
     >
       <Switch
-        className=''
+        className='ml-1'
         isLoading={isLoading}
         isToggled={isAutofill}
         handleToggle={handleAutofillChange}

@@ -19,8 +19,9 @@ const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isToggled, isL
         onChange={handleToggle}
       />
       <label
-        className='switch-track'
-        htmlFor='toggle-autofill'>
+        className={`switch-track ${className ?? ''}`}
+        htmlFor='toggle-autofill'
+        >
         <span className='switch-slider' />
       </label>
     </>
