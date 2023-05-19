@@ -1,5 +1,5 @@
 /*
-Injects field values in browser storage into the requisition form's input
+Injects field values from browser storage into the requisition form's input
 elements
 */
 import syncStorage from '../common/syncStorage'
@@ -81,7 +81,7 @@ if (isProperURL) {
   })
 
   /*
-  Autofills when corresponding switch is toggled
+  Executes autofill switch is toggled
   */
   syncStorage.onChanged.addListener(() => {
     getIsAutofillStorage().then(isAutofill => {

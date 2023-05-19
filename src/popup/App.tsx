@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import Banner from './components/Banner'
-import Field from './components/Field'
+import Field from './components/FieldItem'
 import syncStorage from '../common/syncStorage'
 
 interface FieldDict {

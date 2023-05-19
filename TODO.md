@@ -14,8 +14,6 @@
 
 ### Storage
 
-- Consider abstracting the get(), then(), and set() calls from storage.
-
 ### Document & Advertise
 
 - Fill out the README.md in detail.
@@ -31,7 +29,6 @@
 
 - Add or remove default value fields from popup
 - Set fields to be multivalue and scrollable
-- Allow enable/disable functionality to both individual and entireity of default values
 
 ### Other Capabilities
 
