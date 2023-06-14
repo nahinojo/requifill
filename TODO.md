@@ -4,10 +4,6 @@
 
 ## **Features**
 
-### Metadata
-
-- Add an icon for the extension
-
 ### Storage
 
 ### Documentation & Advertise
