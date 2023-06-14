@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/**/**
 !dist/manifest.json
+!dist/requifill-icon.svg
 
 # IDE
 .vscode

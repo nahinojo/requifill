@@ -21,5 +21,10 @@
     }
   ],
 
-  "permissions" : ["storage"]
+  "permissions" : ["storage"],
+
+  "icons" : {
+    "48" : "requifill-icon.svg",
+    "96" : "requifill-icon.svg"
+  }
 }
