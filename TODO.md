@@ -2,10 +2,6 @@
 
 ## **Issues**
 
-### DOM Problems
-
-- Manually updating numeric values does not change prior number.
-
 ## **Features**
 
 ### Metadata
@@ -14,7 +10,7 @@
 
 ### Storage
 
-### Document & Advertise
+### Documentation & Advertise
 
 - Fill out the README.md in detail.
 - Make a website for this extension.
@@ -24,6 +20,8 @@
 ### DOM Manipulation
 
 - Add a visual indicator that the input field contains scrollable values. Maybe an icon or change of styling?
+- Autofill Suggestions. Maybe include a dropdown for scrolling?
+- Finer decimal scroll when holding down the shift key
 
 ### Figma Features
 
