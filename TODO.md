@@ -13,10 +13,15 @@
 
 [ Wait until project is more fleshed out before completing ]
 
+### Popup Features
+
+- See design on Figma
+- Instead of saving automatically, ask to save changes to autofill values
+
 ### DOM Manipulation
 
 - Add a visual indicator that the input field contains scrollable values. Maybe an icon or change of styling?
-- Autofill Suggestions. Maybe include a dropdown for scrolling?
+- Autofill expected value when typing. Maybe include a dropdown for scrolling?
 - Finer decimal scroll when holding down the shift key
 
 ### Figma Features
