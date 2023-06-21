@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
-import type { FC, ReactEventHandler } from 'react'
+import type { FC } from 'react'
 
 const NewFieldItem: FC = (props) => {
-  const [isClicked, setIsClicked] = useState(false)
-  const handleClick: ReactEventHandler<HTMLElement> = () => {
-    setIsClicked(true)
-  }
+  const [isSelections, setIsSelections] = useState(false)
   return (
-    <div onClick={handleClick}>
-      <h1>Click me!</h1>
-      {isClicked && <h1>I am clicked!!!</h1>}
-    </div>
+      <div onClick={() => { setIsSelections(true) }}>
+        {!isSelections &&
+          <button>New Field Item</button>
+        }
+        {isSelections &&
+          <div></div>
+        }
+      </div>
   )
 }
 

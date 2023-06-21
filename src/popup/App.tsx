@@ -3,6 +3,7 @@ import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import Banner from './components/Banner'
 import Field from './components/FieldItem'
 import syncStorage from '../common/syncStorage'
+import NewFieldItem from './components/NewFieldItem'
 
 interface FieldDict {
   adHocUserId: string
@@ -89,6 +90,7 @@ const App: FC = () => {
           />
         </form>
       </div>
+      <NewFieldItem />
     </>
   )
 }
