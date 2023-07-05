@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import Banner from './components/Banner'
-import Field from './components/FieldItem'
+import FieldItem from './components/FieldItem'
 import syncStorage from '../common/syncStorage'
 import NewFieldItem from './components/NewFieldItem'
 
@@ -19,7 +19,7 @@ const App: FC = () => {
   })
 
   /*
-  Abstraction of changing a value of the fields object.
+  Change key-value pair within fields object.
   */
   const updateFields = (name: string, value: string): void => {
     setFields(prevFieldValues => {
@@ -31,7 +31,7 @@ const App: FC = () => {
   }
 
   /*
-  Synchronizes field input value with fields stored by browser.
+  Transfers field state to browser storage.
   */
   const handleFieldChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
@@ -41,7 +41,7 @@ const App: FC = () => {
   }
 
   /*
-  Synchronizes field state to match browser storage on refresh
+  On app refresh, updates all field states to match data in browser storage.
   */
   useEffect(() => {
     syncStorage.get()
@@ -61,7 +61,7 @@ const App: FC = () => {
           className='text-silver text-sm mt-3 ml-1'
         >Autofill Values</header>
         <form>
-          <Field
+          <FieldItem
             name='roomNumber'
             title='Room Number'
             id='room-number'
@@ -70,7 +70,7 @@ const App: FC = () => {
             value={fields.roomNumber}
             onChange={handleFieldChange}
           />
-          <Field
+          <FieldItem
             name='commodityCode'
             title='Commodity Code'
             id='commodity-code'
@@ -80,7 +80,7 @@ const App: FC = () => {
             value={fields.commodityCode}
             onChange={handleFieldChange}
           />
-          <Field
+          <FieldItem
             name='adHocUserId'
             title='Ad Hoc User ID'
             id='ad-hoc-user-id'
