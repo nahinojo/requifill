@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import type { FC } from 'react'
 import PlusSVG from './PlusSVG'
+import syncStorage from '../../common/syncStorage'
 
 const NewFieldItem: FC = (props) => {
   const [isSelections, setIsSelections] = useState(false)
@@ -8,7 +9,10 @@ const NewFieldItem: FC = (props) => {
   return (
       <div
         className='mx-1 mt-1.5'
-        onClick={() => { setIsSelections(true) }}
+        onClick={() => { 
+          syncStorage.get().then(storage => {console.log(storage)})
+          setIsSelections(!isSelections)
+        }}
       >
         {!isSelections &&
         <div
@@ -31,22 +35,18 @@ const NewFieldItem: FC = (props) => {
           >
             <h1
               className='mx-auto font-bold text-sm'
-            >New Autofill Field</h1>
+            >Add Autofill Field</h1>
             <button 
               className={`${buttonFieldItemStyling} border-b-0 rounded-t-md`}
-              onClick={ () => { setIsSelections(false) }}
             >Field Item 1</button>
             <button 
               className={`${buttonFieldItemStyling} border-b-0`}
-              onClick={ () => { setIsSelections(false) }}
             >Field Item 2</button>
             <button
               className={`${buttonFieldItemStyling} border-b-0`}
-              onClick={ () => { setIsSelections(false) }}
             >Field Item 3</button>
             <button
               className={`${buttonFieldItemStyling} rounded-b-md`}
-              onClick={ () => { setIsSelections(false) }}
             >Field Item 4</button>
           </div>
         }

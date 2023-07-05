@@ -19,7 +19,7 @@ const App: FC = () => {
   })
 
   /*
-  Abstraction of changing one specific key-value in fields.
+  Abstraction of changing a value of the fields object.
   */
   const updateFields = (name: string, value: string): void => {
     setFields(prevFieldValues => {
