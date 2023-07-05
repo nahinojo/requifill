@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import type { FC } from 'react'
-import PlusSVG from './plus.svg'
+import PlusSVG from './PlusSVG'
 
 const NewFieldItem: FC = (props) => {
   const [isSelections, setIsSelections] = useState(false)
@@ -8,9 +8,11 @@ const NewFieldItem: FC = (props) => {
       <div onClick={() => { setIsSelections(true) }}>
         {!isSelections &&
         <div
-          className='flex justify-center'
+          className='flex justify-center mx-28 cursor-pointer'
         >
-          <PlusSVG />
+          <PlusSVG 
+            className='mt-1 mr-1'
+          />
           <button
             className='text-sm text-silver mt-1'
           >New Field Item</button>
