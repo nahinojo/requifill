@@ -1,6 +1,5 @@
 /*
-Improves the DOM elements of requisition form, such as allowing integer
-scrolling of numeric inputs.
+Adds features to requisition form DOM elements.
 */
 import isProperURL from '../common/isProperURL'
 
