@@ -58,7 +58,7 @@ const App: FC = () => {
       <Banner />
       <div className='field-container'>
         <header
-          className='text-silver text-xs mt-3 ml-1'
+          className='text-silver text-sm mt-3 ml-1'
         >Autofill Values</header>
         <form>
           <Field
