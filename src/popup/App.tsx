@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
-import Banner from './components/Banner'
-import FieldItem from './components/FieldItem'
 import syncStorage from '../common/syncStorage'
-import NewFieldItem from './components/NewFieldItem'
+import Banner from './components/Banner'
+import Field from './components/Field'
+import FieldSelector from './components/FieldSelector'
 
 interface FieldDict {
   adHocUserId: string
@@ -12,7 +12,7 @@ interface FieldDict {
 }
 
 const App: FC = () => {
-  const [fields, setFields] = useState<FieldDict>({
+  const [fieldValues, setFieldValues] = useState<FieldDict>({
     adHocUserId: '',
     commodityCode: '',
     roomNumber: ''
@@ -21,8 +21,8 @@ const App: FC = () => {
   /*
   Change key-value pair within fields object.
   */
-  const updateFields = (name: string, value: string): void => {
-    setFields(prevFieldValues => {
+  const updateFieldValues = (name: string, value: string): void => {
+    setFieldValues(prevFieldValues => {
       return {
         ...prevFieldValues,
         [name]: value
@@ -37,7 +37,7 @@ const App: FC = () => {
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = evt.target
-    updateFields(name, value)
+    updateFieldValues(name, value)
   }
 
   /*
@@ -48,8 +48,9 @@ const App: FC = () => {
       .then((storage) => {
         const { fieldData } = storage
         for (const fieldName in fieldData) {
-          const fieldValue = fieldData[fieldName]
-          updateFields(fieldName, fieldValue)
+          const fieldValue = fieldData[fieldName].value
+          console.log('useEffect - fieldValue:', fieldValue)
+          updateFieldValues(fieldName, fieldValue)
         }
       }).catch(error => { console.log(error) })
   }, [])
@@ -61,36 +62,30 @@ const App: FC = () => {
           className='text-silver text-sm mt-3 ml-1'
         >Autofill Values</header>
         <form>
-          <FieldItem
+          <Field
             name='roomNumber'
             title='Room Number'
             id='room-number'
-            type='text'
-            pattern='^\d*$'
-            value={fields.roomNumber}
+            value={fieldValues.roomNumber}
             onChange={handleFieldChange}
           />
-          <FieldItem
+          <Field
             name='commodityCode'
             title='Commodity Code'
             id='commodity-code'
-            type='text'
-            pattern='^\d*$'
-            inputMode='numeric'
-            value={fields.commodityCode}
+            value={fieldValues.commodityCode}
             onChange={handleFieldChange}
           />
-          <FieldItem
+          <Field
             name='adHocUserId'
             title='Ad Hoc User ID'
             id='ad-hoc-user-id'
-            type='text'
-            value={fields.adHocUserId}
+            value={fieldValues.adHocUserId}
             onChange={handleFieldChange}
           />
         </form>
       </div>
-      <NewFieldItem />
+      <FieldSelector />
     </>
   )
 }

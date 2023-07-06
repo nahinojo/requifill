@@ -24,7 +24,7 @@ interface OnKeydownEvent extends SyntheticEvent<HTMLInputElement> {
 
 const FieldItem: FC<FieldItemProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { id } = props
+  const { id, name, title, value, type, onChange } = props
   if (id === undefined) {
     throw new Error('React component ID not found.')
   }
@@ -35,7 +35,7 @@ const FieldItem: FC<FieldItemProps> = (props) => {
   const handleSaveValue: ReactEventHandler<HTMLInputElement> =
   () => {
     const { name } = props
-    const newData = { [String(name)]: props.value }
+    const newData = { [String(name)]: {value: props.value} }
     syncStorage
       .get('fieldData')
       .then(result => {
@@ -68,22 +68,22 @@ const FieldItem: FC<FieldItemProps> = (props) => {
 
   return (
     <div
-      id={props.id}
+      id={id}
       className='bg-thunder rounded mx-1 mb-1 h-14 grid justify-start items-center grid-cols-2'
     >
       <label
         id={`${id}-label`}
         className='text-base ml-2'
         htmlFor={`${id}-input`}
-      >{props.title}</label>
+      >{title}</label>
       <input
         id={`${id}-input`}
         className='bg-iron text-base h-3/5 mx-3 rounded indent-1 pt-1'
-        name={props.name}
-        value={props.value}
+        name={name}
+        value={value}
         ref={inputRef}
-        type={props.type}
-        onChange={props.onChange}
+        type={'text'}
+        onChange={onChange}
         onKeyDown={handleEnterKeydown}
         onBlur={handleSaveValue}
       />

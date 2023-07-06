@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import PlusSVG from './PlusSVG'
 import syncStorage from '../../common/syncStorage'
 
-const NewFieldItem: FC = (props) => {
+const FieldSelector: FC = (props) => {
   const [isSelections, setIsSelections] = useState(false)
   const buttonFieldItemStyling = 'text-left bg-night border border-solid border-wither pl-3 py-2'
   return (
@@ -54,4 +54,4 @@ const NewFieldItem: FC = (props) => {
   )
 }
 
-export default NewFieldItem
+export default FieldSelector
