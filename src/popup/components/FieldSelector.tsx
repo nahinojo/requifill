@@ -1,20 +1,60 @@
 import React, { useState } from 'react'
-import type { FC } from 'react'
+import type { FC, HTMLAttributes, ReactEventHandler, SetStateAction } from 'react'
 import PlusSVG from './PlusSVG'
 import syncStorage from '../../common/syncStorage'
 
-const FieldSelector: FC = (props) => {
-  const [isSelections, setIsSelections] = useState(false)
+interface FieldSelectorProps extends HTMLAttributes<HTMLElement> {
+  isSelecting: boolean
+  setIsSelecting: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) => {
+  
   const buttonFieldItemStyling = 'text-left bg-night border border-solid border-wither pl-3 py-2'
+  const handleActivateField: ReactEventHandler<HTMLButtonElement> =() => {
+    syncStorage
+      .get('fieldData')
+      .then(storage => {
+        console.log('FieldSelector handleActivateField storage:', storage)
+        const previousData = storage.fieldData !== undefined
+          ? storage.fieldData
+          : {}
+        const currentData = { 
+          ...previousData, 
+          phoneNumber: {
+            value: '77777777',
+            isActive: true
+          }
+        }
+        syncStorage
+          .set({
+            fieldData: currentData
+          }).catch(
+            error => {
+              console.log('cannot set data for syncStorage') 
+              console.log(error)
+            }
+          )
+        setIsSelecting(false)
+      }).catch(
+        error => {
+          console.log('cannot operate on syncStorage')
+          console.log(error)
+        }
+      )
+  }
+
   return (
       <div
         className='mx-1 mt-1.5'
         onClick={() => { 
-          syncStorage.get().then(storage => {console.log(storage)})
-          setIsSelections(!isSelections)
+          syncStorage.get().then(storage => {
+            console.log('FieldSelector syncStorage:', storage)
+          })
+          setIsSelecting(true)
         }}
       >
-        {!isSelections &&
+        {!isSelecting &&
         <div
           id='new-field-initiator'
           className='flex justify-center w-fit mx-auto cursor-pointer'
@@ -28,7 +68,7 @@ const FieldSelector: FC = (props) => {
           >New Field</button>
         </div>
         }
-        {isSelections &&
+        {isSelecting &&
           <div
             id='field-selections'
             className='flex flex-col'
@@ -38,7 +78,8 @@ const FieldSelector: FC = (props) => {
             >Add Autofill Field</h1>
             <button 
               className={`${buttonFieldItemStyling} border-b-0 rounded-t-md`}
-            >Field Item 1</button>
+              onClick={handleActivateField}
+            >PhoneNumber</button>
             <button 
               className={`${buttonFieldItemStyling} border-b-0`}
             >Field Item 2</button>

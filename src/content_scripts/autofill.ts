@@ -4,7 +4,7 @@ elements.
 */
 import syncStorage from '../common/syncStorage'
 import isProperURL from '../common/isProperURL'
-import getIsAutofillStorage from '../common/getIsAutofillStorage'
+import getIsAutofill from '../common/getIsAutofill'
 
 if (isProperURL) {
   /*
@@ -72,7 +72,7 @@ if (isProperURL) {
   /*
   Executes on initial page load.
   */
-  getIsAutofillStorage().then(isAutofill => {
+  getIsAutofill().then(isAutofill => {
     if (isAutofill) {
       autofill()
     }
@@ -84,7 +84,7 @@ if (isProperURL) {
   Executes when autofill switch is toggled.
   */
   syncStorage.onChanged.addListener(() => {
-    getIsAutofillStorage().then(isAutofill => {
+    getIsAutofill().then(isAutofill => {
       if (isAutofill) {
         autofill()
       } else {

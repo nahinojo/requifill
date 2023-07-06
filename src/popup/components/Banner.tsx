@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Switch from './Switch'
 import syncStorage from '../../common/syncStorage'
-import getIsAutofillStorage from '../../common/getIsAutofillStorage'
+import getIsAutofill from '../../common/getIsAutofill'
 import type { ReactEventHandler } from 'react'
 
 const Banner: React.FC = () => {
@@ -28,7 +28,7 @@ const Banner: React.FC = () => {
   Synchronizes component state with browser storage on initial render
   */
   useEffect(() => {
-    getIsAutofillStorage().then(isAutofillStorage => {
+    getIsAutofill().then(isAutofillStorage => {
       setIsAutofill(isAutofillStorage)
       setIsLoading(false)
     }).catch(error => {

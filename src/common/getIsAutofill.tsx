@@ -3,7 +3,7 @@ import syncStorage from './syncStorage'
 /*
 Determines if autofill is toggled on/off.
 */
-const getIsAutofillStorage = async (): Promise<boolean> => {
+const getIsAutofill = async (): Promise<boolean> => {
   return await syncStorage.get('settings')
     .then(storage => {
       return Boolean(storage?.settings?.isAutofill)
@@ -12,4 +12,4 @@ const getIsAutofillStorage = async (): Promise<boolean> => {
       return false
     })
 }
-export default getIsAutofillStorage
+export default getIsAutofill

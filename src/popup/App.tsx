@@ -4,34 +4,41 @@ import syncStorage from '../common/syncStorage'
 import Banner from './components/Banner'
 import Field from './components/Field'
 import FieldSelector from './components/FieldSelector'
+import FieldRenderer from './components/FieldRenderer'
 
-interface FieldDict {
-  adHocUserId: string
-  commodityCode: string
-  roomNumber: string
+export interface FieldData {
+  [name: string]: {
+    title?: string
+    value: string
+    isActive: boolean
+  };
 }
 
 const App: FC = () => {
-  const [fieldValues, setFieldValues] = useState<FieldDict>({
-    adHocUserId: '',
-    commodityCode: '',
-    roomNumber: ''
-  })
+  console.log('App render ID:', Math.random())
+  const [fieldData, setFieldData] = useState<FieldData>({})
+  console.log('App render fieldData:', fieldData)
+  const [isSelecting, setIsSelecting] = useState(false)
 
   /*
   Change key-value pair within fields object.
   */
   const updateFieldValues = (name: string, value: string): void => {
-    setFieldValues(prevFieldValues => {
-      return {
-        ...prevFieldValues,
-        [name]: value
-      }
-    })
+    if (fieldData != null) {
+      setFieldData(prevFieldData => {
+        return {
+          ...prevFieldData!,
+          [name]: {
+            value: value,
+            isActive: !prevFieldData[name].isActive
+          }
+        }
+      })
+    }
   }
 
   /*
-  Transfers field state to browser storage.
+  Transfers input value to component state
   */
   const handleFieldChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
@@ -41,19 +48,41 @@ const App: FC = () => {
   }
 
   /*
-  On app refresh, updates all field states to match data in browser storage.
+  Sets initial fieldData state to syncStorage.
+  Sets default for syncStorage if is null.
   */
   useEffect(() => {
-    syncStorage.get()
-      .then((storage) => {
-        const { fieldData } = storage
-        for (const fieldName in fieldData) {
-          const fieldValue = fieldData[fieldName].value
-          console.log('useEffect - fieldValue:', fieldValue)
-          updateFieldValues(fieldName, fieldValue)
-        }
-      }).catch(error => { console.log(error) })
-  }, [])
+    syncStorage.get().then( storage => {
+      if (Object.keys(storage).length <= 0) {
+        console.log('App - setting default value for syncStorage')
+        syncStorage
+        .set({
+          fieldData: {
+            adHocUserId: {
+              title: 'Ad Hoc User ID',
+              value: 'adarami',
+              isActive: true,
+            },
+            commodityCode: {
+              value: '7786413',
+              isActive: true,
+            },
+            phoneNumber: {
+              value: '9491234567',
+              isActive: false,
+            },
+            roomNumber: {
+              value: '237',
+              isActive: true,
+            }
+          }
+        })
+      }
+    syncStorage.get().then(storage => {
+      setFieldData(storage.fieldData)
+    })
+  }) 
+  }, [setIsSelecting])
   return (
     <>
       <Banner />
@@ -62,30 +91,16 @@ const App: FC = () => {
           className='text-silver text-sm mt-3 ml-1'
         >Autofill Values</header>
         <form>
-          <Field
-            name='roomNumber'
-            title='Room Number'
-            id='room-number'
-            value={fieldValues.roomNumber}
-            onChange={handleFieldChange}
-          />
-          <Field
-            name='commodityCode'
-            title='Commodity Code'
-            id='commodity-code'
-            value={fieldValues.commodityCode}
-            onChange={handleFieldChange}
-          />
-          <Field
-            name='adHocUserId'
-            title='Ad Hoc User ID'
-            id='ad-hoc-user-id'
-            value={fieldValues.adHocUserId}
+          <FieldRenderer
+            fieldData={fieldData}
             onChange={handleFieldChange}
           />
         </form>
       </div>
-      <FieldSelector />
+      <FieldSelector
+        isSelecting={isSelecting}
+        setIsSelecting={setIsSelecting}
+      />
     </>
   )
 }

@@ -1,2 +1,3 @@
-const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync
+const syncStorage: browser.storage.StorageAreaSync = browser.storage.sync;
 export default syncStorage
+
