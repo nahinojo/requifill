@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import type { FC, HTMLAttributes, ReactEventHandler, SetStateAction } from 'react'
+import React from 'react'
+import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
 import PlusSVG from './PlusSVG'
 import syncStorage from '../../common/syncStorage'
 
@@ -15,7 +15,6 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
     syncStorage
       .get('fieldData')
       .then(storage => {
-        console.log('FieldSelector handleActivateField storage:', storage)
         const previousData = storage.fieldData !== undefined
           ? storage.fieldData
           : {}
@@ -31,14 +30,12 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
             fieldData: currentData
           }).catch(
             error => {
-              console.log('cannot set data for syncStorage') 
               console.log(error)
             }
           )
         setIsSelecting(false)
       }).catch(
         error => {
-          console.log('cannot operate on syncStorage')
           console.log(error)
         }
       )
@@ -47,12 +44,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
   return (
       <div
         className='mx-1 mt-1.5'
-        onClick={() => { 
-          syncStorage.get().then(storage => {
-            console.log('FieldSelector syncStorage:', storage)
-          })
-          setIsSelecting(true)
-        }}
+        onClick={() => {setIsSelecting(true)}}
       >
         {!isSelecting &&
         <div

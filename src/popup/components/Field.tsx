@@ -24,7 +24,7 @@ interface OnKeydownEvent extends SyntheticEvent<HTMLInputElement> {
 
 const Field: FC<FieldProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { id, name, title, value, type, onChange } = props
+  const { id, name, title, value, onChange } = props
   if (id === undefined) {
     throw new Error('React component ID not found.')
   }

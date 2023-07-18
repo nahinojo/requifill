@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import syncStorage from '../common/syncStorage'
 import Banner from './components/Banner'
-import Field from './components/Field'
 import FieldSelector from './components/FieldSelector'
 import FieldRenderer from './components/FieldRenderer'
 
@@ -10,27 +9,29 @@ export interface FieldData {
   [name: string]: {
     title?: string
     value: string
-    isActive: boolean
+    isActive?: boolean
   };
 }
 
 const App: FC = () => {
-  console.log('App render ID:', Math.random())
   const [fieldData, setFieldData] = useState<FieldData>({})
-  console.log('App render fieldData:', fieldData)
   const [isSelecting, setIsSelecting] = useState(false)
+  console.log('App render ID:', Math.random())
+  console.log('App state - fieldData:', fieldData)
 
   /*
-  Change key-value pair within fields object.
+  Ensures fieldData is in sync with value in input box
   */
-  const updateFieldValues = (name: string, value: string): void => {
+  const handleFieldChange: ReactEventHandler<HTMLInputElement> = (
+    evt: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = evt.target
     if (fieldData != null) {
       setFieldData(prevFieldData => {
         return {
-          ...prevFieldData!,
+          ...prevFieldData,
           [name]: {
-            value: value,
-            isActive: !prevFieldData[name].isActive
+            value: value
           }
         }
       })
@@ -38,23 +39,12 @@ const App: FC = () => {
   }
 
   /*
-  Transfers input value to component state
-  */
-  const handleFieldChange: ReactEventHandler<HTMLInputElement> = (
-    evt: ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = evt.target
-    updateFieldValues(name, value)
-  }
-
-  /*
+  Sets default for syncStorage if null.
   Sets initial fieldData state to syncStorage.
-  Sets default for syncStorage if is null.
   */
   useEffect(() => {
     syncStorage.get().then( storage => {
       if (Object.keys(storage).length <= 0) {
-        console.log('App - setting default value for syncStorage')
         syncStorage
         .set({
           fieldData: {
@@ -82,7 +72,8 @@ const App: FC = () => {
       setFieldData(storage.fieldData)
     })
   }) 
-  }, [setIsSelecting])
+  }, [])
+  
   return (
     <>
       <Banner />

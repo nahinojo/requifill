@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import type {
   HTMLAttributes,
-  InputHTMLAttributes,
-  LabelHTMLAttributes,
   FC,
   ReactEventHandler,
-  SyntheticEvent,
-  ChangeEvent
 } from 'react'
-import syncStorage from '../../common/syncStorage'
 import camelToTitleCase from '../../common/camelToTitleCase'
 import camelToKebabCase from '../../common/camelToKebabCase'
 import Field from './Field'
