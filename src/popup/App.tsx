@@ -28,19 +28,21 @@ const App: FC = () => {
     const { name, value } = evt.target
     if (fieldData != null) {
       setFieldData(prevFieldData => {
-        return {
+        const updatedFieldData = {
           ...prevFieldData,
           [name]: {
+            ...prevFieldData[name],
             value: value
           }
         }
+        return updatedFieldData
       })
     }
   }
 
   /*
   Sets default for syncStorage if null.
-  Sets initial fieldData state to syncStorage.
+  Initialized fieldData state based on syncStorage.
   */
   useEffect(() => {
     syncStorage.get().then( storage => {
