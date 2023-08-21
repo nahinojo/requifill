@@ -12,6 +12,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
   
   const buttonFieldItemStyling = 'text-left bg-night border border-solid border-wither pl-3 py-2'
   const handleActivateField: ReactEventHandler<HTMLButtonElement> =() => {
+    console.log('Executing FieldSelector.handleActivateField()...')
     syncStorage
       .get('fieldData')
       .then(storage => {
@@ -25,6 +26,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
             isActive: true
           }
         }
+        console.log("FieldSelector.handleActivateField().currentData:", currentData)
         syncStorage
           .set({
             fieldData: currentData

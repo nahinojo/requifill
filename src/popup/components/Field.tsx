@@ -45,6 +45,7 @@ const Field: FC<FieldProps> = (props) => {
             value: props.value,
             isActive: previousData![String(name)].isActive
           } }
+        console.log("FieldSelector.handleSaveValue...currentData:", currentData)
         syncStorage
           .set({
             fieldData: currentData

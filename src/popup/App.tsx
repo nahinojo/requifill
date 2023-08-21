@@ -71,10 +71,11 @@ const App: FC = () => {
         })
       }
     syncStorage.get().then(storage => {
-      setFieldData(storage.fieldData)
+        setFieldData(storage.fieldData)
+        console.log('App.useEffect().syncStorage.get():', storage)
     })
   }) 
-  }, [])
+  })
   
   return (
     <>
