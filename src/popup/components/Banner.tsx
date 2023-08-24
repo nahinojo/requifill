@@ -50,7 +50,7 @@ const Banner: React.FC = () => {
       <h1
         id='toggle-autofill-title'
         className='font-bold ml-2 mt-1'
-      >Toggle Autofill</h1>
+      >Enable Autofill</h1>
     </div>
   )
 }
