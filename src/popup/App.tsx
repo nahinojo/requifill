@@ -17,13 +17,14 @@ export interface FieldData {
 const App: FC = () => {
   const [fieldData, setFieldData] = useState<FieldData>({})
   const [isUnsavedChanges, setIsUnsavedChanges] = useState(false)
+  const [isSelecting, setIsSelecting] = useState(false)
   console.log('App render ID:', Math.random())
   console.log('App.fieldData:', fieldData)
 
   /*
   Keeps fieldData synchronized with values in <input> elements.
   */
-  const handleFieldDataChange: ReactEventHandler<HTMLInputElement> = (
+  const updateFieldDataState: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = evt.target
@@ -72,16 +73,24 @@ const App: FC = () => {
           },
           phoneNumber: {
             value: '9491234567',
-            isActive: true
+            isActive: false
           }
         }
         syncStorage.set({fieldData: initialFieldData})
         setFieldData(initialFieldData)
       } else {
         setFieldData(storage.fieldData)
-      }
+      }true
     })
   }, [])
+
+  useEffect(() => {
+    syncStorage.get().then(storage => {
+      if (!isSelecting && Object.keys(storage).length > 0) {
+        setFieldData(storage.fieldData)
+      }
+    })
+  }, [isSelecting])
   
   return (
     <>
@@ -95,19 +104,19 @@ const App: FC = () => {
         <form>
           <FieldRenderer
             fieldData={fieldData}
-            onChange={handleFieldDataChange}
+            onChange={updateFieldDataState}
           />
         </form>
       </div>
+      <FieldSelector
+        isSelecting={isSelecting}
+        setIsSelecting={setIsSelecting}
+      /> 
       <Footer
         isUnsavedChanges={isUnsavedChanges}
         discardFieldChanges={discardFieldChanges}
         saveFieldChanges={saveFieldChanges}
       />
-      {/* <FieldSelector
-        isSelecting={isSelecting}
-        setIsSelecting={setIsSelecting}
-      /> */}
     </>
   )
 }
