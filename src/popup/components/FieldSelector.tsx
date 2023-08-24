@@ -62,7 +62,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
           >New Field</button>
         </div>
         }
-        {isSelecting &&
+        {isSelecting && 
           <div
             id='field-selections'
             className='flex flex-col'
@@ -73,7 +73,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
             <button 
               className={`${buttonFieldItemStyling} border-b-0 rounded-t-md`}
               onClick={handleActivateField}
-            >PhoneNumber</button>
+            >Phone Number</button>
             <button 
               className={`${buttonFieldItemStyling} border-b-0`}
             >Field Item 2</button>

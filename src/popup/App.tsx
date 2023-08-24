@@ -80,17 +80,14 @@ const App: FC = () => {
         setFieldData(initialFieldData)
       } else {
         setFieldData(storage.fieldData)
-      }true
-    })
-  }, [])
-
-  useEffect(() => {
-    syncStorage.get().then(storage => {
-      if (!isSelecting && Object.keys(storage).length > 0) {
-        setFieldData(storage.fieldData)
       }
     })
-  }, [isSelecting])
+    syncStorage.onChanged.addListener(() => {
+      syncStorage.get().then(storage => {
+        setFieldData(storage.fieldData)
+      })
+    })
+  }, [])
   
   return (
     <>
