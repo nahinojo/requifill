@@ -60,24 +60,23 @@ const App: FC = () => {
   useEffect(() => {
     syncStorage.get().then(storage => {
       if (Object.keys(storage).length <= 0) {
-        syncStorage
-        .set({
-          fieldData: {
-            adHocUserId: {
-              title: 'Ad Hoc User ID',
-              value: 'adarami',
-              isActive: true,
-            },
-            commodityCode: {
-              value: '7786413',
-              isActive: true,
-            },
-            phoneNumber: {
-              value: '9491234567',
-              isActive: true
-            }
+        const initialFieldData = {
+          adHocUserId: {
+            title: 'Ad Hoc User ID',
+            value: 'adarami',
+            isActive: true,
+          },
+          commodityCode: {
+            value: '7786413',
+            isActive: true,
+          },
+          phoneNumber: {
+            value: '9491234567',
+            isActive: true
           }
-        })
+        }
+        syncStorage.set({fieldData: initialFieldData})
+        setFieldData(initialFieldData)
       } else {
         setFieldData(storage.fieldData)
       }
