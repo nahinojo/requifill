@@ -4,6 +4,7 @@ import syncStorage from '../common/syncStorage'
 import Banner from './components/Banner'
 import FieldSelector from './components/FieldSelector'
 import FieldRenderer from './components/FieldRenderer'
+import Footer from './components/Footer'
 
 export interface FieldData {
   [name: string]: {
@@ -15,14 +16,14 @@ export interface FieldData {
 
 const App: FC = () => {
   const [fieldData, setFieldData] = useState<FieldData>({})
-  const [isSelecting, setIsSelecting] = useState(false)
+  const [isUnsavedChanges, setIsUnsavedChanges] = useState(false)
   console.log('App render ID:', Math.random())
-  console.log('App state - fieldData:', fieldData)
+  console.log('App.fieldData:', fieldData)
 
   /*
-  Ensures fieldData is in sync with value in input box
+  Keeps fieldData synchronized with values in <input> elements.
   */
-  const handleFieldChange: ReactEventHandler<HTMLInputElement> = (
+  const handleFieldDataChange: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = evt.target
@@ -38,6 +39,19 @@ const App: FC = () => {
         return updatedFieldData
       })
     }
+    setIsUnsavedChanges(true)
+  }
+
+  const saveFieldChanges: ReactEventHandler<HTMLInputElement> =() => {
+    syncStorage.set({fieldData: fieldData})
+    setIsUnsavedChanges(false)
+  }
+
+  const discardFieldChanges: ReactEventHandler<HTMLInputElement> =() => {
+    syncStorage.get().then(storage => {
+      setFieldData(storage.fieldData)
+    })
+    setIsUnsavedChanges(false)
   }
 
   /*
@@ -45,7 +59,7 @@ const App: FC = () => {
   Initialized fieldData state based on syncStorage.
   */
   useEffect(() => {
-    syncStorage.get().then( storage => {
+    syncStorage.get().then(storage => {
       if (Object.keys(storage).length <= 0) {
         syncStorage
         .set({
@@ -61,40 +75,39 @@ const App: FC = () => {
             },
             phoneNumber: {
               value: '9491234567',
-              isActive: false,
-            },
-            roomNumber: {
-              value: '237',
-              isActive: true,
             }
           }
         })
       }
-    syncStorage.get().then(storage => {
-        setFieldData(storage.fieldData)
-        console.log('App.useEffect().syncStorage.get():', storage)
+      setFieldData(storage.fieldData)
     })
-  }) 
-  })
+  }, [])
   
   return (
     <>
       <Banner />
-      <div className='field-container'>
+      <div 
+        id='field-container'
+      >
         <header
           className='text-silver text-sm mt-3 ml-1'
         >Autofill Values</header>
         <form>
           <FieldRenderer
             fieldData={fieldData}
-            onChange={handleFieldChange}
+            onChange={handleFieldDataChange}
           />
         </form>
       </div>
-      <FieldSelector
+      <Footer
+        isUnsavedChanges={isUnsavedChanges}
+        discardFieldChanges={discardFieldChanges}
+        saveFieldChanges={saveFieldChanges}
+      />
+      {/* <FieldSelector
         isSelecting={isSelecting}
         setIsSelecting={setIsSelecting}
-      />
+      /> */}
     </>
   )
 }

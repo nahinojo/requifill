@@ -30,38 +30,6 @@ const Field: FC<FieldProps> = (props) => {
   }
 
   /*
-  Synchronizes browser storage with values within input elements.
-  */
-  const handleSaveValue: ReactEventHandler<HTMLInputElement> =() => {
-    syncStorage
-      .get('fieldData')
-      .then(result => {
-        const previousData = result.fieldData !== 'undefined'
-          ? result.fieldData
-          : {}
-        const currentData = { 
-          ...previousData, 
-          [String(name)]: {
-            value: props.value,
-            isActive: previousData![String(name)].isActive
-          } }
-        console.log("FieldSelector.handleSaveValue...currentData:", currentData)
-        syncStorage
-          .set({
-            fieldData: currentData
-          }).catch(
-            error => { 
-              console.log(error)
-            }
-          )
-      }).catch(
-        error => {
-          console.log(error)
-        }
-      )
-  }
-
-  /*
   Triggers handleSaveValue() listener on input elements.
   */
   const handleEnterKeydown: ReactEventHandler<HTMLInputElement> = (
@@ -92,7 +60,6 @@ const Field: FC<FieldProps> = (props) => {
         type={'text'}
         onChange={onChange}
         onKeyDown={handleEnterKeydown}
-        onBlur={handleSaveValue}
       />
     </div>
   )
