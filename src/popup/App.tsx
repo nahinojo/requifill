@@ -29,14 +29,13 @@ const App: FC = () => {
     const { name, value } = evt.target
     if (fieldData != null) {
       setFieldData(prevFieldData => {
-        const updatedFieldData = {
+        return {
           ...prevFieldData,
           [name]: {
             ...prevFieldData[name],
             value: value
           }
         }
-        return updatedFieldData
       })
     }
     setIsUnsavedChanges(true)
@@ -75,11 +74,13 @@ const App: FC = () => {
             },
             phoneNumber: {
               value: '9491234567',
+              isActive: true
             }
           }
         })
+      } else {
+        setFieldData(storage.fieldData)
       }
-      setFieldData(storage.fieldData)
     })
   }, [])
   
