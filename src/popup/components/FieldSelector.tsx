@@ -46,11 +46,11 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
   return (
       <div
         className='mx-1 mt-1.5'
-        onClick={() => {setIsSelecting(true)}}
-      >
+        >
         {!isSelecting &&
         <div
-          id='new-field-initiator'
+          onClick={() => {setIsSelecting(true)}}
+          id='new-field-iwrapper'
           className='flex justify-center w-fit mx-auto cursor-pointer'
         >
           <PlusSVG
