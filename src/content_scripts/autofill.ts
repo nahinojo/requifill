@@ -8,7 +8,7 @@ import getIsAutofill from '../common/getIsAutofill'
 
 if (isProperURL) {
   /*
-  Since actualy DOM IDs are absurdly long, a shorthand translation dict is used.
+  Since DOM IDs are absurdly long, a shorthand translation dict is used.
   */
   type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
   const nameToIdDict = {
