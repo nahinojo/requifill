@@ -107,6 +107,7 @@ const App: FC = () => {
         </form>
       </div>
       <FieldSelector
+        fieldData={fieldData}
         isSelecting={isSelecting}
         setIsSelecting={setIsSelecting}
       /> 
