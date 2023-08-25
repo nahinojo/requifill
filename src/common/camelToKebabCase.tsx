@@ -1,15 +1,15 @@
 const camelToKebabCase = (camelString: string): string => {
-  var titleString = camelString[0].toLowerCase()
+  var kebabString = camelString[0]
   let i = 1
   while (i < camelString.length) {
     let char = camelString[i]
     if (char !== char.toUpperCase()) {
-      titleString = ''.concat(titleString, char)
+      kebabString = ''.concat(kebabString, char)
     } else {
-      titleString = ''.concat(titleString, '-', char.toLowerCase())
+      kebabString = ''.concat(kebabString, '-', char.toLowerCase())
     }
     i++
   }
-  return titleString
+  return kebabString
 }
 export default camelToKebabCase

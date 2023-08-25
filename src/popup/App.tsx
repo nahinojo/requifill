@@ -10,13 +10,13 @@ export interface FieldData {
   [name: string]: {
     title?: string
     value: string
-    isActive?: boolean
+    isActive: boolean
   };
 }
 
 const App: FC = () => {
   const [fieldData, setFieldData] = useState<FieldData>({})
-  const [isUnsavedChanges, setIsUnsavedChanges] = useState(false)
+  const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
   const [isSelecting, setIsSelecting] = useState(false)
   console.log('App render ID:', Math.random())
   console.log('App.fieldData:', fieldData)
@@ -39,24 +39,24 @@ const App: FC = () => {
         }
       })
     }
-    setIsUnsavedChanges(true)
+    setIsUnsavedFieldChanges(true)
   }
 
   const saveFieldChanges: ReactEventHandler<HTMLInputElement> =() => {
     syncStorage.set({fieldData: fieldData})
-    setIsUnsavedChanges(false)
+    setIsUnsavedFieldChanges(false)
   }
 
   const discardFieldChanges: ReactEventHandler<HTMLInputElement> =() => {
     syncStorage.get().then(storage => {
       setFieldData(storage.fieldData)
     })
-    setIsUnsavedChanges(false)
+    setIsUnsavedFieldChanges(false)
   }
 
   /*
-  Sets default for syncStorage if null.
-  Initialized fieldData state based on syncStorage.
+  Fills in field <input> elements on page load.
+  Ensure fieldData is in sync with browser storage.
   */
   useEffect(() => {
     syncStorage.get().then(storage => {
@@ -96,6 +96,7 @@ const App: FC = () => {
         id='field-container'
       >
         <header
+          id='autofill-values-title'
           className='text-silver text-sm mt-3 ml-1'
         >Autofill Values</header>
         <form>
@@ -110,7 +111,7 @@ const App: FC = () => {
         setIsSelecting={setIsSelecting}
       /> 
       <Footer
-        isUnsavedChanges={isUnsavedChanges}
+        isUnsavedFieldChanges={isUnsavedFieldChanges}
         discardFieldChanges={discardFieldChanges}
         saveFieldChanges={saveFieldChanges}
       />

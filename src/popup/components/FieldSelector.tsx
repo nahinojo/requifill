@@ -2,6 +2,7 @@ import React from 'react'
 import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
 import PlusSVG from './PlusSVG'
 import syncStorage from '../../common/syncStorage'
+import kebabToCamelCase from '../../common/kebabToCamelCase'
 
 interface FieldSelectorProps extends HTMLAttributes<HTMLElement> {
   isSelecting: boolean
@@ -9,39 +10,38 @@ interface FieldSelectorProps extends HTMLAttributes<HTMLElement> {
 }
 
 const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) => {
-  
-  const buttonFieldItemStyling = 'text-left bg-night border border-solid border-wither pl-3 py-2'
-  const handleActivateField: ReactEventHandler<HTMLButtonElement> =() => {
-    console.log('Executing FieldSelector.handleActivateField()...')
+  const handleActivateField: ReactEventHandler<HTMLButtonElement> =(evt) => {
+    const buttonElement = evt.target as HTMLButtonElement
+    const fieldName = kebabToCamelCase(buttonElement.id)
     syncStorage
-      .get('fieldData')
-      .then(storage => {
-        const previousData = storage.fieldData !== undefined
-          ? storage.fieldData
-          : {}
-        const currentData = { 
-          ...previousData, 
-          phoneNumber: {
-            value: '77777777',
-            isActive: true
-          }
+    .get('fieldData')
+    .then(storage => {
+      const prevFieldData = storage.fieldData !== undefined
+      ? storage.fieldData
+      : {}
+      const currFieldData = { 
+        ...prevFieldData, 
+        [fieldName]: {
+          ...prevFieldData[fieldName],
+          isActive: true
         }
-        console.log("FieldSelector.handleActivateField().currentData:", currentData)
-        syncStorage
-          .set({
-            fieldData: currentData
-          }).catch(
-            error => {
-              console.log(error)
-            }
-          )
+      }
+      syncStorage
+      .set({
+        fieldData: currFieldData
+      }).catch(
+        error => {
+          console.log(error)
+        }
+        )
         setIsSelecting(false)
       }).catch(
         error => {
           console.log(error)
         }
       )
-  }
+    }
+  const buttonFieldItemStyling = 'text-left bg-night border border-solid border-wither pl-3 py-2'
 
   return (
       <div
@@ -70,7 +70,8 @@ const FieldSelector: FC<FieldSelectorProps> = ({isSelecting, setIsSelecting}) =>
             <h1
               className='mx-auto font-bold text-sm'
             >Add Autofill Field</h1>
-            <button 
+            <button
+              id='phone-number'
               className={`${buttonFieldItemStyling} border-b-0 rounded-t-md`}
               onClick={handleActivateField}
             >Phone Number</button>

@@ -2,13 +2,13 @@ import React, { HTMLAttributes, ReactEventHandler, useRef } from 'react'
 import type FC from 'react'
 
 interface FooterProps extends HTMLAttributes<HTMLElement> {
-  isUnsavedChanges: boolean
+  isUnsavedFieldChanges: boolean
   discardFieldChanges: ReactEventHandler
   saveFieldChanges: ReactEventHandler
 }
 
 const Footer: React.FC<FooterProps> = ({
-  isUnsavedChanges, 
+  isUnsavedFieldChanges, 
   discardFieldChanges,
   saveFieldChanges
 }) => {
@@ -16,7 +16,7 @@ const Footer: React.FC<FooterProps> = ({
     <footer
       className='bg-thunder w-full h-1/6 fixed bottom-0'
     >
-      {isUnsavedChanges && 
+      {isUnsavedFieldChanges && 
       <>
         <p
           className='text-center mt-4 font-semibold'

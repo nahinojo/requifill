@@ -16,7 +16,7 @@ if (isProperURL) {
   }
 
   /*
-  Assists the cyclical indexing of Arrays.
+  Assists cyclicaly indexing Arrays.
   */
   const modulo = (m: number, n: number): number => {
     return ((n % m) + m) % m

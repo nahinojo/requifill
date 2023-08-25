@@ -18,27 +18,11 @@ interface FieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
 
-interface OnKeydownEvent extends SyntheticEvent<HTMLInputElement> {
-  key: string
-}
-
 const Field: FC<FieldProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const { id, name, title, value, onChange } = props
   if (id === undefined) {
     throw new Error('React component ID not found.')
-  }
-
-  /*
-  Triggers handleSaveValue() listener on input elements.
-  */
-  const handleEnterKeydown: ReactEventHandler<HTMLInputElement> = (
-    evt: OnKeydownEvent
-  ) => {
-    const { key } = evt
-    if (key === 'Enter') {
-      inputRef.current?.blur()
-    }
   }
 
   return (
@@ -59,7 +43,6 @@ const Field: FC<FieldProps> = (props) => {
         ref={inputRef}
         type={'text'}
         onChange={onChange}
-        onKeyDown={handleEnterKeydown}
       />
     </div>
   )
