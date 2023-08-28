@@ -14,9 +14,14 @@ interface FieldSelectorProps extends HTMLAttributes<HTMLElement> {
 }
 
 const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSelecting}) => {
-  const buttonFieldItemStyling = 'text-left bg-night border border-solid border-wither pl-3 py-2'
   console.log('Object.keys(fieldData)',Object.keys(fieldData))
   console.log('Object.entries(fieldData)',Object.entries(fieldData))
+  const [newFieldOptions, setNewFieldOptions] = useState([])
+  const buttonFieldStyling = 'text-left bg-night border-t border-solid border-wither pl-3 py-2'
+  /* 
+  Since new field option will disappear on full autofill, newFieldOptions is the ultimate requirement
+  But, it may be extractable through fieldData, hence, no  component state is necessary
+  */
   const handleActivateField: ReactEventHandler<HTMLButtonElement> =(evt) => {
     const buttonElement = evt.target as HTMLButtonElement
     const fieldName = kebabToCamelCase(buttonElement.id)
@@ -42,12 +47,13 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
         }
         )
         setIsSelecting(false)
-      }).catch(
-        error => {
-          console.log(error)
-        }
-      )
-    }
+    }).catch(
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
   return (
       <div
         className='mx-1 mt-1.5'
@@ -70,56 +76,37 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
         {isSelecting && 
         <div
           className='flex flex-col'
-          id='field-selections'
+          id='field-selector'
         >
           <h1
             className='mx-auto font-bold text-sm'
           >Add Autofill Field</h1>
+          <div
+            id='field-options'
+            className='flex flex-col rounded-md bg-white'
+          >
             {Object.entries(fieldData!).map(([name, data], index) => {
               if (!data.isActive) {
-                let buttonClassName = ''
+                let buttonClassName: string
                 if (index === 0) {
-                  buttonClassName = `${buttonFieldItemStyling} border-b-0 rounded-t-md`
+                  buttonClassName = `${buttonFieldStyling} border-b-0 rounded-t-md`
                 } else if (index < Object.entries(fieldData!).length - 1) {
-                  buttonClassName = `${buttonFieldItemStyling} border-b-0`
+                  buttonClassName = `${buttonFieldStyling} border-b-0`
                 } else {
-                  buttonClassName = `${buttonFieldItemStyling} rounded-b-md`
+                  buttonClassName = `${buttonFieldStyling} rounded-b-md`
                 }
                 return(
                   <button
-                    id={camelToKebabCase(name)}
-                    className={buttonClassName}
-                    onClick={handleActivateField}
+                  id={camelToKebabCase(name)}
+                  className={buttonFieldStyling}
+                  onClick={handleActivateField}
                   >{camelToTitleCase(name)}</button>
-                )
-              }
-            })}
+                  )
+                }
+              })}
+          </div>
         </div>
         }
-        {/* {isSelecting &&
-          <div
-            id='field-selections'
-            className='flex flex-col'
-          >
-            <h1
-              className='mx-auto font-bold text-sm'
-            >Add Autofill Field</h1>
-            <button
-              id='phone-number'
-              className={`${buttonFieldItemStyling} border-b-0 rounded-t-md`}
-              onClick={handleActivateField}
-            >Phone Number</button>
-            <button 
-              className={`${buttonFieldItemStyling} border-b-0`}
-            >Field Item 2</button>
-            <button
-              className={`${buttonFieldItemStyling} border-b-0`}
-            >Field Item 3</button>
-            <button
-              className={`${buttonFieldItemStyling} rounded-b-md`}
-            >Field Item 4</button>
-          </div>
-        } */}
       </div>
   )
 }
