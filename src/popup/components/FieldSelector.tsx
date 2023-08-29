@@ -14,14 +14,8 @@ interface FieldSelectorProps extends HTMLAttributes<HTMLElement> {
 }
 
 const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSelecting}) => {
-  console.log('Object.keys(fieldData)',Object.keys(fieldData))
-  console.log('Object.entries(fieldData)',Object.entries(fieldData))
-  const [newFieldOptions, setNewFieldOptions] = useState([])
-  const buttonFieldStyling = 'text-left bg-night border-t border-solid border-wither pl-3 py-2'
-  /* 
-  Since new field option will disappear on full autofill, newFieldOptions is the ultimate requirement
-  But, it may be extractable through fieldData, hence, no  component state is necessary
-  */
+  const fieldOptions = Object.keys(fieldData).filter(key => !fieldData[key].isActive)
+  const buttonFieldStylingBase = 'text-left bg-night border border-solid border-wither pl-3 py-2'
   const handleActivateField: ReactEventHandler<HTMLButtonElement> =(evt) => {
     const buttonElement = evt.target as HTMLButtonElement
     const fieldName = kebabToCamelCase(buttonElement.id)
@@ -59,6 +53,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
         className='mx-1 mt-1.5'
         >
         {!isSelecting &&
+        fieldOptions.length !== 0 &&
         <div
           onClick={() => {setIsSelecting(true)}}
           id='new-field-iwrapper'
@@ -81,30 +76,28 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
           <h1
             className='mx-auto font-bold text-sm'
           >Add Autofill Field</h1>
-          <div
-            id='field-options'
-            className='flex flex-col rounded-md bg-white'
-          >
-            {Object.entries(fieldData!).map(([name, data], index) => {
-              if (!data.isActive) {
-                let buttonClassName: string
-                if (index === 0) {
-                  buttonClassName = `${buttonFieldStyling} border-b-0 rounded-t-md`
-                } else if (index < Object.entries(fieldData!).length - 1) {
-                  buttonClassName = `${buttonFieldStyling} border-b-0`
-                } else {
-                  buttonClassName = `${buttonFieldStyling} rounded-b-md`
-                }
-                return(
-                  <button
-                  id={camelToKebabCase(name)}
-                  className={buttonFieldStyling}
-                  onClick={handleActivateField}
-                  >{camelToTitleCase(name)}</button>
-                  )
-                }
-              })}
-          </div>
+          {fieldOptions.map((name, index) => {
+            let buttonFieldStyling: string
+            if (index === 0) {
+              buttonFieldStyling = `${buttonFieldStylingBase} rounded-t-md`
+              if (fieldOptions.length > 1) {
+                buttonFieldStyling = `${buttonFieldStyling} border-b-0`
+              } else {
+                buttonFieldStyling = `${buttonFieldStyling} rounded-b-md`
+              }
+            } else if (index < fieldOptions.length - 1) {
+              buttonFieldStyling = `${buttonFieldStylingBase} border-b-0`
+            } else {
+              buttonFieldStyling = `${buttonFieldStylingBase} rounded-b-md`
+            }
+            return(
+              <button
+              id={camelToKebabCase(name)}
+              className={buttonFieldStyling}
+              onClick={handleActivateField}
+              >{camelToTitleCase(name)}</button>
+              )
+            })}
         </div>
         }
       </div>
