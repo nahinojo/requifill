@@ -1,14 +1,19 @@
 import React from 'react'
 import type { FC, HTMLAttributes } from 'react'
 
-interface VerticalDotsSVGProps extends HTMLAttributes<SVGElement> {}
+interface VerticalDotsSVGProps extends HTMLAttributes<SVGElement> {
+  transform: string
+}
 
-const VerticalDotsSVG: FC<VerticalDotsSVGProps> = ({ className }) => {
+const VerticalDotsSVG: FC<VerticalDotsSVGProps> = ({ className, transform}) => {
   return (
     <svg
       id='vertical-dots-svg'
-      className={`${className}`}
-      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 4 16"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 4 16"
+      transform={transform}
     >
       <path 
         stroke="currentColor"

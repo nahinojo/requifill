@@ -8,6 +8,7 @@ import type {
   SyntheticEvent
 } from 'react'
 import syncStorage from '../../common/syncStorage'
+import VerticalDotsSVG from './VerticalDots'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
@@ -27,22 +28,31 @@ const Field: FC<FieldProps> = (props) => {
 
   return (
     <div
+      className='bg-thunder rounded mx-1 mb-1 h-14 items-center flex flex-row'
       id={id}
-      className='bg-thunder rounded mx-1 mb-1 h-14 grid justify-start items-center grid-cols-2'
     >
-      <label
-        id={`${id}-label`}
-        className='text-base ml-2'
-        htmlFor={`${id}-input`}
-      >{title}</label>
-      <input
-        id={`${id}-input`}
-        className='bg-iron text-base h-3/5 mx-3 rounded indent-1 pt-1'
-        name={name}
-        value={value}
-        ref={inputRef}
-        type={'text'}
-        onChange={onChange}
+        <div
+          className='flex-none grow h-full items-center justify-items-start grid grid-cols-2'
+          id={`${id}-wrapper`}
+        >
+          <label
+            className='text-base ml-2 w-32'
+            id={`${id}-label`}
+            htmlFor={`${id}-input`}
+          >{title}</label>
+          <input
+            className='bg-iron text-base h-3/5 mx-3 rounded indent-1 pt-1'
+            id={`${id}-input`}
+            name={name}
+            value={value}
+            ref={inputRef}
+            type={'text'}
+            onChange={onChange}
+          />
+      </div>
+      <VerticalDotsSVG
+        className='flex-auto'
+        transform='scale(.05)'
       />
     </div>
   )
