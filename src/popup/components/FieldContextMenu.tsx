@@ -43,7 +43,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id }) => {
       />
       {position &&
         <div
-          className='fixed w-36 h-10 bg-night border border-bleach'
+          className='fixed w-36 h-32 bg-night border border-solid border-iron'
           style={{
             left: `calc(${position.left}px - 9rem)`,
             top: position.top
