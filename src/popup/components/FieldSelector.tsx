@@ -50,7 +50,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
 
   return (
       <div
-        className='mx-1 mt-1.5'
+        className='mx-1 mt-2'
         >
         {!isSelecting &&
         fieldOptions.length !== 0 &&

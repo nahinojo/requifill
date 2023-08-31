@@ -28,20 +28,20 @@ const Field: FC<FieldProps> = (props) => {
 
   return (
     <div
-      className='bg-thunder rounded mx-1 mb-1 h-14 items-center flex flex-row'
+      className='bg-thunder rounded mx-1 mb-1 h-14 flex flex-row flex-nowrap items-stretch'
       id={id}
     >
         <div
-          className='flex-none grow h-full items-center justify-items-start grid grid-cols-2'
+          className='flex-1 grow h-full items-center grid grid-cols-2'
           id={`${id}-wrapper`}
         >
           <label
-            className='text-base ml-2 w-32'
+            className='text-base ml-2'
             id={`${id}-label`}
             htmlFor={`${id}-input`}
           >{title}</label>
           <input
-            className='bg-iron text-base h-3/5 mx-3 rounded indent-1 pt-1'
+            className='bg-iron text-base h-3/5 rounded indent-1 pt-1'
             id={`${id}-input`}
             name={name}
             value={value}
@@ -51,8 +51,8 @@ const Field: FC<FieldProps> = (props) => {
           />
       </div>
       <VerticalDotsSVG
-        className='flex-auto'
-        transform='scale(.05)'
+        className='flex-none mx-1.5'
+        transform='scale(.55)'
       />
     </div>
   )
