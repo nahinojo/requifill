@@ -1,23 +1,19 @@
 import React, { HTMLAttributes, ReactEventHandler, useRef } from 'react'
-import type FC from 'react'
 
-interface FooterProps extends HTMLAttributes<HTMLElement> {
-  isUnsavedFieldChanges: boolean
+interface UnsavedFieldPromptProps extends HTMLAttributes<HTMLElement> {
   discardFieldChanges: ReactEventHandler
   saveFieldChanges: ReactEventHandler
 }
 
-const Footer: React.FC<FooterProps> = ({
-  isUnsavedFieldChanges, 
+const UnsavedFieldPrompt: React.FC<UnsavedFieldPromptProps> = ({
   discardFieldChanges,
   saveFieldChanges
 }) => {
   return(
-    <div
+    <>
+      <div
       className='bg-aqua w-full h-1/6 fixed bottom-0'
-    >
-      {isUnsavedFieldChanges && 
-      <>
+      >
         <p
           className='text-center mt-4 font-semibold'
           >Would you like to save your changes?
@@ -25,22 +21,21 @@ const Footer: React.FC<FooterProps> = ({
         <div
           className='flex justify-around mt-5'
           id='save-choice-wrapper'
-        >
+          >
           <button
             className='font-semibold hover:underline'
             onClick={discardFieldChanges}
-          >Discard
+            >Discard
           </button>
           <button
             className='font-semibold hover:underline'
             onClick={saveFieldChanges}
-          >Save
+            >Save
           </button>
         </div>
-      </>
-      }
     </div>
+  </>
   )
 }
 
-export default Footer
+export default UnsavedFieldPrompt

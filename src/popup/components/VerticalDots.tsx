@@ -5,17 +5,19 @@ interface VerticalDotsSVGProps extends HTMLAttributes<SVGElement> {
   transform: string
 }
 
-const VerticalDotsSVG: FC<VerticalDotsSVGProps> = ({ className, transform}) => {
+const VerticalDots: FC<VerticalDotsSVGProps> = ({ className, id, transform, onClick}) => {
   return (
     <svg
-      id='vertical-dots-svg'
+      id={`${id}-vertical-dots-svg`}
       className={className}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 4 16"
       transform={transform}
+      onClick={onClick}
     >
-      <path 
+      <path
+        id={`${id}-vertical-dots-path`}
         stroke="currentColor"
         stroke-linecap="round"
         stroke-width="3"
@@ -25,4 +27,4 @@ const VerticalDotsSVG: FC<VerticalDotsSVGProps> = ({ className, transform}) => {
   )
 }
 
-export default VerticalDotsSVG
+export default VerticalDots

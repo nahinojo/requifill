@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import syncStorage from '../common/syncStorage'
 import Banner from './components/Banner'
-import FieldSelector from './components/FieldSelector'
+import FieldAdder from './components/FieldAdder'
 import FieldRenderer from './components/FieldRenderer'
-import UnsavedChanges from './components/UnsavedChanges'
+import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
 
 export interface FieldData {
   [name: string]: {
@@ -17,9 +17,10 @@ export interface FieldData {
 const App: FC = () => {
   const [fieldData, setFieldData] = useState<FieldData>({})
   const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
-  const [isSelecting, setIsSelecting] = useState(false)
-  console.log('App render ID:', Math.random())
-  console.log('App.fieldData:', fieldData)
+  const [isAddingField, setIsAddingField] = useState(false)
+  const [isEditingField, setIsEditingField] = useState(false)
+  // console.log('App render ID:', Math.random())
+  // console.log('App.fieldData:', fieldData)
 
   /*
   Keeps fieldData synchronized with values in <input> elements.
@@ -69,7 +70,7 @@ const App: FC = () => {
           },
           commodityCode: {
             value: '7786413',
-            isActive: true,
+            isActive: false,
           },
           phoneNumber: {
             value: '9491234567',
@@ -103,23 +104,22 @@ const App: FC = () => {
           id='autofill-values-title'
           className='text-silver text-sm mt-3 ml-1'
         >Autofill Values</header>
-        <form>
-          <FieldRenderer
-            fieldData={fieldData}
-            onChange={updateFieldDataState}
-          />
-        </form>
+        <FieldRenderer
+          fieldData={fieldData}
+          onChange={updateFieldDataState}
+        />
       </div>
-      <FieldSelector
+      <FieldAdder
         fieldData={fieldData}
-        isSelecting={isSelecting}
-        setIsSelecting={setIsSelecting}
+        isAdding={isAddingField}
+        setIsAdding={setIsAddingField}
       /> 
-      <UnsavedChanges
-        isUnsavedFieldChanges={isUnsavedFieldChanges}
-        discardFieldChanges={discardFieldChanges}
-        saveFieldChanges={saveFieldChanges}
-      />
+      {isUnsavedFieldChanges &&
+        <UnsavedFieldPrompt
+          discardFieldChanges={discardFieldChanges}
+          saveFieldChanges={saveFieldChanges}
+        />     
+      }
     </>
   )
 }

@@ -9,11 +9,11 @@ import camelToKebabCase from '../../common/camelToKebabCase'
 
 interface FieldSelectorProps extends HTMLAttributes<HTMLElement> {
   fieldData: FieldData
-  isSelecting: boolean
-  setIsSelecting: React.Dispatch<React.SetStateAction<boolean>>
+  isAdding: boolean
+  setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSelecting}) => {
+const FieldAdder: FC<FieldSelectorProps> = ({fieldData, isAdding: isAdding, setIsAdding: setIsAdding}) => {
   const fieldOptions = Object.keys(fieldData).filter(key => !fieldData[key].isActive)
   const buttonFieldStylingBase = 'text-left bg-night border border-solid border-wither pl-3 py-2'
   const handleActivateField: ReactEventHandler<HTMLButtonElement> =(evt) => {
@@ -40,7 +40,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
           console.log(error)
         }
         )
-        setIsSelecting(false)
+        setIsAdding(false)
     }).catch(
       error => {
         console.log(error)
@@ -52,10 +52,10 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
       <div
         className='mx-1 mt-2'
         >
-        {!isSelecting &&
+        {!isAdding &&
         fieldOptions.length !== 0 &&
         <div
-          onClick={() => {setIsSelecting(true)}}
+          onClick={() => {setIsAdding(true)}}
           id='new-field-iwrapper'
           className='flex justify-center w-fit mx-auto cursor-pointer'
         >
@@ -68,7 +68,7 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
           >New Field</button>
         </div>
         }
-        {isSelecting && 
+        {isAdding && 
         <div
           className='flex flex-col'
           id='field-selector'
@@ -104,4 +104,4 @@ const FieldSelector: FC<FieldSelectorProps> = ({fieldData, isSelecting, setIsSel
   )
 }
 
-export default FieldSelector
+export default FieldAdder

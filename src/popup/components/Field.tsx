@@ -4,11 +4,10 @@ import type {
   InputHTMLAttributes,
   LabelHTMLAttributes,
   FC,
-  ReactEventHandler,
-  SyntheticEvent
 } from 'react'
 import syncStorage from '../../common/syncStorage'
-import VerticalDotsSVG from './VerticalDots'
+import VerticalDots from './VerticalDots'
+import FieldContextMenu from './FieldContextMenu'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
@@ -50,9 +49,9 @@ const Field: FC<FieldProps> = (props) => {
             onChange={onChange}
           />
       </div>
-      <VerticalDotsSVG
+      <FieldContextMenu
         className='flex-none ml-2 mr-1.5'
-        transform='scale(.55)'
+        id={id}
       />
     </div>
   )
