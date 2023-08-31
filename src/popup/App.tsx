@@ -4,7 +4,7 @@ import syncStorage from '../common/syncStorage'
 import Banner from './components/Banner'
 import FieldSelector from './components/FieldSelector'
 import FieldRenderer from './components/FieldRenderer'
-import Footer from './components/Footer'
+import UnsavedChanges from './components/UnsavedChanges'
 
 export interface FieldData {
   [name: string]: {
@@ -115,7 +115,7 @@ const App: FC = () => {
         isSelecting={isSelecting}
         setIsSelecting={setIsSelecting}
       /> 
-      <Footer
+      <UnsavedChanges
         isUnsavedFieldChanges={isUnsavedFieldChanges}
         discardFieldChanges={discardFieldChanges}
         saveFieldChanges={saveFieldChanges}

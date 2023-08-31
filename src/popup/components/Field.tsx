@@ -51,7 +51,7 @@ const Field: FC<FieldProps> = (props) => {
           />
       </div>
       <VerticalDotsSVG
-        className='flex-none mx-1.5'
+        className='flex-none ml-2 mr-1.5'
         transform='scale(.55)'
       />
     </div>

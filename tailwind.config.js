@@ -15,7 +15,8 @@ module.exports = {
       thunder: '#3B3E45',
       storm: '#2F3237',
       night: '#232529',
-      abyss: '#111113'
+      abyss: '#111113',
+      aqua: '#4C88FF'
     },
     extend: {}
   }

@@ -13,8 +13,8 @@ const Footer: React.FC<FooterProps> = ({
   saveFieldChanges
 }) => {
   return(
-    <footer
-      className='bg-thunder w-full h-1/6 fixed bottom-0'
+    <div
+      className='bg-aqua w-full h-1/6 fixed bottom-0'
     >
       {isUnsavedFieldChanges && 
       <>
@@ -39,7 +39,7 @@ const Footer: React.FC<FooterProps> = ({
         </div>
       </>
       }
-    </footer>
+    </div>
   )
 }
 
