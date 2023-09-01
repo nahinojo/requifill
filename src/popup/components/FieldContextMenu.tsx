@@ -92,7 +92,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id, transform
         >
           <button
             id={id}
-            className={menuButtonStyling}
+            className={menuBottomButtonStyling}
             onClick={handleDeactivateField(kebabToCamelCase(id))}
           >Remove
           </button>
