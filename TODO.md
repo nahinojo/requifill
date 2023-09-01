@@ -8,26 +8,24 @@
 
 ### Documentation & Advertise
 
+[ Wait until project is more fleshed out before completing ]
+
 - Fill out the README.md in detail.
 - Make a website for this extension.
 
-[ Wait until project is more fleshed out before completing ]
 
 ### Popup Features
 
-- See design on Figma
-- Instead of saving automatically, ask to save changes to autofill values
+[ See design on Figma ]
+- Set fields to be multivalue and scrollable
+- Clearall values? Remove all fields?
+
 
 ### DOM Manipulation
 
 - Add a visual indicator that the input field contains scrollable values. Maybe an icon or change of styling?
 - Autofill expected value when typing. Maybe include a dropdown for scrolling?
 - Finer decimal scroll when holding down the shift key
-
-### Figma Features
-
-- Add or remove default value fields from popup
-- Set fields to be multivalue and scrollable
 
 ### Other Capabilities
 
