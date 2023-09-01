@@ -15,22 +15,33 @@ interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
 }
 
 const FieldRenderer: FC<FieldRendererProps> = ({onChange, fieldData}) => {
+  const hasActiveItems = Object.values(fieldData).some(field => {return field.isActive})
+  console.log('Object.values(fieldData)', Object.values(fieldData))
+  console.log('hasActiveItems:', hasActiveItems)
   return(
     <>
-      {Object.entries(fieldData!).map(([name, data]) => {
-        if (data.isActive) {
-          const title = data.title == null
+    {hasActiveItems &&
+      <>
+        <header
+        id='autofill-values-title'
+        className='text-silver text-sm mt-3 ml-1'
+        >Autofill Values</header>
+        {Object.entries(fieldData!).map(([name, data]) => {
+          if (data.isActive) {
+            const title = data.title == null
             ? camelToTitleCase(name)
             : data.title
-          return <Field 
+            return <Field 
             name={name}
             title={title}
             id={camelToKebabCase(name)}
             value={data.value}
             onChange={onChange}
-          />
-        }
-      })}
+            />
+          }
+        })}
+      </>
+    }
     </>
   )
 }

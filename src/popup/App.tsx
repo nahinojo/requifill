@@ -18,7 +18,6 @@ const App: FC = () => {
   const [fieldData, setFieldData] = useState<FieldData>({})
   const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
   const [isAddingField, setIsAddingField] = useState(false)
-  const [isEditingField, setIsEditingField] = useState(false)
   // console.log('App render ID:', Math.random())
   // console.log('App.fieldData:', fieldData)
 
@@ -100,10 +99,6 @@ const App: FC = () => {
       <div 
         id='field-container'
       >
-        <header
-          id='autofill-values-title'
-          className='text-silver text-sm mt-3 ml-1'
-        >Autofill Values</header>
         <FieldRenderer
           fieldData={fieldData}
           onChange={updateFieldDataState}

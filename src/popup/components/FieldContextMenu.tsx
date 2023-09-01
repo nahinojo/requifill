@@ -1,12 +1,16 @@
-import React, { FC, HTMLAttributes, useState, useEffect } from 'react'
+import React, { FC, HTMLAttributes, useState, useEffect, ReactEventHandler } from 'react'
 import VerticalDots from './VerticalDots'
+import kebabToCamelCase from '../../common/kebabToCamelCase'
+import syncStorage from '../../common/syncStorage'
 
 interface FieldContextMenuProps extends HTMLAttributes<HTMLElement> {
+  id: string // Forces dependency in props
   transformSVG: string
 }
 
 const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id, transformSVG }) => {  
   const [position, setPosition] = useState<{left: number, top:number} | null>(null)
+  const openContextMenuId = `${id}-context-menu-vdots`
 
   const handleOpenContextMenu = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault()
@@ -15,17 +19,49 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id, transform
     setPosition({ left: x, top: y})
   }
 
+  const handleDeactivateField = (fieldName: string) => {
+    const handleDeactivateFieldTemplate: ReactEventHandler<HTMLButtonElement> = () => {
+      syncStorage
+      .get('fieldData')
+      .then(storage => {
+        const prevFieldData = storage.fieldData !== undefined
+        ? storage.fieldData
+        : {}
+        const currFieldData = { 
+          ...prevFieldData, 
+          [fieldName]: {
+            ...prevFieldData[fieldName],
+            isActive: false
+          }
+        }
+        console.log('handleDeactivateField() currFieldData:', currFieldData)
+        syncStorage
+        .set({
+          fieldData: currFieldData
+        }).catch(
+          error => {
+            console.log(error)
+          }
+        )
+      }).catch(
+        error => {
+          console.log(error)
+        }
+      )
+    }
+    return handleDeactivateFieldTemplate
+  }
+
+
+
   useEffect(() => {
     const handleCloseContextMenu = (evt: MouseEvent) => {
       const clickTarget = evt.target as HTMLElement
       const clickTargetId = clickTarget.id
-      const isClickedVerticalDots = clickTargetId.includes(`${id}-vdots`)
-      if (!isClickedVerticalDots) {
+      const isClickedAway = !clickTargetId.includes(openContextMenuId)
+      if (isClickedAway) {
         setPosition(null)
       }
-      console.log('clickTargetId:', clickTargetId)
-      console.log('checkMatchIdString', `${id}-context-menu-vdots`)
-      console.log('isClickedVerticalDots:', isClickedVerticalDots)
     }
 
     document.addEventListener('click', handleCloseContextMenu)
@@ -34,23 +70,37 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id, transform
       document.removeEventListener('click', handleCloseContextMenu)
     })
   }, [])
+
+  const menuBottomButtonStyling = 'w-full h-9 flex align-middle items-center text-start indent-1 pt-1 text-white'
+  const menuButtonStyling = `${menuBottomButtonStyling} border-b border-solid border-iron`
+
   return(
     <>
       <VerticalDots
         className={className}
-        id={id}
+        id={openContextMenuId}
         transformSVG={transformSVG}
         onClick={handleOpenContextMenu}
       />
       {position &&
         <div
-          className='fixed w-36 h-32 bg-night border border-solid border-iron z-50'
+          className='fixed w-36 h-fit bg-night border border-solid border-iron z-50'
           style={{
             left: `calc(${position.left}px - 9rem)`,
             top: position.top
           }}
-          id='field-context-menu-dropdown'
-        ></div>
+        >
+          <button
+            id={id}
+            className={menuButtonStyling}
+            onClick={handleDeactivateField(kebabToCamelCase(id))}
+          >Remove
+          </button>
+          {/* <button
+            className={menuBottomButtonStyling}
+          >Disable
+          </button> */}
+        </div>
       }
     </>
   )

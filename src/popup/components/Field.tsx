@@ -49,7 +49,7 @@ const Field: FC<FieldProps> = (props) => {
       </div>
       <FieldContextMenu
         className='w-6 h-full flex items-center'
-        id={`${id}-context-menu`}
+        id={id}
         transformSVG='scale(.33)'
       />
     </div>
