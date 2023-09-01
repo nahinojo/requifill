@@ -51,12 +51,13 @@ const NewField: FC<NewFieldProps> = ({fieldData, isAdding: isAdding, setIsAdding
   return (
       <div
         className='mx-1 mt-2'
+        id='new-field'
         >
         {!isAdding &&
         fieldOptions.length !== 0 &&
         <div
           onClick={() => {setIsAdding(true)}}
-          id='new-field-iwrapper'
+          id='new-field-initiator'
           className='flex justify-center w-fit mx-auto cursor-pointer'
         >
           <PlusSVG

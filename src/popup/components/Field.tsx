@@ -5,8 +5,6 @@ import type {
   LabelHTMLAttributes,
   FC,
 } from 'react'
-import syncStorage from '../../common/syncStorage'
-import VerticalDots from './VerticalDots'
 import FieldContextMenu from './FieldContextMenu'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
@@ -32,7 +30,7 @@ const Field: FC<FieldProps> = (props) => {
     >
         <div
           className='flex-1 grow h-full items-center grid grid-cols-2'
-          id={`${id}-wrapper`}
+          id={`${id}-selection`}
         >
           <label
             className='text-base ml-2'
@@ -50,8 +48,8 @@ const Field: FC<FieldProps> = (props) => {
           />
       </div>
       <FieldContextMenu
-        className='flex-none ml-2 mr-1.5'
-        id={id}
+        className='w-4 h-full ml-1.5 mr-1.5 flex items-center'
+        id={`${id}-context-menu`}
       />
     </div>
   )

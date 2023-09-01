@@ -38,7 +38,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id }) => {
       <VerticalDots
         className={className}
         id={id}
-        transform='scale(0.5)'
+        transform='scale(0.4)'
         onClick={handleOpenContextMenu}
       />
       {position &&
