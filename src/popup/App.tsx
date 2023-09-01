@@ -74,10 +74,6 @@ const App: FC = () => {
           phoneNumber: {
             value: '9491234567',
             isActive: false
-          },
-          comment:{
-            value: '',
-            isActive: false
           }
         }
         syncStorage.set({fieldData: initialFieldData})
