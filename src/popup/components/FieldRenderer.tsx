@@ -2,7 +2,7 @@ import React from 'react'
 import type {
   HTMLAttributes,
   FC,
-  ReactEventHandler,
+  ReactEventHandler
 } from 'react'
 import camelToTitleCase from '../../common/camelToTitleCase'
 import camelToKebabCase from '../../common/camelToKebabCase'
@@ -14,11 +14,11 @@ interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
   fieldData: FieldData
 }
 
-const FieldRenderer: FC<FieldRendererProps> = ({onChange, fieldData}) => {
-  const hasActiveItems = Object.values(fieldData).some(field => {return field.isActive})
+const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
+  const hasActiveItems = Object.values(fieldData).some(field => { return field.isActive })
   console.log('Object.values(fieldData)', Object.values(fieldData))
   console.log('hasActiveItems:', hasActiveItems)
-  return(
+  return (
     <>
     {hasActiveItems &&
       <>
@@ -26,19 +26,21 @@ const FieldRenderer: FC<FieldRendererProps> = ({onChange, fieldData}) => {
         id='autofill-values-title'
         className='text-silver text-sm mt-3 ml-1'
         >Autofill Values</header>
-        {Object.entries(fieldData!).map(([name, data]) => {
+        {Object.entries(fieldData).map(([name, data], index) => {
           if (data.isActive) {
             const title = data.title == null
-            ? camelToTitleCase(name)
-            : data.title
-            return <Field 
-            name={name}
-            title={title}
-            id={camelToKebabCase(name)}
-            value={data.value}
-            onChange={onChange}
+              ? camelToTitleCase(name)
+              : data.title
+            return <Field
+              name={name}
+              key={`${camelToKebabCase(name)}-${index}`}
+              title={title}
+              id={camelToKebabCase(name)}
+              value={data.value}
+              onChange={onChange}
             />
           }
+          return null
         })}
       </>
     }

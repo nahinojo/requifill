@@ -1,9 +1,9 @@
 const kebabToCamelCase = (kebabString: string): string => {
-  var camelString =  kebabString[0]
+  let camelString = kebabString[0]
   let i = 1
   let isUpperNextChar = false
   while (i < kebabString.length) {
-    let char = kebabString[i]
+    const char = kebabString[i]
     if (char === '-') {
       isUpperNextChar = true
     } else {
@@ -13,7 +13,6 @@ const kebabToCamelCase = (kebabString: string): string => {
       } else {
         camelString = ''.concat(camelString, char)
       }
-
     }
     i++
   }

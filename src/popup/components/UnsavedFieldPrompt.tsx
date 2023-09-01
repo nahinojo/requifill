@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactEventHandler, useRef } from 'react'
+import React, { type HTMLAttributes, type ReactEventHandler } from 'react'
 
 interface UnsavedFieldPromptProps extends HTMLAttributes<HTMLElement> {
   discardFieldChanges: ReactEventHandler
@@ -9,7 +9,7 @@ const UnsavedFieldPrompt: React.FC<UnsavedFieldPromptProps> = ({
   discardFieldChanges,
   saveFieldChanges
 }) => {
-  return(
+  return (
     <>
       <div
       className='bg-aqua w-full h-1/6 fixed bottom-0'

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
 import PlusSVG from './PlusSVG'
 import syncStorage from '../../common/syncStorage'
 import kebabToCamelCase from '../../common/kebabToCamelCase'
 import camelToTitleCase from '../../common/camelToTitleCase'
-import { FieldData } from '../App'
+import { type FieldData } from '../App'
 import camelToKebabCase from '../../common/camelToKebabCase'
 
 interface NewFieldProps extends HTMLAttributes<HTMLElement> {
@@ -13,39 +13,39 @@ interface NewFieldProps extends HTMLAttributes<HTMLElement> {
   setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const NewField: FC<NewFieldProps> = ({fieldData, isAdding: isAdding, setIsAdding: setIsAdding}) => {
-  const fieldOptions = Object.keys(fieldData).filter(key => !fieldData[key].isActive)
+const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
+  const fieldOptions = Object.keys(fieldData).filter(key => { return !fieldData[key].isActive })
   const buttonFieldStylingBase = 'text-left bg-night border border-solid border-wither pl-3 py-2'
-  const handleActivateField: ReactEventHandler<HTMLButtonElement> =(evt) => {
+  const handleActivateField: ReactEventHandler<HTMLButtonElement> = (evt) => {
     const buttonElement = evt.target as HTMLButtonElement
     const fieldName = kebabToCamelCase(buttonElement.id)
     syncStorage
-    .get('fieldData')
-    .then(storage => {
-      const prevFieldData = storage.fieldData !== undefined
-      ? storage.fieldData
-      : {}
-      const currFieldData = { 
-        ...prevFieldData, 
-        [fieldName]: {
-          ...prevFieldData[fieldName],
-          isActive: true
+      .get('fieldData')
+      .then(storage => {
+        const prevFieldData = storage.fieldData !== undefined
+          ? storage.fieldData
+          : {}
+        const currFieldData = {
+          ...prevFieldData,
+          [fieldName]: {
+            ...prevFieldData[fieldName],
+            isActive: true
+          }
         }
-      }
-      syncStorage
-      .set({
-        fieldData: currFieldData
+        syncStorage
+          .set({
+            fieldData: currFieldData
+          }).catch(
+            error => {
+              console.log(error)
+            }
+          )
+        setIsAdding(false)
       }).catch(
         error => {
           console.log(error)
         }
-        )
-        setIsAdding(false)
-    }).catch(
-      error => {
-        console.log(error)
-      }
-    )
+      )
   }
 
   return (
@@ -56,7 +56,7 @@ const NewField: FC<NewFieldProps> = ({fieldData, isAdding: isAdding, setIsAdding
         {!isAdding &&
         fieldOptions.length !== 0 &&
         <div
-          onClick={() => {setIsAdding(true)}}
+          onClick={() => { setIsAdding(true) }}
           id='new-field-initiator'
           className='flex justify-center w-fit mx-auto cursor-pointer'
         >
@@ -69,7 +69,7 @@ const NewField: FC<NewFieldProps> = ({fieldData, isAdding: isAdding, setIsAdding
           >New Field</button>
         </div>
         }
-        {isAdding && 
+        {isAdding &&
         <div
           className='flex flex-col'
           id='field-selector'
@@ -91,14 +91,16 @@ const NewField: FC<NewFieldProps> = ({fieldData, isAdding: isAdding, setIsAdding
             } else {
               buttonFieldStyling = `${buttonFieldStylingBase} rounded-b-md`
             }
-            return(
+            return (
               <button
-              id={camelToKebabCase(name)}
-              className={buttonFieldStyling}
-              onClick={handleActivateField}
-              >{camelToTitleCase(name)}</button>
-              )
-            })}
+                className={buttonFieldStyling}
+                id={camelToKebabCase(name)}
+                key={`${camelToKebabCase(name)}-${index}`}
+                onClick={handleActivateField}
+              >{camelToTitleCase(name)}
+              </button>
+            )
+          })}
         </div>
         }
       </div>

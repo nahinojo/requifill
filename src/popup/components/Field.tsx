@@ -3,7 +3,7 @@ import type {
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
-  FC,
+  FC
 } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 

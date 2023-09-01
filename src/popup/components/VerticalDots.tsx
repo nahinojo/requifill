@@ -2,13 +2,14 @@ import React from 'react'
 import type { FC, HTMLAttributes } from 'react'
 
 interface VerticalDotsSVGProps extends HTMLAttributes<HTMLElement> {
+  id: string
   transformSVG: string
 }
 
-const VerticalDots: FC<VerticalDotsSVGProps> = ({ className, id, transformSVG, onClick}) => {
+const VerticalDots: FC<VerticalDotsSVGProps> = ({ className, id, transformSVG, onClick }) => {
   return (
     <div
-      className={`${className} cursor-pointer`}
+      className={`${className ?? ''} cursor-pointer`}
       id={`${id}-vdots`}
       onClick={onClick}
     >
@@ -22,8 +23,8 @@ const VerticalDots: FC<VerticalDotsSVGProps> = ({ className, id, transformSVG, o
           <path
             id={`${id}-vdots-path`}
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-width="3"
+            strokeLinecap="round"
+            strokeWidth="3"
             d="M1.5 2h.01M1.5 7h.01m-.01 5h.01"
           />
       </svg>

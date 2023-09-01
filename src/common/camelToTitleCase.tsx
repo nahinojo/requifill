@@ -1,8 +1,8 @@
 const camelToTitleCase = (camelString: string): string => {
-  var titleString = camelString[0].toUpperCase()
+  let titleString = camelString[0].toUpperCase()
   let i = 1
   while (i < camelString.length) {
-    let char = camelString[i]
+    const char = camelString[i]
     if (char !== char.toUpperCase()) {
       titleString = ''.concat(titleString, char)
     } else {
