@@ -38,7 +38,7 @@ const Field: FC<FieldProps> = (props) => {
             htmlFor={`${id}-input`}
           >{title}</label>
           <input
-            className='bg-iron text-base h-3/5 rounded indent-1 pt-1'
+            className='bg-iron text-base h-9 ml-7 rounded indent-2 pt-1'
             id={`${id}-input`}
             name={name}
             value={value}
@@ -48,8 +48,9 @@ const Field: FC<FieldProps> = (props) => {
           />
       </div>
       <FieldContextMenu
-        className='w-4 h-full ml-1.5 mr-1.5 flex items-center'
+        className='w-6 h-full flex items-center'
         id={`${id}-context-menu`}
+        transformSVG='scale(.33)'
       />
     </div>
   )
