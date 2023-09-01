@@ -26,9 +26,7 @@ if (isProperURL) {
         const { fieldData } = storage
         for (const fieldName in fieldData) {
           const fieldValue = fieldData[fieldName]
-          const targetInput = document.getElementById(
-            nameToIdDict[fieldName as NameToIdDictKeys]
-          ) as HTMLInputElement
+          const targetInput = document.getElementById(nameToIdDict[fieldName as NameToIdDictKeys]) as HTMLInputElement
           // Prevents duplicate injections of adHocUserId.
           const neglectAdHocUserId = (
             fieldName === 'adHocUserId' &&
@@ -51,9 +49,7 @@ if (isProperURL) {
       .then(storage => {
         const { fieldData } = storage
         for (const fieldName in fieldData) {
-          const targetInput = document.getElementById(
-            nameToIdDict[fieldName as NameToIdDictKeys]
-          ) as HTMLInputElement
+          const targetInput = document.getElementById(nameToIdDict[fieldName as NameToIdDictKeys]) as HTMLInputElement
           // Prevents duplicate injections of adHocUserId.
           const neglectAdHocUserId = (
             fieldName === 'adHocUserId' &&
@@ -72,26 +68,30 @@ if (isProperURL) {
   /*
   Executes on initial page load.
   */
-  getIsAutofill().then(isAutofill => {
-    if (isAutofill) {
-      autofill()
-    }
-  }).catch(error => {
-    console.log(error)
-  })
+  getIsAutofill()
+    .then(isAutofill => {
+      if (isAutofill) {
+        autofill()
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
 
   /*
   Executes when autofill switch is toggled.
   */
   syncStorage.onChanged.addListener(() => {
-    getIsAutofill().then(isAutofill => {
-      if (isAutofill) {
-        autofill()
-      } else {
-        autoclear()
-      }
-    }).catch(error => {
-      console.log(error)
-    })
+    getIsAutofill()
+      .then(isAutofill => {
+        if (isAutofill) {
+          autofill()
+        } else {
+          autoclear()
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
   })
 }

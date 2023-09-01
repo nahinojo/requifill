@@ -24,8 +24,10 @@ module.exports = {
   ],
   rules: {
     'arrow-body-style': ['error', 'always'],
-    'function-paren-newline': ['error', 'multiline-arguments'],
+    'function-call-argument-newline': ['error', 'consistent'],
+    'function-paren-newline': ['error', { minItems: 3 }],
     'implicit-arrow-linebreak': ['error', 'below'],
+    'newline-per-chained-call': ['error', { ignoreChainWithDepth: 1 }],
     'sort-keys': ['error', 'asc', { natural: true }]
   },
   settings: {

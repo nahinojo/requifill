@@ -26,10 +26,8 @@ if (isProperURL) {
   Enchance any list-based input.
   Scrolling cycles through list within target input element.
   */
-  const addOptionsScroller = (
-    id: string,
-    options: string[]
-  ): void => {
+  const addOptionsScroller = (id: string,
+    options: string[]): void => {
     const targetInput = document.getElementById(id) as HTMLInputElement
     const setInputValue = focusInputValue(targetInput)
     let currentIdx = (
@@ -83,16 +81,12 @@ if (isProperURL) {
     })
   }
 
-  const addOptionsScrollerSelector = (
-    selector: string,
-    options: string[]
-  ): void => {
+  const addOptionsScrollerSelector = (selector: string,
+    options: string[]): void => {
     const elements = document.querySelectorAll(selector)
     for (let i = 0; i < elements.length; i++) {
-      addOptionsScroller(
-        elements[i].id,
-        options
-      )
+      addOptionsScroller(elements[i].id,
+        options)
     }
   }
 
@@ -111,20 +105,14 @@ if (isProperURL) {
     }
   }
 
-  addOptionsScroller(
-    'document.documentHeader.documentDescription',
-    ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg']
-  )
+  addOptionsScroller('document.documentHeader.documentDescription',
+    ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg'])
 
-  addOptionsScroller(
-    'document.documentHeader.organizationDocumentNumber',
-    ['080p', '081p']
-  )
+  addOptionsScroller('document.documentHeader.organizationDocumentNumber',
+    ['080p', '081p'])
 
-  addOptionsScrollerSelector(
-    '[id$=".itemUnitOfMeasureCode"]',
-    ['UN', 'PK']
-  )
+  addOptionsScrollerSelector('[id$=".itemUnitOfMeasureCode"]',
+    ['UN', 'PK'])
 
   addNumericScrollerSelector(
     '[id$=".itemQuantity"]',

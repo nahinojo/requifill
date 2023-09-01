@@ -22,9 +22,7 @@ const App: FC = () => {
   /*
   Keeps fieldData synchronized with values in <input> elements.
   */
-  const updateFieldDataState: ReactEventHandler<HTMLInputElement> = (
-    evt: ChangeEvent<HTMLInputElement>
-  ) => {
+  const updateFieldDataState: ReactEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target
     if (fieldData != null) {
       setFieldData(prevFieldData => {
@@ -43,11 +41,9 @@ const App: FC = () => {
   const saveFieldChanges: ReactEventHandler<HTMLInputElement> = () => {
     syncStorage
       .set({ fieldData })
-      .catch(
-        error => {
-          console.log(error)
-        }
-      )
+      .catch(error => {
+        console.log(error)
+      })
     setIsUnsavedFieldChanges(false)
   }
 

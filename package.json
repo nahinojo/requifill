@@ -10,6 +10,7 @@
     "dev:extension": "concurrently \"npm run build:webpack:watch\" \"web-ext run --source-dir ./dist/\"",
     "dev:extension:devtools": "concurrently \"npm run build:webpack:watch\" \"web-ext run --source-dir ./dist/ --devtools\"",
     "lint": "npx eslint ./src/**/**.{ts,tsx}",
+    "lint:fix": "npx eslint ./src/**/**.{ts,tsx} --fix",
     "lint:debug": "npx eslint ./src/**/**.{ts,tsx} --debug"
   },
   "keywords": [],

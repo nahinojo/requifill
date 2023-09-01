@@ -5,5 +5,6 @@ import './styles/popup.css'
 
 const root = document.getElementById('root') as HTMLDivElement | null
 if (root !== null) {
-  createRoot(root).render(<App />)
+  createRoot(root)
+    .render(<App />)
 }

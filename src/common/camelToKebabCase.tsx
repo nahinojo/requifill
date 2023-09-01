@@ -6,7 +6,9 @@ const camelToKebabCase = (camelString: string): string => {
     if (char !== char.toUpperCase()) {
       kebabString = ''.concat(kebabString, char)
     } else {
-      kebabString = ''.concat(kebabString, '-', char.toLowerCase())
+      kebabString = ''.concat(
+        kebabString, '-', char.toLowerCase()
+      )
     }
     i++
   }

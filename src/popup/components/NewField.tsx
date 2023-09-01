@@ -14,7 +14,8 @@ interface NewFieldProps extends HTMLAttributes<HTMLElement> {
 }
 
 const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
-  const fieldOptions = Object.keys(fieldData).filter(key => { return !fieldData[key].isActive })
+  const fieldOptions = Object.keys(fieldData)
+    .filter(key => { return !fieldData[key].isActive })
   const buttonFieldStylingBase = 'text-left bg-night border border-solid border-wither pl-3 py-2'
   const handleActivateField: ReactEventHandler<HTMLButtonElement> = (evt) => {
     const buttonElement = evt.target as HTMLButtonElement
@@ -35,17 +36,15 @@ const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
         syncStorage
           .set({
             fieldData: currFieldData
-          }).catch(
-            error => {
-              console.log(error)
-            }
-          )
+          })
+          .catch(error => {
+            console.log(error)
+          })
         setIsAdding(false)
-      }).catch(
-        error => {
-          console.log(error)
-        }
-      )
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   return (

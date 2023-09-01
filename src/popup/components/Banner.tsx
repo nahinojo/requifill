@@ -16,9 +16,10 @@ const Banner: React.FC = () => {
       settings: {
         isAutofill: !isAutofill
       }
-    }).catch(error => {
-      console.log(error)
     })
+      .catch(error => {
+        console.log(error)
+      })
     setIsAutofill(isAutofill => {
       return !isAutofill
     })
@@ -28,12 +29,14 @@ const Banner: React.FC = () => {
   Synchronizes component state with browser storage on initial render
   */
   useEffect(() => {
-    getIsAutofill().then(isAutofillStorage => {
-      setIsAutofill(isAutofillStorage)
-      setIsLoading(false)
-    }).catch(error => {
-      console.log(error)
-    })
+    getIsAutofill()
+      .then(isAutofillStorage => {
+        setIsAutofill(isAutofillStorage)
+        setIsLoading(false)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }, [])
 
   return (
