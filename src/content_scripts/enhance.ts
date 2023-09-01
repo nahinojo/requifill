@@ -1,6 +1,5 @@
 /*
-Improves the DOM elements of requisition form, such as allowing integer
-scrolling of numeric inputs.
+Adds features to requisition form DOM elements.
 */
 import isProperURL from '../common/isProperURL'
 
@@ -17,7 +16,7 @@ if (isProperURL) {
   }
 
   /*
-  Assists the cyclical indexing of Arrays.
+  Assists cyclicaly indexing Arrays.
   */
   const modulo = (m: number, n: number): number => {
     return ((n % m) + m) % m

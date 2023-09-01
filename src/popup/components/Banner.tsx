@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Switch from './Switch'
 import syncStorage from '../../common/syncStorage'
-import getIsAutofillStorage from '../../common/getIsAutofillStorage'
+import getIsAutofill from '../../common/getIsAutofill'
 import type { ReactEventHandler } from 'react'
 
 const Banner: React.FC = () => {
@@ -28,7 +28,7 @@ const Banner: React.FC = () => {
   Synchronizes component state with browser storage on initial render
   */
   useEffect(() => {
-    getIsAutofillStorage().then(isAutofillStorage => {
+    getIsAutofill().then(isAutofillStorage => {
       setIsAutofill(isAutofillStorage)
       setIsLoading(false)
     }).catch(error => {
@@ -38,8 +38,8 @@ const Banner: React.FC = () => {
 
   return (
     <div
-      id='toggle-autofill-background'
       className='bg-thunder w-full h-16 flex items-center'
+      id='toggle-autofill-background'
     >
       <Switch
         className='ml-1'
@@ -48,9 +48,9 @@ const Banner: React.FC = () => {
         handleToggle={handleAutofillChange}
       />
       <h1
-        id='toggle-autofill-title'
         className='font-bold ml-2 mt-1'
-      >Toggle Autofill</h1>
+        id='toggle-autofill-title'
+      >Enable Autofill</h1>
     </div>
   )
 }

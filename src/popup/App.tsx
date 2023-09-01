@@ -1,94 +1,116 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
-import Banner from './components/Banner'
-import Field from './components/FieldItem'
 import syncStorage from '../common/syncStorage'
+import Banner from './components/Banner'
+import NewField from './components/NewField'
+import FieldRenderer from './components/FieldRenderer'
+import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
 
-interface FieldDict {
-  adHocUserId: string
-  commodityCode: string
-  roomNumber: string
+export interface FieldData {
+  [name: string]: {
+    title?: string
+    value: string
+    isActive: boolean
+  };
 }
 
 const App: FC = () => {
-  const [fields, setFields] = useState<FieldDict>({
-    adHocUserId: '',
-    commodityCode: '',
-    roomNumber: ''
-  })
+  const [fieldData, setFieldData] = useState<FieldData>({})
+  const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
+  const [isAddingField, setIsAddingField] = useState(false)
+  // console.log('App render ID:', Math.random())
+  // console.log('App.fieldData:', fieldData)
 
   /*
-  Abstraction of changing one specific key-value in fields.
+  Keeps fieldData synchronized with values in <input> elements.
   */
-  const updateFields = (name: string, value: string): void => {
-    setFields(prevFieldValues => {
-      return {
-        ...prevFieldValues,
-        [name]: value
-      }
-    })
-  }
-
-  /*
-  Synchronizes field input value with fields stored by browser.
-  */
-  const handleFieldChange: ReactEventHandler<HTMLInputElement> = (
+  const updateFieldDataState: ReactEventHandler<HTMLInputElement> = (
     evt: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = evt.target
-    updateFields(name, value)
+    if (fieldData != null) {
+      setFieldData(prevFieldData => {
+        return {
+          ...prevFieldData,
+          [name]: {
+            ...prevFieldData[name],
+            value: value
+          }
+        }
+      })
+    }
+    setIsUnsavedFieldChanges(true)
+  }
+
+  const saveFieldChanges: ReactEventHandler<HTMLInputElement> =() => {
+    syncStorage.set({fieldData: fieldData})
+    setIsUnsavedFieldChanges(false)
+  }
+
+  const discardFieldChanges: ReactEventHandler<HTMLInputElement> =() => {
+    syncStorage.get().then(storage => {
+      setFieldData(storage.fieldData)
+    })
+    setIsUnsavedFieldChanges(false)
   }
 
   /*
-  Synchronizes field state to match browser storage on refresh
+  Fills in field <input> elements on page load.
+  Ensure fieldData is in sync with browser storage.
   */
   useEffect(() => {
-    syncStorage.get()
-      .then((storage) => {
-        const { fieldData } = storage
-        for (const fieldName in fieldData) {
-          const fieldValue = fieldData[fieldName]
-          updateFields(fieldName, fieldValue)
+    syncStorage.get().then(storage => {
+      if (Object.keys(storage).length <= 0) {
+        const initialFieldData = {
+          adHocUserId: {
+            title: 'Ad Hoc User ID',
+            value: 'adarami',
+            isActive: true,
+          },
+          commodityCode: {
+            value: '7786413',
+            isActive: false,
+          },
+          phoneNumber: {
+            value: '9491234567',
+            isActive: false
+          }
         }
-      }).catch(error => { console.log(error) })
+        syncStorage.set({fieldData: initialFieldData})
+        setFieldData(initialFieldData)
+      } else {
+        setFieldData(storage.fieldData)
+      }
+    })
+    syncStorage.onChanged.addListener(() => {
+      syncStorage.get().then(storage => {
+        setFieldData(storage.fieldData)
+      })
+    })
   }, [])
+  
   return (
     <>
       <Banner />
-      <div className='field-container'>
-        <header
-          className='text-silver text-xs mt-3 ml-1'
-        >Autofill Values</header>
-        <form>
-          <Field
-            name='roomNumber'
-            title='Room Number'
-            id='room-number'
-            type='text'
-            pattern='^\d*$'
-            value={fields.roomNumber}
-            onChange={handleFieldChange}
-          />
-          <Field
-            name='commodityCode'
-            title='Commodity Code'
-            id='commodity-code'
-            type='text'
-            pattern='^\d*$'
-            inputMode='numeric'
-            value={fields.commodityCode}
-            onChange={handleFieldChange}
-          />
-          <Field
-            name='adHocUserId'
-            title='Ad Hoc User ID'
-            id='ad-hoc-user-id'
-            type='text'
-            value={fields.adHocUserId}
-            onChange={handleFieldChange}
-          />
-        </form>
+      <div 
+        id='field-container'
+      >
+        <FieldRenderer
+          fieldData={fieldData}
+          onChange={updateFieldDataState}
+        />
       </div>
+      <NewField
+        fieldData={fieldData}
+        isAdding={isAddingField}
+        setIsAdding={setIsAddingField}
+      /> 
+      {isUnsavedFieldChanges &&
+        <UnsavedFieldPrompt
+          discardFieldChanges={discardFieldChanges}
+          saveFieldChanges={saveFieldChanges}
+        />     
+      }
     </>
   )
 }

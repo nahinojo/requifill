@@ -1,14 +1,14 @@
 /*
 Injects field values from browser storage into the requisition form's input
-elements
+elements.
 */
 import syncStorage from '../common/syncStorage'
 import isProperURL from '../common/isProperURL'
-import getIsAutofillStorage from '../common/getIsAutofillStorage'
+import getIsAutofill from '../common/getIsAutofill'
 
 if (isProperURL) {
   /*
-  Since actualy DOM IDs are absurdly long, a shorthand translation dict is used
+  Since requisition form DOM IDs are absurdly long, a shorthand translation dict is used.
   */
   type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
   const nameToIdDict = {
@@ -18,7 +18,7 @@ if (isProperURL) {
   }
 
   /*
-  Uses field data from browser storage to autofill requisition form <input> elements
+  Retrieves field data from browser storage to autofill requisition form <input> elements.
   */
   const autofill = (): void => {
     syncStorage.get()
@@ -29,7 +29,7 @@ if (isProperURL) {
           const targetInput = document.getElementById(
             nameToIdDict[fieldName as NameToIdDictKeys]
           ) as HTMLInputElement
-          // Prevents duplicate injections of adHocUserId
+          // Prevents duplicate injections of adHocUserId.
           const neglectAdHocUserId = (
             fieldName === 'adHocUserId' &&
                 document.getElementById('adHocRoutePerson[0].id') !== null
@@ -44,7 +44,7 @@ if (isProperURL) {
       })
   }
   /*
-  Empties all field data from all requisition form <input> elements
+  Empties all field data from all requisition form <input> elements.
   */
   const autoclear = (): void => {
     syncStorage.get()
@@ -54,7 +54,7 @@ if (isProperURL) {
           const targetInput = document.getElementById(
             nameToIdDict[fieldName as NameToIdDictKeys]
           ) as HTMLInputElement
-          // Prevents duplicate injections of adHocUserId
+          // Prevents duplicate injections of adHocUserId.
           const neglectAdHocUserId = (
             fieldName === 'adHocUserId' &&
                 document.getElementById('adHocRoutePerson[0].id') !== null
@@ -70,9 +70,9 @@ if (isProperURL) {
   }
 
   /*
-  Executes on initial page load
+  Executes on initial page load.
   */
-  getIsAutofillStorage().then(isAutofill => {
+  getIsAutofill().then(isAutofill => {
     if (isAutofill) {
       autofill()
     }
@@ -81,10 +81,10 @@ if (isProperURL) {
   })
 
   /*
-  Executes autofill switch is toggled
+  Executes when autofill switch is toggled.
   */
   syncStorage.onChanged.addListener(() => {
-    getIsAutofillStorage().then(isAutofill => {
+    getIsAutofill().then(isAutofill => {
       if (isAutofill) {
         autofill()
       } else {
