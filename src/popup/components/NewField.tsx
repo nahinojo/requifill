@@ -7,13 +7,13 @@ import camelToTitleCase from '../../common/camelToTitleCase'
 import { FieldData } from '../App'
 import camelToKebabCase from '../../common/camelToKebabCase'
 
-interface FieldSelectorProps extends HTMLAttributes<HTMLElement> {
+interface NewFieldProps extends HTMLAttributes<HTMLElement> {
   fieldData: FieldData
   isAdding: boolean
   setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const FieldAdder: FC<FieldSelectorProps> = ({fieldData, isAdding: isAdding, setIsAdding: setIsAdding}) => {
+const NewField: FC<NewFieldProps> = ({fieldData, isAdding: isAdding, setIsAdding: setIsAdding}) => {
   const fieldOptions = Object.keys(fieldData).filter(key => !fieldData[key].isActive)
   const buttonFieldStylingBase = 'text-left bg-night border border-solid border-wither pl-3 py-2'
   const handleActivateField: ReactEventHandler<HTMLButtonElement> =(evt) => {
@@ -104,4 +104,4 @@ const FieldAdder: FC<FieldSelectorProps> = ({fieldData, isAdding: isAdding, setI
   )
 }
 
-export default FieldAdder
+export default NewField
