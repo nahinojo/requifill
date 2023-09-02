@@ -6,7 +6,7 @@ interface VerticalDotsSVGProps extends HTMLAttributes<HTMLElement> {
   transformSVG: string
 }
 
-const VerticalDots: FC<VerticalDotsSVGProps> = ({ className, id, transformSVG, onClick }) => {
+const VerticalDots: FC<VerticalDotsSVGProps> = ({ id, transformSVG, onClick }) => {
   return (
     <div
       className='w-6 h-full flex items-center cursor-pointer'

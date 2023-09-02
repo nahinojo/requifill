@@ -7,7 +7,7 @@ interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {
   isToggled: boolean
 }
 
-const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isToggled, isLoading }) => {
+const Switch: React.FC<SwitchProps> = ({ handleToggle, isToggled, isLoading }) => {
   if (isLoading) {
     return (
       <div

@@ -10,7 +10,7 @@ interface FieldContextMenuProps extends HTMLAttributes<HTMLElement> {
   transformSVG: string
 }
 
-const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id, transformSVG }) => {
+const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
   const openContextMenuId = `${id}-context-menu-vdots`
 
