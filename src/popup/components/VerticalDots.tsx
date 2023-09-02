@@ -9,24 +9,24 @@ interface VerticalDotsSVGProps extends HTMLAttributes<HTMLElement> {
 const VerticalDots: FC<VerticalDotsSVGProps> = ({ className, id, transformSVG, onClick }) => {
   return (
     <div
-      className={`${className ?? ''} cursor-pointer`}
+      className='w-6 h-full flex items-center cursor-pointer'
       id={`${id}-vdots`}
       onClick={onClick}
     >
       <svg
-        id={`${id}-vdots-svg`}
-        xmlns="http://www.w3.org/2000/svg"
         fill="none"
-        viewBox="0 0 4 14"
+        id={`${id}-vdots-svg`}
         transform={transformSVG}
+        viewBox="0 0 4 14"
+        xmlns="http://www.w3.org/2000/svg"
       >
-          <path
-            id={`${id}-vdots-path`}
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeWidth="3"
-            d="M1.5 2h.01M1.5 7h.01m-.01 5h.01"
-          />
+        <path
+          d="M1.5 2h.01M1.5 7h.01m-.01 5h.01"
+          id={`${id}-vdots-path`}
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="3"
+        />
       </svg>
     </div>
   )

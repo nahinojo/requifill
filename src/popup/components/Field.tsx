@@ -16,9 +16,9 @@ interface FieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
 
-const Field: FC<FieldProps> = (props) => {
+const Field: FC<FieldProps> = ({ id, name, title, value, onChange }) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { id, name, title, value, onChange } = props
+
   if (id === undefined) {
     throw new Error('React component ID not found.')
   }
@@ -28,28 +28,27 @@ const Field: FC<FieldProps> = (props) => {
       className='bg-thunder rounded mx-1 mb-1 h-14 flex flex-row flex-nowrap items-stretch'
       id={id}
     >
-        <div
-          className='flex-1 grow h-full items-center grid grid-cols-2'
-          id={`${id}-selection`}
-        >
-          <label
-            className='text-base ml-2'
-            id={`${id}-label`}
-            htmlFor={`${id}-input`}
-          >{title}
-          </label>
-          <input
-            className='bg-iron text-base h-9 ml-7 rounded indent-2 pt-1'
-            id={`${id}-input`}
-            name={name}
-            value={value}
-            ref={inputRef}
-            type={'text'}
-            onChange={onChange}
-          />
-        </div>
+      <div
+        className='flex-1 grow h-full items-center grid grid-cols-2'
+        id={`${id}-selection`}
+      >
+        <label
+          className='text-base ml-2'
+          htmlFor={`${id}-input`}
+          id={`${id}-label`}
+        >{title}
+        </label>
+        <input
+          className='bg-iron text-base h-9 ml-7 rounded indent-2 pt-1'
+          id={`${id}-input`}
+          name={name}
+          ref={inputRef}
+          type={'text'}
+          value={value}
+          onChange={onChange}
+        />
+      </div>
       <FieldContextMenu
-        className='w-6 h-full flex items-center'
         id={id}
         transformSVG='scale(.33)'
       />

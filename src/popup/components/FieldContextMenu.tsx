@@ -75,31 +75,35 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id, transform
   return (
     <>
       <VerticalDots
-        className={className}
         id={openContextMenuId}
         transformSVG={transformSVG}
         onClick={handleOpenContextMenu}
       />
-      {(position != null) && (
-        <div
-          className='fixed w-36 h-fit bg-night border border-solid border-iron z-50'
-          style={{
-            left: `calc(${position.left}px - 9rem)`,
-            top: position.top
-          }}
-        >
-          <button
-            id={id}
-            className={menuBottomButtonStyling}
-            onClick={handleDeactivateField(kebabToCamelCase(id))}
-          >Remove
-          </button>
-          {/* <button
+      {
+(position != null) && (
+<div
+  style={
+ {
+   left: `calc(${position.left}px - 9rem)`,
+   top: position.top
+ }
+}
+  className='fixed w-36 h-fit bg-night border border-solid border-iron z-50'
+>
+  <button
+    className={menuBottomButtonStyling}
+    id={id}
+    type='button'
+    onClick={handleDeactivateField(kebabToCamelCase(id))}
+  >Remove
+  </button>
+  {/* <button
             className={menuBottomButtonStyling}
           >Disable
           </button> */}
-        </div>
-      )}
+</div>
+)
+}
     </>
   )
 }

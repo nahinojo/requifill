@@ -10,23 +10,23 @@ interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {
 const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isToggled, isLoading }) => {
   if (isLoading) {
     return (
-<div
-  className={`switch-track ${className ?? ''}`}
->
-</div>
+      <div
+        className='switch-track ml-1'
+      >
+      </div>
     )
   }
   return (
     <>
       <input
+        checked={isToggled}
         className='toggle-switch'
         id='toggle-autofill'
         type='checkbox'
-        checked={isToggled}
         onChange={handleToggle}
       />
       <label
-        className={`switch-track ${className ?? ''}`}
+        className='switch-track ml-1'
         htmlFor='toggle-autofill'
       >
         <span

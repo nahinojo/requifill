@@ -45,10 +45,9 @@ const Banner: React.FC = () => {
       id='toggle-autofill-background'
     >
       <Switch
-        className='ml-1'
+        handleToggle={handleAutofillChange}
         isLoading={isLoading}
         isToggled={isAutofill}
-        handleToggle={handleAutofillChange}
       />
       <h1
         className='font-bold ml-2 mt-1'

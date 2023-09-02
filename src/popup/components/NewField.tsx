@@ -48,63 +48,71 @@ const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
   }
 
   return (
-      <div
-        className='mx-1 mt-2'
-        id='new-field'
-      >
-        {!isAdding &&
+    <div
+      className='mx-1 mt-2'
+      id='new-field'
+    >
+      {
+!isAdding &&
         fieldOptions.length !== 0 && (
         <div
-          onClick={() => { setIsAdding(true) }}
-          id='new-field-initiator'
           className='flex justify-center w-fit mx-auto cursor-pointer'
+          id='new-field-initiator'
+          onClick={() => { setIsAdding(true) }}
         >
-          <PlusSVG
-            className='mr-1 mt-0.5'
-          />
+          <PlusSVG />
           <button
-            id='new-field'
             className='text-sm text-silver'
+            id='new-field'
+            type='button'
           >New Field
           </button>
         </div>
-        )}
-        {isAdding && (
-        <div
-          className='flex flex-col'
-          id='field-selector'
-        >
-          <h1
-            className='mx-auto font-bold text-sm'
-          >Add Autofill Field
-          </h1>
-          {fieldOptions.map((name, index) => {
-            let buttonFieldStyling: string
-            if (index === 0) {
-              buttonFieldStyling = `${buttonFieldStylingBase} rounded-t-md`
-              if (fieldOptions.length > 1) {
-                buttonFieldStyling = `${buttonFieldStyling} border-b-0`
-              } else {
-                buttonFieldStyling = `${buttonFieldStyling} rounded-b-md`
-              }
-            } else if (index < fieldOptions.length - 1) {
-              buttonFieldStyling = `${buttonFieldStylingBase} border-b-0`
-            } else {
-              buttonFieldStyling = `${buttonFieldStylingBase} rounded-b-md`
-            }
-            return (
-              <button
-                className={buttonFieldStyling}
-                id={camelToKebabCase(name)}
-                key={`${camelToKebabCase(name)}-${index}`}
-                onClick={handleActivateField}
-              >{camelToTitleCase(name)}
-              </button>
-            )
-          })}
-        </div>
-        )}
-      </div>
+)
+}
+      {
+!!isAdding && (
+<div
+  className='flex flex-col'
+  id='field-selector'
+>
+  <h1
+    className='mx-auto font-bold text-sm'
+  >Add Autofill Field
+  </h1>
+  {
+fieldOptions.map((name, index) => {
+  let buttonFieldStyling: string
+  if (index === 0) {
+    buttonFieldStyling = `${buttonFieldStylingBase} rounded-t-md`
+    if (fieldOptions.length > 1) {
+      buttonFieldStyling = `${buttonFieldStyling} border-b-0`
+    } else {
+      buttonFieldStyling = `${buttonFieldStyling} rounded-b-md`
+    }
+  } else if (index < fieldOptions.length - 1) {
+    buttonFieldStyling = `${buttonFieldStylingBase} border-b-0`
+  } else {
+    buttonFieldStyling = `${buttonFieldStylingBase} rounded-b-md`
+  }
+  return (
+    <button
+      className={buttonFieldStyling}
+      id={camelToKebabCase(name)}
+      key={`${camelToKebabCase(name)}-${index}`}
+      type='button'
+      onClick={handleActivateField}
+    >{
+camelToTitleCase(name)
+}
+    </button>
+  )
+})
+}
+</div>
+)
+}
+    </div>
   )
 }
 
