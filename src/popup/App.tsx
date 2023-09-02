@@ -63,52 +63,54 @@ const App: FC = () => {
   Fills in field <input> elements on page load.
   Ensure fieldData is in sync with browser storage.
   */
-  useEffect(() => {
-    syncStorage
-      .get()
-      .then(storage => {
-        if (Object.keys(storage).length <= 0) {
-          const initialFieldData = {
-            adHocUserId: {
-              isActive: true,
-              title: 'Ad Hoc User ID',
-              value: 'adarami'
-            },
-            commodityCode: {
-              isActive: false,
-              value: '7786413'
-            },
-            phoneNumber: {
-              isActive: false,
-              value: '9491234567'
-            }
-          }
-          syncStorage
-            .set({
-              fieldData: initialFieldData
-            })
-            .catch(error => {
-              console.log(error)
-            })
-          setFieldData(initialFieldData)
-        } else {
-          setFieldData(storage.fieldData)
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    syncStorage.onChanged.addListener(() => {
+  useEffect(
+    () => {
       syncStorage
         .get()
         .then(storage => {
-          setFieldData(storage.fieldData)
+          if (Object.keys(storage).length <= 0) {
+            const initialFieldData = {
+              adHocUserId: {
+                isActive: true,
+                title: 'Ad Hoc User ID',
+                value: 'adarami'
+              },
+              commodityCode: {
+                isActive: false,
+                value: '7786413'
+              },
+              phoneNumber: {
+                isActive: false,
+                value: '9491234567'
+              }
+            }
+            syncStorage
+              .set({
+                fieldData: initialFieldData
+              })
+              .catch(error => {
+                console.log(error)
+              })
+            setFieldData(initialFieldData)
+          } else {
+            setFieldData(storage.fieldData)
+          }
         })
         .catch(error => {
           console.log(error)
         })
-    })
-  }, [])
+      syncStorage.onChanged.addListener(() => {
+        syncStorage
+          .get()
+          .then(storage => {
+            setFieldData(storage.fieldData)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
+    }, []
+  )
 
   return (
     <>
@@ -127,13 +129,13 @@ const App: FC = () => {
         setIsAdding={setIsAddingField}
       />
       {
-!!isUnsavedFieldChanges && (
-<UnsavedFieldPrompt
-  discardFieldChanges={discardFieldChanges}
-  saveFieldChanges={saveFieldChanges}
-/>
-)
-}
+        !!isUnsavedFieldChanges && (
+          <UnsavedFieldPrompt
+            discardFieldChanges={discardFieldChanges}
+            saveFieldChanges={saveFieldChanges}
+          />
+        )
+      }
     </>
   )
 }

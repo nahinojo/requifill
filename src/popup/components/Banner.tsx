@@ -28,16 +28,18 @@ const Banner: React.FC = () => {
   /*
   Synchronizes component state with browser storage on initial render
   */
-  useEffect(() => {
-    getIsAutofill()
-      .then(isAutofillStorage => {
-        setIsAutofill(isAutofillStorage)
-        setIsLoading(false)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }, [])
+  useEffect(
+    () => {
+      getIsAutofill()
+        .then(isAutofillStorage => {
+          setIsAutofill(isAutofillStorage)
+          setIsLoading(false)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }, []
+  )
 
   return (
     <div

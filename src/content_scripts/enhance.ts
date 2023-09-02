@@ -18,16 +18,21 @@ if (isProperURL) {
   /*
   Assists cyclicaly indexing Arrays.
   */
-  const modulo = (m: number, n: number): number => {
-    return ((n % m) + m) % m
+  const modulo = (
+    mod: number,
+    num: number
+  ): number => {
+    return ((num % mod) + mod) % mod
   }
 
   /*
   Enchance any list-based input.
   Scrolling cycles through list within target input element.
   */
-  const addOptionsScroller = (id: string,
-    options: string[]): void => {
+  const addOptionsScroller = (
+    id: string,
+    options: string[]
+  ): void => {
     const targetInput = document.getElementById(id) as HTMLInputElement
     const setInputValue = focusInputValue(targetInput)
     let currentIdx = (
@@ -35,19 +40,25 @@ if (isProperURL) {
         ? options.indexOf(targetInput.value)
         : 0
     )
-    targetInput.addEventListener('wheel', (evt) => {
-      evt.preventDefault()
-      if (options.includes(targetInput.value)) {
-        if (evt.deltaY > 0) {
-          currentIdx = modulo(options.length, (currentIdx + 1))
+    targetInput.addEventListener(
+      'wheel', (evt) => {
+        evt.preventDefault()
+        if (options.includes(targetInput.value)) {
+          if (evt.deltaY > 0) {
+            currentIdx = modulo(
+              options.length, (currentIdx + 1)
+            )
+          } else {
+            currentIdx = modulo(
+              options.length, (currentIdx - 1)
+            )
+          }
         } else {
-          currentIdx = modulo(options.length, (currentIdx - 1))
+          currentIdx = 0
         }
-      } else {
-        currentIdx = 0
+        setInputValue(options[currentIdx])
       }
-      setInputValue(options[currentIdx])
-    })
+    )
   }
 
   /*
@@ -62,31 +73,37 @@ if (isProperURL) {
     const targetInput = document.getElementById(id) as HTMLInputElement
     const setInputValue = focusInputValue(targetInput)
     let currentNumber = defaultNumber
-    targetInput.addEventListener('wheel', (evt) => {
-      evt.preventDefault()
-      const inputContainsValidNumber = (
-        Number(targetInput.value) !== null &&
+    targetInput.addEventListener(
+      'wheel', (evt) => {
+        evt.preventDefault()
+        const inputContainsValidNumber = (
+          Number(targetInput.value) !== null &&
         Number(targetInput.value) >= defaultNumber)
-      if (inputContainsValidNumber) {
-        currentNumber = Number(targetInput.value)
-        if (evt.deltaY < 0) {
-          currentNumber += 1
-        } else if (Number(targetInput.value) !== defaultNumber) {
-          currentNumber -= 1
+        if (inputContainsValidNumber) {
+          currentNumber = Number(targetInput.value)
+          if (evt.deltaY < 0) {
+            currentNumber += 1
+          } else if (Number(targetInput.value) !== defaultNumber) {
+            currentNumber -= 1
+          }
+        } else {
+          currentNumber = defaultNumber
         }
-      } else {
-        currentNumber = defaultNumber
+        setInputValue(currentNumber.toFixed(decimalPlace))
       }
-      setInputValue(currentNumber.toFixed(decimalPlace))
-    })
+    )
   }
 
-  const addOptionsScrollerSelector = (selector: string,
-    options: string[]): void => {
+  const addOptionsScrollerSelector = (
+    selector: string,
+    options: string[]
+  ): void => {
     const elements = document.querySelectorAll(selector)
     for (let i = 0; i < elements.length; i++) {
-      addOptionsScroller(elements[i].id,
-        options)
+      addOptionsScroller(
+        elements[i].id,
+        options
+      )
     }
   }
 
@@ -105,14 +122,20 @@ if (isProperURL) {
     }
   }
 
-  addOptionsScroller('document.documentHeader.documentDescription',
-    ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg'])
+  addOptionsScroller(
+    'document.documentHeader.documentDescription',
+    ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg']
+  )
 
-  addOptionsScroller('document.documentHeader.organizationDocumentNumber',
-    ['080p', '081p'])
+  addOptionsScroller(
+    'document.documentHeader.organizationDocumentNumber',
+    ['080p', '081p']
+  )
 
-  addOptionsScrollerSelector('[id$=".itemUnitOfMeasureCode"]',
-    ['UN', 'PK'])
+  addOptionsScrollerSelector(
+    '[id$=".itemUnitOfMeasureCode"]',
+    ['UN', 'PK']
+  )
 
   addNumericScrollerSelector(
     '[id$=".itemQuantity"]',

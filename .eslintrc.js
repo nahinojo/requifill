@@ -26,9 +26,18 @@ module.exports = {
     'arrow-body-style': ['error', 'always'],
     'function-call-argument-newline': ['error', 'consistent'],
     'function-paren-newline': ['error', {
-      minItems: 3
+      minItems: 2
     }],
     'implicit-arrow-linebreak': ['error', 'below'],
+    indent: ['error', 2, {
+      ArrayExpression: 'first',
+      FunctionExpression: {
+        body: 1,
+        parameters: 1
+      },
+      MemberExpression: 1,
+      ObjectExpression: 'first'
+    }],
     'newline-per-chained-call': ['error', {
       ignoreChainWithDepth: 1
     }],

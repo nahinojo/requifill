@@ -36,7 +36,9 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
               isActive: false
             }
           }
-          console.log('handleDeactivateField() currFieldData:', currFieldData)
+          console.log(
+            'handleDeactivateField() currFieldData:', currFieldData
+          )
           syncStorage
             .set({
               fieldData: currFieldData
@@ -52,22 +54,28 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
     return handleDeactivateFieldTemplate
   }
 
-  useEffect(() => {
-    const handleCloseContextMenu = (evt: MouseEvent): void => {
-      const clickTarget = evt.target as HTMLElement
-      const clickTargetId = clickTarget.id
-      const isClickedAway = !clickTargetId.includes(openContextMenuId)
-      if (isClickedAway) {
-        setPosition(null)
+  useEffect(
+    () => {
+      const handleCloseContextMenu = (evt: MouseEvent): void => {
+        const clickTarget = evt.target as HTMLElement
+        const clickTargetId = clickTarget.id
+        const isClickedAway = !clickTargetId.includes(openContextMenuId)
+        if (isClickedAway) {
+          setPosition(null)
+        }
       }
-    }
 
-    document.addEventListener('click', handleCloseContextMenu)
+      document.addEventListener(
+        'click', handleCloseContextMenu
+      )
 
-    return () => {
-      document.removeEventListener('click', handleCloseContextMenu)
-    }
-  }, [])
+      return () => {
+        document.removeEventListener(
+          'click', handleCloseContextMenu
+        )
+      }
+    }, []
+  )
 
   const menuBottomButtonStyling = 'w-full h-9 flex align-middle items-center text-start indent-1 pt-1 text-white'
   // const menuButtonStyling = `${menuBottomButtonStyling} border-b border-solid border-iron`
@@ -80,30 +88,32 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
         onClick={handleOpenContextMenu}
       />
       {
-(position != null) && (
-<div
-  style={
- {
-   left: `calc(${position.left}px - 9rem)`,
-   top: position.top
- }
-}
-  className='fixed w-36 h-fit bg-night border border-solid border-iron z-50'
->
-  <button
-    className={menuBottomButtonStyling}
-    id={id}
-    type='button'
-    onClick={handleDeactivateField(kebabToCamelCase(id))}
-  >Remove
-  </button>
-  {/* <button
-            className={menuBottomButtonStyling}
-          >Disable
-          </button> */}
-</div>
-)
-}
+        (position != null) && (
+          <div
+            style={
+              {
+                left: `calc(${position.left}px - 9rem)`,
+                top: position.top
+              }
+            }
+            className='fixed w-36 h-fit bg-night border border-solid border-iron z-50'
+          >
+            <button
+              className={menuBottomButtonStyling}
+              id={id}
+              type='button'
+              onClick={handleDeactivateField(kebabToCamelCase(id))}
+            >Remove
+            </button>
+            {/*
+            <button
+              className={menuBottomButtonStyling}
+            >Disable
+            </button>
+            */}
+          </div>
+        )
+      }
     </>
   )
 }

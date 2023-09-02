@@ -8,10 +8,14 @@ const kebabToCamelCase = (kebabString: string): string => {
       isUpperNextChar = true
     } else {
       if (isUpperNextChar) {
-        camelString = ''.concat(camelString, char.toUpperCase())
+        camelString = ''.concat(
+          camelString, char.toUpperCase()
+        )
         isUpperNextChar = false
       } else {
-        camelString = ''.concat(camelString, char)
+        camelString = ''.concat(
+          camelString, char
+        )
       }
     }
     i++
