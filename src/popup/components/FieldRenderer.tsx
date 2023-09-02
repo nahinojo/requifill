@@ -6,7 +6,7 @@ import type {
 } from 'react'
 import camelToTitleCase from '../../common/camelToTitleCase'
 import camelToKebabCase from '../../common/camelToKebabCase'
-import Field from './Field'
+import SingleField from './SingleField'
 import type { FieldData } from '../../popup/App'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
@@ -38,7 +38,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
                       ? camelToTitleCase(name)
                       : data.title
                     return (
-                      <Field
+                      <SingleField
                         id={camelToKebabCase(name)}
                         key={`${camelToKebabCase(name)}-${index}`}
                         name={name}
