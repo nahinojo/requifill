@@ -16,7 +16,7 @@ interface FieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
 
-const Field: FC<FieldProps> = ({ id, name, title, value, onChange }) => {
+const Field: FC<FieldProps> = ({ id, name, onChange, title, value }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   if (id === undefined) {
