@@ -19,31 +19,34 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
     .some(field => { return field.isActive })
   return (
     <>
-    {hasActiveItems &&
+    {hasActiveItems && (
       <>
         <header
-        id='autofill-values-title'
-        className='text-silver text-sm mt-3 ml-1'
-        >Autofill Values</header>
+          id='autofill-values-title'
+          className='text-silver text-sm mt-3 ml-1'
+        >Autofill Values
+        </header>
         {Object.entries(fieldData)
           .map(([name, data], index) => {
             if (data.isActive) {
               const title = data.title == null
                 ? camelToTitleCase(name)
                 : data.title
-              return <Field
-              name={name}
-              key={`${camelToKebabCase(name)}-${index}`}
-              title={title}
-              id={camelToKebabCase(name)}
-              value={data.value}
-              onChange={onChange}
-            />
+              return (
+<Field
+  name={name}
+  key={`${camelToKebabCase(name)}-${index}`}
+  title={title}
+  id={camelToKebabCase(name)}
+  value={data.value}
+  onChange={onChange}
+/>
+              )
             }
             return null
           })}
       </>
-    }
+    )}
     </>
   )
 }

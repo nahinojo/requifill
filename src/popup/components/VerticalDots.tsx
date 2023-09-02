@@ -19,7 +19,7 @@ const VerticalDots: FC<VerticalDotsSVGProps> = ({ className, id, transformSVG, o
         fill="none"
         viewBox="0 0 4 14"
         transform={transformSVG}
-        >
+      >
           <path
             id={`${id}-vdots-path`}
             stroke="currentColor"

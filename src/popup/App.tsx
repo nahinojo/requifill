@@ -126,12 +126,12 @@ const App: FC = () => {
         isAdding={isAddingField}
         setIsAdding={setIsAddingField}
       />
-      {isUnsavedFieldChanges &&
+      {isUnsavedFieldChanges && (
         <UnsavedFieldPrompt
           discardFieldChanges={discardFieldChanges}
           saveFieldChanges={saveFieldChanges}
         />
-      }
+      )}
     </>
   )
 }

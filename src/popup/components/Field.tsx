@@ -36,7 +36,8 @@ const Field: FC<FieldProps> = (props) => {
             className='text-base ml-2'
             id={`${id}-label`}
             htmlFor={`${id}-input`}
-          >{title}</label>
+          >{title}
+          </label>
           <input
             className='bg-iron text-base h-9 ml-7 rounded indent-2 pt-1'
             id={`${id}-input`}
@@ -46,7 +47,7 @@ const Field: FC<FieldProps> = (props) => {
             type={'text'}
             onChange={onChange}
           />
-      </div>
+        </div>
       <FieldContextMenu
         className='w-6 h-full flex items-center'
         id={id}

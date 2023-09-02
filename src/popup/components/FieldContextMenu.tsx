@@ -80,7 +80,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id, transform
         transformSVG={transformSVG}
         onClick={handleOpenContextMenu}
       />
-      {(position != null) &&
+      {(position != null) && (
         <div
           className='fixed w-36 h-fit bg-night border border-solid border-iron z-50'
           style={{
@@ -99,7 +99,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ className, id, transform
           >Disable
           </button> */}
         </div>
-      }
+      )}
     </>
   )
 }

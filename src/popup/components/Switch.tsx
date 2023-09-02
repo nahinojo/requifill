@@ -8,7 +8,14 @@ interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {
 }
 
 const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isToggled, isLoading }) => {
-  if (isLoading) return <div className={`switch-track ${className ?? ''}`}></div>
+  if (isLoading) {
+    return (
+<div
+  className={`switch-track ${className ?? ''}`}
+>
+</div>
+    )
+  }
   return (
     <>
       <input
@@ -21,8 +28,10 @@ const Switch: React.FC<SwitchProps> = ({ className, handleToggle, isToggled, isL
       <label
         className={`switch-track ${className ?? ''}`}
         htmlFor='toggle-autofill'
-        >
-        <span className='switch-slider' />
+      >
+        <span
+          className='switch-slider'
+        />
       </label>
     </>
   )

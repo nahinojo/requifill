@@ -51,9 +51,9 @@ const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
       <div
         className='mx-1 mt-2'
         id='new-field'
-        >
+      >
         {!isAdding &&
-        fieldOptions.length !== 0 &&
+        fieldOptions.length !== 0 && (
         <div
           onClick={() => { setIsAdding(true) }}
           id='new-field-initiator'
@@ -63,19 +63,21 @@ const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
             className='mr-1 mt-0.5'
           />
           <button
-          id='new-field'
+            id='new-field'
             className='text-sm text-silver'
-          >New Field</button>
+          >New Field
+          </button>
         </div>
-        }
-        {isAdding &&
+        )}
+        {isAdding && (
         <div
           className='flex flex-col'
           id='field-selector'
         >
           <h1
             className='mx-auto font-bold text-sm'
-          >Add Autofill Field</h1>
+          >Add Autofill Field
+          </h1>
           {fieldOptions.map((name, index) => {
             let buttonFieldStyling: string
             if (index === 0) {
@@ -101,7 +103,7 @@ const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
             )
           })}
         </div>
-        }
+        )}
       </div>
   )
 }
