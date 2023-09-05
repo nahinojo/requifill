@@ -7,13 +7,13 @@ import camelToTitleCase from '../../common/camelToTitleCase'
 import { type FieldData } from '../App'
 import camelToKebabCase from '../../common/camelToKebabCase'
 
-interface NewFieldProps extends HTMLAttributes<HTMLElement> {
+interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
   fieldData: FieldData
   isAdding: boolean
   setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
+const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
   const fieldOptions = Object.keys(fieldData)
     .filter(key => { return !fieldData[key].isActive })
   const buttonFieldStylingBase = 'text-left bg-night border border-solid border-wither pl-3 py-2'
@@ -50,7 +50,7 @@ const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
   return (
     <div
       className='mx-1 mt-2'
-      id='new-field'
+      id='add-new-field'
     >
       {
         !isAdding &&
@@ -62,7 +62,7 @@ const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
           >
             <PlusSVG />
             <button
-              className='text-sm text-silver'
+              className='text-sm text-silver hover:underline'
               id='new-field'
               type='button'
             >New Field
@@ -116,4 +116,4 @@ const NewField: FC<NewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
   )
 }
 
-export default NewField
+export default AddNewField

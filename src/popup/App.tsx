@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import syncStorage from '../common/syncStorage'
 import Banner from './components/Banner'
-import NewField from './components/NewField'
+import AddNewField from './components/AddNewField'
 import FieldRenderer from './components/FieldRenderer'
 import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
 
@@ -123,7 +123,7 @@ const App: FC = () => {
           onChange={updateFieldDataState}
         />
       </div>
-      <NewField
+      <AddNewField
         fieldData={fieldData}
         isAdding={isAddingField}
         setIsAdding={setIsAddingField}
