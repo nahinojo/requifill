@@ -6,18 +6,16 @@ import AddNewField from './components/AddNewField'
 import FieldRenderer from './components/FieldRenderer'
 import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
 
-export type FieldData = Record<string, {
+export type FieldDataProps = Record<string, {
   title?: string
-  value: string
+  autofillValue: string | Record<number, string>
   isActive: boolean
 }>
 
 const App: FC = () => {
-  const [fieldData, setFieldData] = useState<FieldData>({})
+  const [fieldData, setFieldData] = useState<FieldDataProps>({})
   const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
   const [isAddingField, setIsAddingField] = useState(false)
-  // console.log('App render ID:', Math.random())
-  // console.log('App.fieldData:', fieldData)
 
   /*
   Keeps fieldData synchronized with values in <input> elements.
@@ -30,7 +28,7 @@ const App: FC = () => {
           ...prevFieldData,
           [name]: {
             ...prevFieldData[name],
-            value
+            autofillValue: value
           }
         }
       })
@@ -71,17 +69,17 @@ const App: FC = () => {
           if (Object.keys(storage).length <= 0) {
             const initialFieldData = {
               adHocUserId: {
+                autofillValue: 'adarami',
                 isActive: true,
-                title: 'Ad Hoc User ID',
-                value: 'adarami'
+                title: 'Ad Hoc User ID'
               },
               commodityCode: {
-                isActive: false,
-                value: '7786413'
+                autofillValue: '7786413',
+                isActive: false
               },
               phoneNumber: {
-                isActive: false,
-                value: '9491234567'
+                autofillValue: '9491234567',
+                isActive: false
               }
             }
             syncStorage

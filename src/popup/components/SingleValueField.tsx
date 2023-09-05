@@ -10,15 +10,18 @@ import FieldContextMenu from './FieldContextMenu'
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
 type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
-'type' | 'pattern' | 'value' | 'onChange' | 'name' | 'inputMode'
+'type' | 'pattern' | 'onChange' | 'name' | 'inputMode'
 >
 interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
-  id: string
 }
 
-const SingleValueField: FC<SingleValueFieldProps> = ({ id, name, onChange, title, value }) => {
+const SingleValueField: FC<SingleValueFieldProps> = ({ id, name, onChange, title }) => {
   const inputRef = useRef<HTMLInputElement>(null)
+
+  if (id === undefined) {
+    throw new Error('React component ID not found.')
+  }
 
   return (
     <div
@@ -41,7 +44,6 @@ const SingleValueField: FC<SingleValueFieldProps> = ({ id, name, onChange, title
           name={name}
           ref={inputRef}
           type={'text'}
-          value={value}
           onChange={onChange}
         />
       </div>

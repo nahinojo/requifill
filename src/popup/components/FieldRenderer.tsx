@@ -7,12 +7,12 @@ import type {
 import camelToTitleCase from '../../common/camelToTitleCase'
 import camelToKebabCase from '../../common/camelToKebabCase'
 import SingleValueField from './SingleValueField'
-import type { FieldData } from '../../popup/App'
+import type { FieldDataProps } from '../../popup/App'
 import MultiValueField from './MultiValueField'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
   onChange: ReactEventHandler
-  fieldData: FieldData
+  fieldData: FieldDataProps
 }
 
 const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
@@ -35,17 +35,34 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
                 .map((
                   [name, data], index
                 ) => {
-                  if (data.isActive) {
-                    const title = data.title == null
-                      ? camelToTitleCase(name)
-                      : data.title
+                  const title = data.title == null
+                    ? camelToTitleCase(name)
+                    : data.title
+                  const key = `${camelToKebabCase(name)}-${index}`
+                  const id = camelToKebabCase(name)
+                  if (
+                    data.isActive &&
+                    Object.keys(data.autofillValue).length === 1
+                  ) {
                     return (
                       <SingleValueField
-                        id={camelToKebabCase(name)}
-                        key={`${camelToKebabCase(name)}-${index}`}
+                        id={id}
+                        key={key}
                         name={name}
                         title={title}
-                        value={data.value}
+                        onChange={onChange}
+                      />
+                    )
+                  } else if (
+                    Object.keys(data.autofillValue).length > 1
+                  ) {
+                    return (
+                      <MultiValueField
+                        id={id}
+                        key={key}
+                        multiValues={data.autofillValue as Record<number, string>}
+                        name={name}
+                        title={title}
                         onChange={onChange}
                       />
                     )
@@ -56,10 +73,6 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
           </>
         )
       }
-      <MultiValueField
-        id='test-muiltifield'
-        title='Test Multifield'
-      />
     </>
   )
 }

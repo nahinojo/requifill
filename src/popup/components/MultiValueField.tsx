@@ -3,8 +3,7 @@ import type {
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
-  FC,
-  ReactEventHandler
+  FC
 } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 import ChevronPointer from './icons/ChevronPointer'
@@ -14,22 +13,24 @@ import VerticalArrows from './icons/VerticalArrows'
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
 type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
-'type' | 'pattern' | 'value' | 'onChange' | 'name' | 'inputMode'
+'type' | 'onChange' | 'name' | 'inputMode'
 >
+
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
-  title: string
+  multiValues: Record<number, string>
   id: string
+  title: string
 }
 
-const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, value }) => {
+const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, multiValues }) => {
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleOnClickUp: ReactEventHandler<HTMLElement> = () => {
+  const handleOnClickUp = (): void => {
     console.log('Clicked up!')
   }
 
-  const handleOnClickDown: ReactEventHandler<HTMLElement> = () => {
+  const handleOnClickDown = (): void => {
     console.log('Clicked down!')
   }
 
@@ -101,25 +102,38 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, 
                 transformSVG='scale(.33)'
               />
             </div>
-            <div
-              className='h-14 mx-1 bg-overcast border-y border-silver grid grid-cols-12 items-center'
-            >
-              <VerticalArrows
-                id={id}
-                onClickDown={handleOnClickDown}
-                onClickUp={handleOnClickUp}
-              />
-              <input
-                className='bg-iron text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1'
-                id={`${id}-input`}
-                name={name}
-                ref={inputRef}
-                type={'text'}
-                value={value}
-                onChange={onChange}
-              />
-              <Trash />
-            </div>
+            {
+              Array(multiValues)
+                .map((
+                  val, index
+                ) => {
+                  console.log(
+                    'val:', val
+                  )
+                  return (
+                    <div
+                      className='h-14 mx-1 bg-overcast border-y border-silver grid grid-cols-12 items-center'
+                      key={`key-${index}`}
+                    >
+                      <VerticalArrows
+                        id={id}
+                        onClickDown={handleOnClickDown}
+                        onClickUp={handleOnClickUp}
+                      />
+                      <input
+                        className='bg-iron text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1'
+                        id={`${id}-input`}
+                        name={name}
+                        ref={inputRef}
+                        type={'text'}
+                        value='test'
+                        onChange={onChange}
+                      />
+                      <Trash />
+                    </div>
+                  )
+                })
+            }
           </>
         )
       }

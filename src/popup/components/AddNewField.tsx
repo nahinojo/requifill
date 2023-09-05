@@ -4,11 +4,11 @@ import Plus from './icons/Plus'
 import syncStorage from '../../common/syncStorage'
 import kebabToCamelCase from '../../common/kebabToCamelCase'
 import camelToTitleCase from '../../common/camelToTitleCase'
-import { type FieldData } from '../App'
+import { type FieldDataProps } from '../App'
 import camelToKebabCase from '../../common/camelToKebabCase'
 
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
-  fieldData: FieldData
+  fieldData: FieldDataProps
   isAdding: boolean
   setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
 }
