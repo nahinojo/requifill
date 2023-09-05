@@ -4,7 +4,7 @@ import syncStorage from '../../common/syncStorage'
 import getIsAutofill from '../../common/getIsAutofill'
 import type { ReactEventHandler } from 'react'
 
-const Banner: React.FC = () => {
+const ToggleAutofillHeader: React.FC = () => {
   const [isAutofill, setIsAutofill] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
@@ -60,4 +60,4 @@ const Banner: React.FC = () => {
   )
 }
 
-export default Banner
+export default ToggleAutofillHeader

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import type { FC, ReactEventHandler, ChangeEvent } from 'react'
 import syncStorage from '../common/syncStorage'
-import Banner from './components/Banner'
+import ToggleAutofillHeader from './components/ToggleAutofillHeader'
 import AddNewField from './components/AddNewField'
 import FieldRenderer from './components/FieldRenderer'
 import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
@@ -22,7 +22,7 @@ const App: FC = () => {
   /*
   Keeps fieldData synchronized with values in <input> elements.
   */
-  const updateFieldDataState: ReactEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
+  const updateStateFieldData: ReactEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target
     if (fieldData != null) {
       setFieldData(prevFieldData => {
@@ -114,13 +114,13 @@ const App: FC = () => {
 
   return (
     <>
-      <Banner />
+      <ToggleAutofillHeader />
       <div
         id='field-container'
       >
         <FieldRenderer
           fieldData={fieldData}
-          onChange={updateFieldDataState}
+          onChange={updateStateFieldData}
         />
       </div>
       <AddNewField

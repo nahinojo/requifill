@@ -1,6 +1,6 @@
 import React from 'react'
 import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
-import PlusSVG from './PlusSVG'
+import PlusIcon from './PlusIcon'
 import syncStorage from '../../common/syncStorage'
 import kebabToCamelCase from '../../common/kebabToCamelCase'
 import camelToTitleCase from '../../common/camelToTitleCase'
@@ -60,7 +60,7 @@ const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding })
             id='new-field-initiator'
             onClick={() => { setIsAdding(true) }}
           >
-            <PlusSVG />
+            <PlusIcon />
             <button
               className='text-sm text-silver hover:underline'
               id='new-field'

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import VerticalDots from './VerticalDots'
+import VerticalDotsIcon from './VerticalDotsIcon'
 import kebabToCamelCase from '../../common/kebabToCamelCase'
 import syncStorage from '../../common/syncStorage'
 
@@ -82,7 +82,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
 
   return (
     <>
-      <VerticalDots
+      <VerticalDotsIcon
         id={openContextMenuId}
         transformSVG={transformSVG}
         onClick={handleOpenContextMenu}

@@ -6,8 +6,9 @@ import type {
 } from 'react'
 import camelToTitleCase from '../../common/camelToTitleCase'
 import camelToKebabCase from '../../common/camelToKebabCase'
-import SingleField from './SingleField'
+import SingleValueField from './SingleValueField'
 import type { FieldData } from '../../popup/App'
+import MultiValueField from './MultiValueField'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
   onChange: ReactEventHandler
@@ -18,6 +19,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
   const hasActiveItems = Object
     .values(fieldData)
     .some(field => { return field.isActive })
+
   return (
     <>
       {
@@ -38,7 +40,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
                       ? camelToTitleCase(name)
                       : data.title
                     return (
-                      <SingleField
+                      <SingleValueField
                         id={camelToKebabCase(name)}
                         key={`${camelToKebabCase(name)}-${index}`}
                         name={name}
@@ -54,6 +56,10 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
           </>
         )
       }
+      <MultiValueField
+        id='test-muiltifield'
+        title='Test Multifield'
+      />
     </>
   )
 }

@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import type {
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
-  FC,
-  ReactNode
+  FC
 } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 
@@ -13,13 +12,12 @@ type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
 type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 'type' | 'pattern' | 'value' | 'onChange' | 'name' | 'inputMode'
 >
-interface FieldTemplateProps extends HTMLProps, LabelProps, InputProps {
+interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
-  extraElements: ReactNode
 }
 
-const FieldTemplate: FC<FieldTemplateProps> = ({ id, title, extraElements }) => {
-  // const inputRef = useRef<HTMLInputElement>(null)
+const SingleValueField: FC<SingleValueFieldProps> = ({ id, name, onChange, title, value }) => {
+  const inputRef = useRef<HTMLInputElement>(null)
 
   if (id === undefined) {
     throw new Error('React component ID not found.')
@@ -40,7 +38,15 @@ const FieldTemplate: FC<FieldTemplateProps> = ({ id, title, extraElements }) => 
           id={`${id}-label`}
         >{title}
         </label>
-        {extraElements}
+        <input
+          className='bg-iron text-base h-9 ml-7 rounded indent-2 pt-1'
+          id={`${id}-input`}
+          name={name}
+          ref={inputRef}
+          type={'text'}
+          value={value}
+          onChange={onChange}
+        />
       </div>
       <FieldContextMenu
         id={id}
@@ -50,4 +56,4 @@ const FieldTemplate: FC<FieldTemplateProps> = ({ id, title, extraElements }) => 
   )
 }
 
-export default FieldTemplate
+export default SingleValueField
