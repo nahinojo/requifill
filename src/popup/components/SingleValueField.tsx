@@ -14,14 +14,11 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
+  id: string
 }
 
 const SingleValueField: FC<SingleValueFieldProps> = ({ id, name, onChange, title, value }) => {
   const inputRef = useRef<HTMLInputElement>(null)
-
-  if (id === undefined) {
-    throw new Error('React component ID not found.')
-  }
 
   return (
     <div

@@ -1,12 +1,12 @@
 import React from 'react'
 import type { FC, HTMLAttributes } from 'react'
 
-interface VerticalDotsIconProps extends HTMLAttributes<HTMLElement> {
+interface VerticalDotsProps extends HTMLAttributes<HTMLElement> {
   id: string
   transformSVG: string
 }
 
-const VerticalDotsIcon: FC<VerticalDotsIconProps> = ({ id, transformSVG, onClick }) => {
+const VerticalDots: FC<VerticalDotsProps> = ({ id, transformSVG, onClick }) => {
   return (
     <div
       className='w-6 h-full flex items-center cursor-pointer'
@@ -32,4 +32,4 @@ const VerticalDotsIcon: FC<VerticalDotsIconProps> = ({ id, transformSVG, onClick
   )
 }
 
-export default VerticalDotsIcon
+export default VerticalDots

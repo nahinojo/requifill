@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import VerticalDotsIcon from './VerticalDotsIcon'
+import VerticalDotsIcon from './icons/VerticalDots'
 import kebabToCamelCase from '../../common/kebabToCamelCase'
 import syncStorage from '../../common/syncStorage'
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Switch from './Switch'
+import Switch from './icons/Switch'
 import syncStorage from '../../common/syncStorage'
 import getIsAutofill from '../../common/getIsAutofill'
 import type { ReactEventHandler } from 'react'

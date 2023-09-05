@@ -11,7 +11,7 @@ module.exports = {
       platinum: '#ACB0B8',
       silver: '#838995',
       iron: '#6A6F7C',
-      wither: '#525660',
+      overcast: '#525660',
       thunder: '#3B3E45',
       storm: '#2F3237',
       night: '#232529',

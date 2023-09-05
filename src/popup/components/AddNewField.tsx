@@ -1,6 +1,6 @@
 import React from 'react'
 import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
-import PlusIcon from './PlusIcon'
+import Plus from './icons/Plus'
 import syncStorage from '../../common/syncStorage'
 import kebabToCamelCase from '../../common/kebabToCamelCase'
 import camelToTitleCase from '../../common/camelToTitleCase'
@@ -16,7 +16,7 @@ interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
 const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
   const fieldOptions = Object.keys(fieldData)
     .filter(key => { return !fieldData[key].isActive })
-  const buttonFieldStylingBase = 'text-left bg-night border border-solid border-wither pl-3 py-2'
+  const buttonFieldStylingBase = 'text-left bg-night border border-solid border-overcast pl-3 py-2'
   const handleActivateField: ReactEventHandler<HTMLButtonElement> = (evt) => {
     const buttonElement = evt.target as HTMLButtonElement
     const fieldName = kebabToCamelCase(buttonElement.id)
@@ -60,7 +60,7 @@ const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding })
             id='new-field-initiator'
             onClick={() => { setIsAdding(true) }}
           >
-            <PlusIcon />
+            <Plus />
             <button
               className='text-sm text-silver hover:underline'
               id='new-field'
