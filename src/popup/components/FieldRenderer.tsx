@@ -43,7 +43,6 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
                     data.isActive &&
                     typeof value === 'string'
                   ) {
-                    console.log('Generating SignleValueField')
                     return (
                       <SingleValueField
                         id={id}
@@ -58,7 +57,6 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
                     data.isActive &&
                     typeof data.autofillValue === 'object'
                   ) {
-                    console.log('Generating MultiValueField')
                     return (
                       <MultiValueField
                         id={id}

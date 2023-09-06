@@ -29,6 +29,9 @@ const App: FC = () => {
     console.log(
       'targetId:', targetId
     )
+    console.log(
+      'value:', value
+    )
     const fieldIdRegex = /^[^.]*/
     const fieldId = String(targetId.match(fieldIdRegex))
     if (fieldId === null) {
@@ -39,22 +42,38 @@ const App: FC = () => {
     )
 
     const fieldIdIndexRegex = /[0-9]*[0-9]/
-    const fieldIdIndex = targetId.match(fieldIdIndexRegex)
+    const fieldIdIndex = Number(targetId.match(fieldIdIndexRegex))
     console.log(
       'fieldIdIndex:', fieldIdIndex
     )
 
     if (fieldData != null) {
       setFieldData(prevFieldData => {
-        return {
-          ...prevFieldData,
-          [fieldId]: {
-            ...prevFieldData[fieldId],
-            autofillValue: value
+        let currFieldData
+        if (typeof fieldData[fieldId].autofillValue === 'string') {
+          currFieldData = {
+            ...prevFieldData,
+            [fieldId]: {
+              ...prevFieldData[fieldId],
+              autofillValue: value
+            }
+          }
+        } else {
+          currFieldData = {
+            ...prevFieldData,
+            [fieldId]: {
+              ...prevFieldData[fieldId],
+              autofillValue: {
+                ...prevFieldData[fieldId].autofillValue as Record<number, string>,
+                [fieldIdIndex]: value
+              }
+            }
           }
         }
+        return currFieldData
       })
     }
+
     setIsUnsavedFieldChanges(true)
   }
 
