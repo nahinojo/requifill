@@ -229,7 +229,7 @@ const App: FC = () => {
   return (
     <>
       <ToggleAutofillHeader />
-      <div
+      <div // Is this necessary?
         id='field-container'
       >
         <FieldRenderer
