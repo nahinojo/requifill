@@ -4,7 +4,7 @@ import type {
   FC,
   ReactEventHandler
 } from 'react'
-import camelToTitleCase from '../../common/camelToTitleCase'
+import camelToTitleCase from '../../utils/camelToTitleCase'
 import SingleValueField from './SingleValueField'
 import type { FieldDataProps } from '../../popup/App'
 import MultiValueField from './MultiValueField'
@@ -13,10 +13,10 @@ interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
   handleOnClickDown: ReactEventHandler<HTMLElement>
   handleOnClickUp: ReactEventHandler<HTMLElement>
   fieldData: FieldDataProps
-  updateStateFieldData: ReactEventHandler<HTMLInputElement>
+  syncStateFieldData: ReactEventHandler<HTMLInputElement>
 }
 
-const FieldRenderer: FC<FieldRendererProps> = ({ handleOnClickDown, handleOnClickUp, updateStateFieldData, fieldData }) => {
+const FieldRenderer: FC<FieldRendererProps> = ({ handleOnClickDown, handleOnClickUp, syncStateFieldData, fieldData }) => {
   const hasActiveItems = Object
     .values(fieldData)
     .some(field => { return field.isActive })
@@ -49,8 +49,8 @@ const FieldRenderer: FC<FieldRendererProps> = ({ handleOnClickDown, handleOnClic
                       <SingleValueField
                         id={id}
                         key={key}
+                        syncStateFieldData={syncStateFieldData}
                         title={title}
-                        updateStateFieldData={updateStateFieldData}
                         value={value}
                       />
                     )
@@ -65,8 +65,8 @@ const FieldRenderer: FC<FieldRendererProps> = ({ handleOnClickDown, handleOnClic
                         id={id}
                         key={key}
                         multiValues={Object.values(data.autofillValue)}
+                        syncStateFieldData={syncStateFieldData}
                         title={title}
-                        updateStateFieldData={updateStateFieldData}
                       />
                     )
                   }

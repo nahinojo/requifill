@@ -1,7 +1,7 @@
 /*
 Adds features to requisition form DOM elements.
 */
-import isProperURL from '../common/isProperURL'
+import isProperURL from '../utils/isProperURL'
 
 if (isProperURL) {
   /*

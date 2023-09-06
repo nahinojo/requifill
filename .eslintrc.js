@@ -23,6 +23,7 @@ module.exports = {
     'react'
   ],
   rules: {
+    '@typescript-eslint/indent': 'off',
     'arrow-body-style': ['error', 'always'],
     'function-call-argument-newline': ['error', 'consistent'],
     'function-paren-newline': ['error', {

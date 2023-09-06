@@ -15,10 +15,10 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
-  updateStateFieldData: ReactEventHandler<HTMLInputElement>
+  syncStateFieldData: ReactEventHandler<HTMLInputElement>
 }
 
-const SingleValueField: FC<SingleValueFieldProps> = ({ id, updateStateFieldData, title, value }) => {
+const SingleValueField: FC<SingleValueFieldProps> = ({ id, syncStateFieldData, title, value }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   if (id === undefined) {
@@ -46,7 +46,7 @@ const SingleValueField: FC<SingleValueFieldProps> = ({ id, updateStateFieldData,
           ref={inputRef}
           type={'text'}
           value={value}
-          onChange={updateStateFieldData}
+          onChange={syncStateFieldData}
         />
       </div>
       <FieldContextMenu

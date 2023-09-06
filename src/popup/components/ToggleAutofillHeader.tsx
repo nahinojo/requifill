@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Switch from './icons/Switch'
-import syncStorage from '../../common/syncStorage'
-import getIsAutofill from '../../common/getIsAutofill'
+import syncStorage from '../../utils/syncStorage'
+import getIsAutofill from '../../utils/getIsAutofill'
 import type { ReactEventHandler } from 'react'
 
 const ToggleAutofillHeader: React.FC = () => {

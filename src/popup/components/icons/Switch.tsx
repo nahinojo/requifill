@@ -1,7 +1,7 @@
 import React from 'react'
 import type { HTMLAttributes, ReactEventHandler } from 'react'
 
-interface SwitchProps extends HTMLAttributes<HTMLLabelElement> {
+interface SwitchProps extends HTMLAttributes<HTMLInputElement> {
   handleToggle: ReactEventHandler<HTMLInputElement>
   isLoading: boolean
   isToggled: boolean
@@ -23,7 +23,7 @@ const Switch: React.FC<SwitchProps> = ({ handleToggle, isToggled, isLoading }) =
         className='toggle-switch'
         id='toggle-autofill'
         type='checkbox'
-        updateStateFieldData={handleToggle}
+        onChange={handleToggle}
       />
       <label
         className='switch-track ml-1'

@@ -2,9 +2,9 @@
 Injects field values from browser storage into the requisition form's input
 elements.
 */
-import syncStorage from '../common/syncStorage'
-import isProperURL from '../common/isProperURL'
-import getIsAutofill from '../common/getIsAutofill'
+import syncStorage from '../utils/syncStorage'
+import isProperURL from '../utils/isProperURL'
+import getIsAutofill from '../utils/getIsAutofill'
 
 if (isProperURL) {
   /*

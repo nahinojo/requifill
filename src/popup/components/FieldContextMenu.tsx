@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import VerticalDotsIcon from './icons/VerticalDots'
-import syncStorage from '../../common/syncStorage'
+import syncStorage from '../../utils/syncStorage'
 
 import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
 

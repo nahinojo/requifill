@@ -23,10 +23,10 @@ interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
   id: string
   multiValues: string[]
   title: string
-  updateStateFieldData: ReactEventHandler<HTMLInputElement>
+  syncStateFieldData: ReactEventHandler<HTMLInputElement>
 }
 
-const MultiValueField: FC<MultiValueFieldProps> = ({ handleOnClickDown, handleOnClickUp, id, updateStateFieldData, title, multiValues }) => {
+const MultiValueField: FC<MultiValueFieldProps> = ({ handleOnClickDown, handleOnClickUp, id, syncStateFieldData, title, multiValues }) => {
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
   return (
@@ -123,7 +123,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ handleOnClickDown, handleOn
                         ref={inputRef}
                         type={'text'}
                         value={val}
-                        onChange={updateStateFieldData}
+                        onChange={syncStateFieldData}
                       />
                       <Trash />
                     </div>

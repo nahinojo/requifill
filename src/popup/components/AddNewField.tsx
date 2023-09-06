@@ -1,8 +1,8 @@
 import React from 'react'
 import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
 import Plus from './icons/Plus'
-import syncStorage from '../../common/syncStorage'
-import camelToTitleCase from '../../common/camelToTitleCase'
+import syncStorage from '../../utils/syncStorage'
+import camelToTitleCase from '../../utils/camelToTitleCase'
 import { type FieldDataProps } from '../App'
 
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
