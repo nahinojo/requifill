@@ -14,7 +14,7 @@ const ChevronPointer: FC<ChevronPointerProps> = ({ id, transformSVG, transformDi
   transformSVG = transformSVG !== undefined
     ? transformSVG
     : ''
-  id = `${id}-pointer`
+  id = `${id}.pointer`
 
   return (
     <div

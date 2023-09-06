@@ -3,37 +3,32 @@ import type {
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
-  FC
+  FC,
+  ReactEventHandler
 } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 import ChevronPointer from './icons/ChevronPointer'
 import Trash from './icons/Trash'
 import VerticalArrows from './icons/VerticalArrows'
 
-type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
+type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id' >
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
 type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
-'type' | 'onChange' | 'name' | 'inputMode'
+'type' | 'inputMode' | 'onChange'
 >
 
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
-  multiValues: string[]
+  handleOnClickDown: ReactEventHandler<HTMLElement>
+  handleOnClickUp: ReactEventHandler<HTMLElement>
   id: string
+  multiValues: string[]
   title: string
+  updateStateFieldData: ReactEventHandler<HTMLInputElement>
 }
 
-const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, multiValues }) => {
+const MultiValueField: FC<MultiValueFieldProps> = ({ handleOnClickDown, handleOnClickUp, id, updateStateFieldData, title, multiValues }) => {
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  const handleOnClickUp = (): void => {
-    console.log('Clicked up!')
-  }
-
-  const handleOnClickDown = (): void => {
-    console.log('Clicked down!')
-  }
-
   return (
     <>
       {
@@ -114,22 +109,21 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, 
                   return (
                     <div
                       className={divStyling}
-                      id={`${id}.option-wrapper`}
-                      key={`${id}.${index}`}
+                      id={`${id}.${index}.option-wrapper`}
+                      key={`${index}`}
                     >
                       <VerticalArrows
-                        id={id}
+                        id={`${id}.${index}`}
                         onClickDown={handleOnClickDown}
                         onClickUp={handleOnClickUp}
                       />
                       <input
                         className='bg-iron text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1'
                         id={`${id}.${index}.input`}
-                        name={id}
                         ref={inputRef}
                         type={'text'}
                         value={val}
-                        onChange={onChange}
+                        onChange={updateStateFieldData}
                       />
                       <Trash />
                     </div>

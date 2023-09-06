@@ -23,7 +23,7 @@ const Switch: React.FC<SwitchProps> = ({ handleToggle, isToggled, isLoading }) =
         className='toggle-switch'
         id='toggle-autofill'
         type='checkbox'
-        onChange={handleToggle}
+        updateStateFieldData={handleToggle}
       />
       <label
         className='switch-track ml-1'

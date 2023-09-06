@@ -10,11 +10,13 @@ import type { FieldDataProps } from '../../popup/App'
 import MultiValueField from './MultiValueField'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
-  onChange: ReactEventHandler
+  handleOnClickDown: ReactEventHandler<HTMLElement>
+  handleOnClickUp: ReactEventHandler<HTMLElement>
   fieldData: FieldDataProps
+  updateStateFieldData: ReactEventHandler<HTMLInputElement>
 }
 
-const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
+const FieldRenderer: FC<FieldRendererProps> = ({ handleOnClickDown, handleOnClickUp, updateStateFieldData, fieldData }) => {
   const hasActiveItems = Object
     .values(fieldData)
     .some(field => { return field.isActive })
@@ -47,10 +49,9 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
                       <SingleValueField
                         id={id}
                         key={key}
-                        name={id}
                         title={title}
+                        updateStateFieldData={updateStateFieldData}
                         value={value}
-                        onChange={onChange}
                       />
                     )
                   } else if (
@@ -59,11 +60,13 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
                   ) {
                     return (
                       <MultiValueField
+                        handleOnClickDown={handleOnClickDown}
+                        handleOnClickUp={handleOnClickUp}
                         id={id}
                         key={key}
                         multiValues={Object.values(data.autofillValue)}
                         title={title}
-                        onChange={onChange}
+                        updateStateFieldData={updateStateFieldData}
                       />
                     )
                   }

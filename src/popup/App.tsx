@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import type { FC, ReactEventHandler, ChangeEvent } from 'react'
+import type { FC, ReactEventHandler, ChangeEvent, MouseEventHandler } from 'react'
 import syncStorage from '../common/syncStorage'
 import ToggleAutofillHeader from './components/ToggleAutofillHeader'
 import AddNewField from './components/AddNewField'
 import FieldRenderer from './components/FieldRenderer'
 import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
+import getFieldName from '../common/getFieldId'
+import getFieldIndex from '../common/getFieldIndex'
 
 export type FieldDataProps = Record<string, {
   title?: string
@@ -17,55 +19,32 @@ const App: FC = () => {
   const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
   const [isAddingField, setIsAddingField] = useState(false)
 
-  console.log(
-    'fieldData:', fieldData
-  )
-
   /*
   Keeps fieldData synchronized with values in <input> elements.
   */
   const updateStateFieldData: ReactEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
     const { id: targetId, value } = evt.target
-    console.log(
-      'targetId:', targetId
-    )
-    console.log(
-      'value:', value
-    )
-    const fieldIdRegex = /^[^.]*/
-    const fieldId = String(targetId.match(fieldIdRegex))
-    if (fieldId === null) {
-      throw new Error('fieldId not found on component')
-    }
-    console.log(
-      'fieldId:', fieldId
-    )
-
-    const fieldIdIndexRegex = /[0-9]*[0-9]/
-    const fieldIdIndex = Number(targetId.match(fieldIdIndexRegex))
-    console.log(
-      'fieldIdIndex:', fieldIdIndex
-    )
-
+    const fieldName = getFieldName(targetId)
     if (fieldData != null) {
       setFieldData(prevFieldData => {
         let currFieldData
-        if (typeof fieldData[fieldId].autofillValue === 'string') {
+        if (typeof fieldData[fieldName].autofillValue === 'string') {
           currFieldData = {
             ...prevFieldData,
-            [fieldId]: {
-              ...prevFieldData[fieldId],
+            [fieldName]: {
+              ...prevFieldData[fieldName],
               autofillValue: value
             }
           }
         } else {
+          const fieldIndex = getFieldIndex(targetId)
           currFieldData = {
             ...prevFieldData,
-            [fieldId]: {
-              ...prevFieldData[fieldId],
+            [fieldName]: {
+              ...prevFieldData[fieldName],
               autofillValue: {
-                ...prevFieldData[fieldId].autofillValue as Record<number, string>,
-                [fieldIdIndex]: value
+                ...prevFieldData[fieldName].autofillValue as Record<number, string>,
+                [fieldIndex]: value
               }
             }
           }
@@ -73,11 +52,13 @@ const App: FC = () => {
         return currFieldData
       })
     }
-
     setIsUnsavedFieldChanges(true)
   }
 
-  const saveFieldChanges: ReactEventHandler<HTMLInputElement> = () => {
+  /*
+  Saves fieldData state to browser storage
+  */
+  const saveFieldDataChanges: ReactEventHandler<HTMLInputElement> = () => {
     syncStorage
       .set({ fieldData })
       .catch(error => {
@@ -86,7 +67,10 @@ const App: FC = () => {
     setIsUnsavedFieldChanges(false)
   }
 
-  const discardFieldChanges: ReactEventHandler<HTMLInputElement> = () => {
+  /*
+  Reverts fieldData state to browser storage
+  */
+  const discardFieldDataChanges: ReactEventHandler<HTMLInputElement> = () => {
     syncStorage
       .get()
       .then(storage => {
@@ -97,6 +81,15 @@ const App: FC = () => {
       })
     setIsUnsavedFieldChanges(false)
   }
+
+  const handleOnClickDown: MouseEventHandler<HTMLDivElement> =
+    (evt: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+      console.log(evt)
+    }
+  const handleOnClickUp: MouseEventHandler<HTMLDivElement> =
+    (evt: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+      console.log(evt)
+    }
 
   /*
   Fills in field <input> elements on page load.
@@ -168,7 +161,9 @@ const App: FC = () => {
       >
         <FieldRenderer
           fieldData={fieldData}
-          onChange={updateStateFieldData}
+          handleOnClickDown={handleOnClickDown}
+          handleOnClickUp={handleOnClickUp}
+          updateStateFieldData={updateStateFieldData}
         />
       </div>
       <AddNewField
@@ -179,8 +174,8 @@ const App: FC = () => {
       {
         !!isUnsavedFieldChanges && (
           <UnsavedFieldPrompt
-            discardFieldChanges={discardFieldChanges}
-            saveFieldChanges={saveFieldChanges}
+            discardFieldChanges={discardFieldDataChanges}
+            saveFieldChanges={saveFieldDataChanges}
           />
         )
       }
