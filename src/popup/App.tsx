@@ -17,17 +17,39 @@ const App: FC = () => {
   const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
   const [isAddingField, setIsAddingField] = useState(false)
 
+  console.log(
+    'fieldData:', fieldData
+  )
+
   /*
   Keeps fieldData synchronized with values in <input> elements.
   */
   const updateStateFieldData: ReactEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.target
+    const { id: targetId, value } = evt.target
+    console.log(
+      'targetId:', targetId
+    )
+    const fieldIdRegex = /^[^.]*/
+    const fieldId = String(targetId.match(fieldIdRegex))
+    if (fieldId === null) {
+      throw new Error('fieldId not found on component')
+    }
+    console.log(
+      'fieldId:', fieldId
+    )
+
+    const fieldIdIndexRegex = /[0-9]*[0-9]/
+    const fieldIdIndex = targetId.match(fieldIdIndexRegex)
+    console.log(
+      'fieldIdIndex:', fieldIdIndex
+    )
+
     if (fieldData != null) {
       setFieldData(prevFieldData => {
         return {
           ...prevFieldData,
-          [name]: {
-            ...prevFieldData[name],
+          [fieldId]: {
+            ...prevFieldData[fieldId],
             autofillValue: value
           }
         }
@@ -76,6 +98,15 @@ const App: FC = () => {
               commodityCode: {
                 autofillValue: '7786413',
                 isActive: false
+              },
+              description: {
+                autofillValue: {
+                  0: 'Amazon',
+                  1: 'Digikey',
+                  2: 'Home Depot',
+                  3: 'Mouser'
+                },
+                isActive: true
               },
               phoneNumber: {
                 autofillValue: '9491234567',

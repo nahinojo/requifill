@@ -5,7 +5,6 @@ import type {
   ReactEventHandler
 } from 'react'
 import camelToTitleCase from '../../common/camelToTitleCase'
-import camelToKebabCase from '../../common/camelToKebabCase'
 import SingleValueField from './SingleValueField'
 import type { FieldDataProps } from '../../popup/App'
 import MultiValueField from './MultiValueField'
@@ -33,35 +32,38 @@ const FieldRenderer: FC<FieldRendererProps> = ({ onChange, fieldData }) => {
             {
               Object.entries(fieldData)
                 .map((
-                  [name, data], index
+                  [id, data], index
                 ) => {
                   const title = data.title == null
-                    ? camelToTitleCase(name)
+                    ? camelToTitleCase(id)
                     : data.title
-                  const key = `${camelToKebabCase(name)}-${index}`
-                  const id = camelToKebabCase(name)
+                  const key = `${id}-${index}`
+                  const value = data.autofillValue
                   if (
                     data.isActive &&
-                    Object.keys(data.autofillValue).length === 1
+                    typeof value === 'string'
                   ) {
+                    console.log('Generating SignleValueField')
                     return (
                       <SingleValueField
                         id={id}
                         key={key}
-                        name={name}
+                        name={id}
                         title={title}
+                        value={value}
                         onChange={onChange}
                       />
                     )
                   } else if (
-                    Object.keys(data.autofillValue).length > 1
+                    data.isActive &&
+                    typeof data.autofillValue === 'object'
                   ) {
+                    console.log('Generating MultiValueField')
                     return (
                       <MultiValueField
                         id={id}
                         key={key}
-                        multiValues={data.autofillValue as Record<number, string>}
-                        name={name}
+                        multiValues={Object.values(data.autofillValue)}
                         title={title}
                         onChange={onChange}
                       />

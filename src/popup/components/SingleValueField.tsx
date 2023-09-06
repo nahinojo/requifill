@@ -10,13 +10,13 @@ import FieldContextMenu from './FieldContextMenu'
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
 type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
-'type' | 'pattern' | 'onChange' | 'name' | 'inputMode'
+'type' | 'pattern' | 'value' | 'onChange' | 'name' | 'inputMode'
 >
 interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
 
-const SingleValueField: FC<SingleValueFieldProps> = ({ id, name, onChange, title }) => {
+const SingleValueField: FC<SingleValueFieldProps> = ({ id, name, onChange, title, value }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   if (id === undefined) {
@@ -30,20 +30,21 @@ const SingleValueField: FC<SingleValueFieldProps> = ({ id, name, onChange, title
     >
       <div
         className='flex-1 grow h-full items-center grid grid-cols-2'
-        id={`${id}-selection`}
+        id={`${id}.selection`}
       >
         <label
           className='text-base ml-2'
-          htmlFor={`${id}-input`}
-          id={`${id}-label`}
+          htmlFor={`${id}.input`}
+          id={`${id}.label`}
         >{title}
         </label>
         <input
           className='bg-iron text-base h-9 ml-7 rounded indent-2 pt-1'
-          id={`${id}-input`}
+          id={`${id}.input`}
           name={name}
           ref={inputRef}
           type={'text'}
+          value={value}
           onChange={onChange}
         />
       </div>

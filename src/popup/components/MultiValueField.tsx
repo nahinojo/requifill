@@ -17,7 +17,7 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
-  multiValues: Record<number, string>
+  multiValues: string[]
   id: string
   title: string
 }
@@ -40,11 +40,11 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, 
         !isListExpanded && (
           <div
             className='bg-thunder rounded mx-1 mb-1 h-14 flex flex-row flex-nowrap items-stretch'
-            id={id}
+            id={`${id}.field-container`}
           >
             <div
               className='flex-1 grow h-full items-center grid grid-cols-2'
-              id={`${id}-selection`}
+              id={`${id}.selection`}
               onClick={
                 () => {
                   setIsListExpanded(true)
@@ -53,12 +53,12 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, 
             >
               <label
                 className='text-base ml-2'
-                htmlFor={`${id}-input`}
-                id={`${id}-label`}
+                htmlFor={`${id}.input`}
+                id={`${id}.label`}
               >{title}
               </label>
               <ChevronPointer
-                id={`${id}-expander`}
+                id={`${id}.expander`}
                 transformDiv='rotate(90deg)'
                 transformSVG='scale(0.75)'
               />
@@ -75,7 +75,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, 
           <>
             <div
               className='bg-thunder rounded-t mx-1 h-14 flex flex-row flex-nowrap items-stretch'
-              id={id}
+              id={`${id}.container-contracted`}
             >
               <div
                 className='flex-1 grow h-full items-center grid grid-cols-2 hover:cursor'
@@ -103,17 +103,19 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, 
               />
             </div>
             {
-              Array(multiValues)
+              multiValues
                 .map((
                   val, index
                 ) => {
-                  console.log(
-                    'val:', val
-                  )
+                  let divStyling = 'h-14 mx-1 bg-overcast border-t border-silver grid grid-cols-12 items-center'
+                  if (index === multiValues.length - 1) {
+                    divStyling = `${divStyling} mb-1 rounded-b`
+                  }
                   return (
                     <div
-                      className='h-14 mx-1 bg-overcast border-y border-silver grid grid-cols-12 items-center'
-                      key={`key-${index}`}
+                      className={divStyling}
+                      id={`${id}.option-wrapper`}
+                      key={`${id}.${index}`}
                     >
                       <VerticalArrows
                         id={id}
@@ -122,11 +124,11 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ id, name, onChange, title, 
                       />
                       <input
                         className='bg-iron text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1'
-                        id={`${id}-input`}
-                        name={name}
+                        id={`${id}.${index}.input`}
+                        name={id}
                         ref={inputRef}
                         type={'text'}
-                        value='test'
+                        value={val}
                         onChange={onChange}
                       />
                       <Trash />

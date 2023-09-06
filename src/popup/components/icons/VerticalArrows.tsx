@@ -21,7 +21,7 @@ const VerticalArrows: FC<VerticalArrowsProps> = ({ id, onClickDown, onClickUp })
 
   return (
     <div
-      className='w-full h-12 grid grid-rows-2'
+      className='w-full h-full grid grid-rows-2'
       id={`${id}-vertical-arrows-container`}
       onClick={handleClick}
     >

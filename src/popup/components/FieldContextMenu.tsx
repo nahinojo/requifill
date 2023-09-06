@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import VerticalDotsIcon from './icons/VerticalDots'
-import kebabToCamelCase from '../../common/kebabToCamelCase'
 import syncStorage from '../../common/syncStorage'
 
 import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
@@ -12,7 +11,7 @@ interface FieldContextMenuProps extends HTMLAttributes<HTMLElement> {
 
 const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
-  const openContextMenuId = `${id}-context-menu-vdots`
+  const openContextMenuId = `${id}.context-menu-vdots`
 
   const handleOpenContextMenu = (evt: React.MouseEvent<HTMLDivElement>): void => {
     evt.preventDefault()
@@ -97,12 +96,13 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
               }
             }
             className='fixed w-36 h-fit bg-night border border-solid border-iron z-50'
+            id={`${id}.context-menu`}
           >
             <button
               className={menuBottomButtonStyling}
-              id={id}
+              id={`${id}.context-menu-option`}
               type='button'
-              onClick={handleDeactivateField(kebabToCamelCase(id))}
+              onClick={handleDeactivateField(id)}
             >Remove
             </button>
             {/*

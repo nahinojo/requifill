@@ -41,9 +41,6 @@ module.exports = {
     'newline-per-chained-call': ['error', {
       ignoreChainWithDepth: 1
     }],
-    'no-unused-vars': ['error', {
-      args: 'all'
-    }],
     'react/boolean-prop-naming': ['error'],
     'react/button-has-type': ['error'],
     'react/destructuring-assignment': ['error', 'always', {

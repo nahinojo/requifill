@@ -2,10 +2,8 @@ import React from 'react'
 import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
 import Plus from './icons/Plus'
 import syncStorage from '../../common/syncStorage'
-import kebabToCamelCase from '../../common/kebabToCamelCase'
 import camelToTitleCase from '../../common/camelToTitleCase'
 import { type FieldDataProps } from '../App'
-import camelToKebabCase from '../../common/camelToKebabCase'
 
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
   fieldData: FieldDataProps
@@ -19,7 +17,7 @@ const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding })
   const buttonFieldStylingBase = 'text-left bg-night border border-solid border-overcast pl-3 py-2'
   const handleActivateField: ReactEventHandler<HTMLButtonElement> = (evt) => {
     const buttonElement = evt.target as HTMLButtonElement
-    const fieldName = kebabToCamelCase(buttonElement.id)
+    const fieldName = buttonElement.id
     syncStorage
       .get('fieldData')
       .then(storage => {
@@ -82,7 +80,7 @@ const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding })
             </h1>
             {
               fieldOptions.map((
-                name, index
+                id, index
               ) => {
                 let buttonFieldStyling: string
                 if (index === 0) {
@@ -100,11 +98,11 @@ const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding })
                 return (
                   <button
                     className={buttonFieldStyling}
-                    id={camelToKebabCase(name)}
-                    key={`${camelToKebabCase(name)}-${index}`}
+                    id={id}
+                    key={`${id}.${index}`}
                     type='button'
                     onClick={handleActivateField}
-                  >{camelToTitleCase(name)}
+                  >{camelToTitleCase(id)}
                   </button>
                 )
               })
