@@ -11,7 +11,7 @@ const ToggleAutofillHeader: React.FC = () => {
   /*
   Flips isAutofill for both component state and browser storage
   */
-  const handleAutofillChange: ReactEventHandler<HTMLInputElement> = () => {
+  const toggleAutofill: ReactEventHandler<HTMLInputElement> = () => {
     syncStorage.set({
       settings: {
         isAutofill: !isAutofill
@@ -47,7 +47,7 @@ const ToggleAutofillHeader: React.FC = () => {
       id='toggle-autofill-background'
     >
       <Switch
-        handleToggle={handleAutofillChange}
+        handleToggle={toggleAutofill}
         isLoading={isLoading}
         isToggled={isAutofill}
       />

@@ -19,10 +19,6 @@ const App: FC = () => {
   const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
   const [isAddingField, setIsAddingField] = useState(false)
 
-  console.log(
-    'fieldData:', fieldData
-  )
-
   /*
   Alters any specific autofillValue for both <SingleValueField /> <MultiValueField /> components.
   */
@@ -54,6 +50,7 @@ const App: FC = () => {
         }
     })
   }
+
   /*
   Keeps fieldData synchronized with values in <input> elements.
   */
@@ -131,7 +128,7 @@ const App: FC = () => {
   /*
   Decreases an item's priority for <MultiValueField /> component.
   */
-  const handleOnClickDown: MouseEventHandler<HTMLDivElement> =
+  const decreaseValuePriority: MouseEventHandler<HTMLDivElement> =
     (evt: MouseEvent<HTMLElement>): void => {
       const { id: targetId } = evt.target as HTMLElement
       const fieldName = getFieldName(targetId)
@@ -150,7 +147,7 @@ const App: FC = () => {
   /*
   Increases an item's priority for <MultiValueField /> component.
   */
-  const handleOnClickUp: MouseEventHandler<HTMLDivElement> =
+  const increaseValuePriority: MouseEventHandler<HTMLDivElement> =
     (evt: MouseEvent<HTMLElement>): void => {
       const { id: targetId } = evt.target as HTMLElement
       const fieldName = getFieldName(targetId)
@@ -164,9 +161,23 @@ const App: FC = () => {
       }
     }
 
+  const deleteAutofillValue: MouseEventHandler<HTMLElement> =
+      (evt: MouseEvent<HTMLElement>): void => {
+        const { id: targetId } = evt.target as HTMLElement
+        const fieldName = getFieldName(targetId)
+        const fieldIndex = getFieldIndex(targetId)
+        const prevAutofillValue = fieldData[fieldName].autofillValue as Record<number, string>
+        const currAutofillValue: Record<number, string> = {}
+        for (const key in prevAutofillValue) {
+          console.log(
+            'key:', key
+          )
+        }
+      }
+
   /*
-  Fills in field <input> elements on page load.
-  Ensure fieldData is in sync with browser storage.
+  Injects fieldData into field <input> elements on page load.
+  Ensures fieldData is in sync with browser storage.
   */
   useEffect(
     () => {
@@ -229,20 +240,17 @@ const App: FC = () => {
   return (
     <>
       <ToggleAutofillHeader />
-      <div // Is this necessary?
-        id='field-container'
-      >
-        <FieldRenderer
-          fieldData={fieldData}
-          handleOnClickDown={handleOnClickDown}
-          handleOnClickUp={handleOnClickUp}
-          syncStateFieldData={syncStateFieldData}
-        />
-      </div>
+      <FieldRenderer
+        decreaseValuePriority={decreaseValuePriority}
+        deleteAutofillValue={deleteAutofillValue}
+        fieldData={fieldData}
+        increaseValuePriority={increaseValuePriority}
+        syncStateFieldData={syncStateFieldData}
+      />
       <AddNewField
         fieldData={fieldData}
-        isAdding={isAddingField}
-        setIsAdding={setIsAddingField}
+        isAddingField={isAddingField}
+        setIsAddingField={setIsAddingField}
       />
       {
         !!isUnsavedFieldChanges && (

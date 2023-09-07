@@ -10,13 +10,14 @@ import type { FieldDataProps } from '../../popup/App'
 import MultiValueField from './MultiValueField'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
-  handleOnClickDown: ReactEventHandler<HTMLElement>
-  handleOnClickUp: ReactEventHandler<HTMLElement>
+  decreaseValuePriority: ReactEventHandler<HTMLElement>
+  deleteAutofillValue: ReactEventHandler<HTMLElement>
+  increaseValuePriority: ReactEventHandler<HTMLElement>
   fieldData: FieldDataProps
   syncStateFieldData: ReactEventHandler<HTMLInputElement>
 }
 
-const FieldRenderer: FC<FieldRendererProps> = ({ handleOnClickDown, handleOnClickUp, syncStateFieldData, fieldData }) => {
+const FieldRenderer: FC<FieldRendererProps> = ({ decreaseValuePriority, deleteAutofillValue, increaseValuePriority, syncStateFieldData, fieldData }) => {
   const hasActiveItems = Object
     .values(fieldData)
     .some(field => { return field.isActive })
@@ -60,9 +61,10 @@ const FieldRenderer: FC<FieldRendererProps> = ({ handleOnClickDown, handleOnClic
                   ) {
                     return (
                       <MultiValueField
-                        handleOnClickDown={handleOnClickDown}
-                        handleOnClickUp={handleOnClickUp}
+                        decreaseValuePriority={decreaseValuePriority}
+                        deleteAutofillValue={deleteAutofillValue}
                         id={id}
+                        increaseValuePriority={increaseValuePriority}
                         key={key}
                         multiValues={Object.values(data.autofillValue)}
                         syncStateFieldData={syncStateFieldData}

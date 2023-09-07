@@ -18,15 +18,16 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
-  handleOnClickDown: ReactEventHandler<HTMLElement>
-  handleOnClickUp: ReactEventHandler<HTMLElement>
+  decreaseValuePriority: ReactEventHandler<HTMLElement>
+  deleteAutofillValue: ReactEventHandler<HTMLElement>
+  increaseValuePriority: ReactEventHandler<HTMLElement>
   id: string
   multiValues: string[]
   title: string
   syncStateFieldData: ReactEventHandler<HTMLInputElement>
 }
 
-const MultiValueField: FC<MultiValueFieldProps> = ({ handleOnClickDown, handleOnClickUp, id, syncStateFieldData, title, multiValues }) => {
+const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseValuePriority, deleteAutofillValue, increaseValuePriority, id, syncStateFieldData, title, multiValues }) => {
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
   return (
@@ -114,8 +115,8 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ handleOnClickDown, handleOn
                     >
                       <VerticalArrows
                         id={`${id}.${index}`}
-                        onClickDown={handleOnClickDown}
-                        onClickUp={handleOnClickUp}
+                        onClickDown={decreaseValuePriority}
+                        onClickUp={increaseValuePriority}
                       />
                       <input
                         className='bg-iron text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1'
@@ -125,7 +126,10 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ handleOnClickDown, handleOn
                         value={val}
                         onChange={syncStateFieldData}
                       />
-                      <Trash />
+                      <Trash
+                        id={`${id}.${index}`}
+                        onClick={deleteAutofillValue}
+                      />
                     </div>
                   )
                 })

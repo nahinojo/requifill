@@ -7,11 +7,11 @@ import { type FieldDataProps } from '../App'
 
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
   fieldData: FieldDataProps
-  isAdding: boolean
-  setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
+  isAddingField: boolean
+  setIsAddingField: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding }) => {
+const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAddingField, setIsAddingField }) => {
   const fieldOptions = Object.keys(fieldData)
     .filter(key => { return !fieldData[key].isActive })
   const buttonFieldStylingBase = 'text-left bg-night border border-solid border-overcast pl-3 py-2'
@@ -38,7 +38,7 @@ const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding })
           .catch(error => {
             console.log(error)
           })
-        setIsAdding(false)
+        setIsAddingField(false)
       })
       .catch(error => {
         console.log(error)
@@ -51,12 +51,12 @@ const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding })
       id='add-new-field'
     >
       {
-        !isAdding &&
+        !isAddingField &&
         fieldOptions.length !== 0 && (
           <div
             className='flex justify-center w-fit mx-auto cursor-pointer'
             id='new-field-initiator'
-            onClick={() => { setIsAdding(true) }}
+            onClick={() => { setIsAddingField(true) }}
           >
             <Plus />
             <button
@@ -69,7 +69,7 @@ const AddNewField: FC<AddNewFieldProps> = ({ fieldData, isAdding, setIsAdding })
         )
       }
       {
-        !!isAdding && (
+        !!isAddingField && (
           <div
             className='flex flex-col'
             id='field-selector'
