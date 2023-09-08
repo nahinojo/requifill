@@ -7,7 +7,7 @@ import type {
   ReactEventHandler
 } from 'react'
 import FieldContextMenu from './FieldContextMenu'
-import ChevronPointer from './icons/ChevronPointer'
+import CheveronPointerWhite from './icons/ChevronPointerWhite'
 import Trash from './icons/Trash'
 import VerticalArrows from './icons/VerticalArrows'
 
@@ -53,7 +53,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, delet
                 id={`${id}.label`}
               >{title}
               </label>
-              <ChevronPointer
+              <CheveronPointerWhite
                 id={`${id}.expander`}
                 transformDiv='rotate(90deg)'
                 transformSVG='scale(0.75)'
@@ -88,7 +88,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, delet
                   id={`${id}-label`}
                 >{title}
                 </label>
-                <ChevronPointer
+                <CheveronPointerWhite
                   id={`${id}-expander`}
                   transformSVG='scale(0.75)'
                 />
@@ -103,7 +103,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, delet
                 .map((
                   val, index
                 ) => {
-                  let divStyling = 'h-14 mx-1 bg-overcast border-t border-silver grid grid-cols-12 items-center'
+                  let divStyling = 'bg-night hover:bg-storm h-16 mx-1 border-t border-iron grid grid-cols-12 items-center'
                   if (index === multiValues.length - 1) {
                     divStyling = `${divStyling} mb-1 rounded-b`
                   }
@@ -119,7 +119,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, delet
                         onClickUp={increaseItemPriority}
                       />
                       <input
-                        className='bg-iron text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1'
+                        className='text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1 bg-opacity-0 bg-storm'
                         id={`${id}.${index}.input`}
                         ref={inputRef}
                         type={'text'}

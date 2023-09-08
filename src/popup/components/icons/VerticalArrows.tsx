@@ -1,5 +1,5 @@
 import React from 'react'
-import ChevronPointer from './ChevronPointer'
+import ChevronPointerBleach from './ChevronPointerBleach'
 import type { FC, HTMLAttributes, MouseEventHandler } from 'react'
 
 interface VerticalArrowsProps extends HTMLAttributes<HTMLElement> {
@@ -24,16 +24,16 @@ const VerticalArrows: FC<VerticalArrowsProps> = ({ id, onClickDown, onClickUp })
 
   return (
     <div
-      className='w-full h-full grid grid-rows-2'
+      className='w-full h-14 grid grid-rows-2 justify-center'
       id={`${id}.vertical-arrows-container`}
       onClick={handleClick}
     >
-      <ChevronPointer
+      <ChevronPointerBleach
         id={upPointerId}
         transformDiv='rotate(180deg)'
         transformSVG='scale(.7)'
       />
-      <ChevronPointer
+      <ChevronPointerBleach
         id={downPointerId}
         transformSVG='scale(.7)'
       />

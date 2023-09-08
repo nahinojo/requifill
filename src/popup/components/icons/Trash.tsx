@@ -8,7 +8,7 @@ interface TrashProps extends HTMLAttributes<HTMLDivElement> {
 const Trash: FC<TrashProps> = ({ id, onClick }) => {
   return (
     <div
-      className='justify-self-center mr-1 col-span-2'
+      className='justify-self-center mr-1 col-span-2 hover:cursor-pointer'
       id={`${id}.trash-div`}
       onClick={onClick}
     >
@@ -16,7 +16,7 @@ const Trash: FC<TrashProps> = ({ id, onClick }) => {
         fill="none"
         height="24"
         id={`${id}.trash-svg`}
-        stroke="rgb(255,255,255)"
+        stroke="rgb(214, 216, 220)"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
