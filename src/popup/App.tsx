@@ -19,10 +19,6 @@ const App: FC = () => {
   const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
   const [isAddingField, setIsAddingField] = useState(false)
 
-  console.log(
-    'fieldData:', fieldData
-  )
-
   /*
   Alters any specific autofillValue for both <SingleValueField /> <MultiValueField /> components.
   */
@@ -59,7 +55,7 @@ const App: FC = () => {
   /*
   Keeps fieldData synchronized with values in <input> elements.
   */
-  const syncStateFieldData: ReactEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
+  const syncFieldDataState: ReactEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
     const { id: targetId, value: autofillValue } = evt.target
     const fieldName = getFieldName(targetId)
     if (fieldData != null) {
@@ -107,7 +103,7 @@ const App: FC = () => {
   /*
   Changes priority of two items for <MultiValueField /> component.
   */
-  const swapAutofillValueIndeces = (
+  const swapAutofillItemIndeces = (
     fieldName: string,
     fieldIndex1: number,
     fieldIndex2: number
@@ -133,7 +129,7 @@ const App: FC = () => {
   /*
   Decreases an item's priority for <MultiValueField /> component.
   */
-  const decreaseValuePriority: MouseEventHandler<HTMLDivElement> =
+  const decreaseItemPriority: MouseEventHandler<HTMLDivElement> =
     (evt: MouseEvent<HTMLElement>): void => {
       const { id: targetId } = evt.target as HTMLElement
       const fieldName = getFieldName(targetId)
@@ -141,7 +137,7 @@ const App: FC = () => {
       const autofillValue = fieldData[fieldName].autofillValue as Record<string, string>
       const indexLowerBoundary = Object.keys(autofillValue).length - 1
       if (fieldIndex < indexLowerBoundary) {
-        swapAutofillValueIndeces(
+        swapAutofillItemIndeces(
           fieldName,
           fieldIndex,
           fieldIndex + 1
@@ -152,13 +148,13 @@ const App: FC = () => {
   /*
   Increases an item's priority for <MultiValueField /> component.
   */
-  const increaseValuePriority: MouseEventHandler<HTMLDivElement> =
+  const increaseItemPriority: MouseEventHandler<HTMLDivElement> =
     (evt: MouseEvent<HTMLElement>): void => {
       const { id: targetId } = evt.target as HTMLElement
       const fieldName = getFieldName(targetId)
       const fieldIndex = getFieldIndex(targetId)
       if (fieldIndex > 0) {
-        swapAutofillValueIndeces(
+        swapAutofillItemIndeces(
           fieldName,
           fieldIndex,
           fieldIndex - 1
@@ -166,9 +162,12 @@ const App: FC = () => {
       }
     }
 
-  const deleteAutofillValue: MouseEventHandler<HTMLElement> =
+  /*
+  Delete's an item for <MultiValueField /> component.
+  */
+  const deleteAutofillItem: MouseEventHandler<HTMLElement> =
       (evt: MouseEvent<HTMLElement>): void => {
-        console.log('Executing deleteAutofillValue()')
+        console.log('Executing deleteAutofillItem()')
         const { id: targetId } = evt.target as HTMLElement
         const fieldName = getFieldName(targetId)
         const fieldIndex = getFieldIndex(targetId)
@@ -260,11 +259,11 @@ const App: FC = () => {
     <>
       <ToggleAutofillHeader />
       <FieldRenderer
-        decreaseValuePriority={decreaseValuePriority}
-        deleteAutofillValue={deleteAutofillValue}
+        decreaseItemPriority={decreaseItemPriority}
+        deleteAutofillItem={deleteAutofillItem}
         fieldData={fieldData}
-        increaseValuePriority={increaseValuePriority}
-        syncStateFieldData={syncStateFieldData}
+        increaseItemPriority={increaseItemPriority}
+        syncFieldDataState={syncFieldDataState}
       />
       <AddNewField
         fieldData={fieldData}

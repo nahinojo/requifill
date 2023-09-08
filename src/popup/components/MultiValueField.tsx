@@ -18,16 +18,16 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
-  decreaseValuePriority: ReactEventHandler<HTMLElement>
-  deleteAutofillValue: ReactEventHandler<HTMLElement>
-  increaseValuePriority: ReactEventHandler<HTMLElement>
+  decreaseItemPriority: ReactEventHandler<HTMLElement>
+  deleteAutofillItem: ReactEventHandler<HTMLElement>
+  increaseItemPriority: ReactEventHandler<HTMLElement>
   id: string
   multiValues: string[]
   title: string
-  syncStateFieldData: ReactEventHandler<HTMLInputElement>
+  syncFieldDataState: ReactEventHandler<HTMLInputElement>
 }
 
-const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseValuePriority, deleteAutofillValue, increaseValuePriority, id, syncStateFieldData, title, multiValues }) => {
+const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, deleteAutofillItem, increaseItemPriority, id, syncFieldDataState, title, multiValues }) => {
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
   return (
@@ -115,8 +115,8 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseValuePriority, dele
                     >
                       <VerticalArrows
                         id={`${id}.${index}`}
-                        onClickDown={decreaseValuePriority}
-                        onClickUp={increaseValuePriority}
+                        onClickDown={decreaseItemPriority}
+                        onClickUp={increaseItemPriority}
                       />
                       <input
                         className='bg-iron text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1'
@@ -124,11 +124,11 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseValuePriority, dele
                         ref={inputRef}
                         type={'text'}
                         value={val}
-                        onChange={syncStateFieldData}
+                        onChange={syncFieldDataState}
                       />
                       <Trash
                         id={`${id}.${index}`}
-                        onClick={deleteAutofillValue}
+                        onClick={deleteAutofillItem}
                       />
                     </div>
                   )

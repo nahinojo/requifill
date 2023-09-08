@@ -10,14 +10,14 @@ import type { FieldDataProps } from '../../popup/App'
 import MultiValueField from './MultiValueField'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
-  decreaseValuePriority: ReactEventHandler<HTMLElement>
-  deleteAutofillValue: ReactEventHandler<HTMLElement>
-  increaseValuePriority: ReactEventHandler<HTMLElement>
+  decreaseItemPriority: ReactEventHandler<HTMLElement>
+  deleteAutofillItem: ReactEventHandler<HTMLElement>
+  increaseItemPriority: ReactEventHandler<HTMLElement>
   fieldData: FieldDataProps
-  syncStateFieldData: ReactEventHandler<HTMLInputElement>
+  syncFieldDataState: ReactEventHandler<HTMLInputElement>
 }
 
-const FieldRenderer: FC<FieldRendererProps> = ({ decreaseValuePriority, deleteAutofillValue, increaseValuePriority, syncStateFieldData, fieldData }) => {
+const FieldRenderer: FC<FieldRendererProps> = ({ decreaseItemPriority, deleteAutofillItem, increaseItemPriority, syncFieldDataState, fieldData }) => {
   const hasActiveItems = Object
     .values(fieldData)
     .some(field => { return field.isActive })
@@ -50,7 +50,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({ decreaseValuePriority, deleteAu
                       <SingleValueField
                         id={id}
                         key={key}
-                        syncStateFieldData={syncStateFieldData}
+                        syncFieldDataState={syncFieldDataState}
                         title={title}
                         value={value}
                       />
@@ -61,13 +61,13 @@ const FieldRenderer: FC<FieldRendererProps> = ({ decreaseValuePriority, deleteAu
                   ) {
                     return (
                       <MultiValueField
-                        decreaseValuePriority={decreaseValuePriority}
-                        deleteAutofillValue={deleteAutofillValue}
+                        decreaseItemPriority={decreaseItemPriority}
+                        deleteAutofillItem={deleteAutofillItem}
                         id={id}
-                        increaseValuePriority={increaseValuePriority}
+                        increaseItemPriority={increaseItemPriority}
                         key={key}
                         multiValues={Object.values(data.autofillValue)}
-                        syncStateFieldData={syncStateFieldData}
+                        syncFieldDataState={syncFieldDataState}
                         title={title}
                       />
                     )
