@@ -2,26 +2,34 @@
 
 ## **Issues**
 
+### Popup 
+
+- Save Changes banner blocks everything!
+- Field does not unfocus on pressing keyboard 'Enter'
+
+### Requisition Form Manipulation
+
+- Multivalue fields are not autofilled onto screen, nor are they even scrollable
+
 ## **Features**
 
 ### Storage
 
 ### Documentation & Advertise
 
-[ Wait until project is more fleshed out before completing ]
-
+[ Wait until project is more fleshed out before completing]
 - Fill out the README.md in detail.
 - Make a website for this extension.
 
 
-### Popup Features
+### Popup
 
 [ See design on Figma ]
-- Set fields to be multivalue and scrollable
+- Enable/Disable fields to be multivalue
 - Clearall values? Remove all fields?
 
 
-### DOM Manipulation
+### Requisition Form Manipulation
 
 - Add a visual indicator that the input field contains scrollable values. Maybe an icon or change of styling?
 - Autofill expected value when typing. Maybe include a dropdown for scrolling?
