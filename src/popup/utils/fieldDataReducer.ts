@@ -31,15 +31,26 @@ import type ActionProps from './ActionProps'
 // }
 
 /*
+Checks 'undefined' possiblility in type-setting
+*/
+const assertDefined = <T extends keyof ActionProps>(value: ActionProps[T]): ActionProps[T] => {
+  if (value === undefined) {
+    throw new Error('Value is undefined')
+  } else {
+    return value
+  }
+}
+
+/*
 Changes autofillValue for any field within fieldData.
 */
 const setAutofillValue = (
   fieldData: FieldDataProps,
   fieldName: string,
   autofillValue: string | Record<string, string>,
-  fieldIndex: number | null = null
+  fieldIndex: number | undefined
 ): FieldDataProps => {
-  return fieldIndex === null
+  return fieldIndex === undefined
   // Editing autofillValue of <SingleValueField />.
   // Or, editing entire autofillValue object of <MultiValueField />.
     ? {
@@ -87,11 +98,11 @@ const swapAutofillItemIndeces = (
   }
 }
 
-const fieldDataPrimeReducer: Reducer<FieldDataProps, ActionProps> = (
+const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
   fieldData: FieldDataProps,
   action: ActionProps
 ): FieldDataProps => {
-  const {
+  let {
     autofillValue,
     fieldIndex,
     fieldName,
@@ -100,18 +111,18 @@ const fieldDataPrimeReducer: Reducer<FieldDataProps, ActionProps> = (
   } = action
   switch (type) {
   case 'set': {
-    if (newFieldData === null) {
-      throw new Error('No new field Data Found')
-    } else {
-      return newFieldData
-    }
+    newFieldData = assertDefined(newFieldData) as FieldDataProps
+    return newFieldData
   }
   case 'sync-input': {
-    return fieldIndex === null
+    fieldName = assertDefined(fieldName) as string
+    autofillValue = assertDefined(autofillValue) as string | Record<string, string>
+    return fieldIndex === undefined
       ? setAutofillValue(
         fieldData,
         fieldName,
-        autofillValue
+        autofillValue,
+        undefined
       )
       : setAutofillValue(
         fieldData,
@@ -140,10 +151,10 @@ const fieldDataPrimeReducer: Reducer<FieldDataProps, ActionProps> = (
     break
   }
   case 'decrease-item-priority': {
+    autofillValue = assertDefined(autofillValue) as Record<string, string>
+    fieldName = assertDefined(fieldName) as string
+    fieldIndex = assertDefined(fieldIndex) as number
     const indexLowerBoundary = Object.keys(autofillValue).length - 1
-    if (fieldIndex === null) {
-      throw new Error('No index found on deprioritized item')
-    }
     if (fieldIndex < indexLowerBoundary) {
       return swapAutofillItemIndeces(
         fieldData,
@@ -155,9 +166,8 @@ const fieldDataPrimeReducer: Reducer<FieldDataProps, ActionProps> = (
     break
   }
   case 'increase-item-priority': {
-    if (fieldIndex === null) {
-      throw new Error('No index found on deprioritized item')
-    }
+    fieldName = assertDefined(fieldName) as string
+    fieldIndex = assertDefined(fieldIndex) as number
     if (fieldIndex > 0) {
       return swapAutofillItemIndeces(
         fieldData,
@@ -169,6 +179,7 @@ const fieldDataPrimeReducer: Reducer<FieldDataProps, ActionProps> = (
     break
   }
   case 'add-item': {
+    fieldName = assertDefined(fieldName) as string
     const newIndex = Object.keys(fieldData[fieldName].autofillValue).length
     setAutofillValue(
       fieldData,
@@ -179,6 +190,7 @@ const fieldDataPrimeReducer: Reducer<FieldDataProps, ActionProps> = (
     break
   }
   case 'delete-item': {
+    fieldName = assertDefined(fieldName) as string
     const prevAutofillValue = fieldData[fieldName].autofillValue as Record<string, string>
     const newAutofillValue: Record<string, string> = {}
     let newIndex = 0
@@ -193,17 +205,19 @@ const fieldDataPrimeReducer: Reducer<FieldDataProps, ActionProps> = (
       return setAutofillValue(
         fieldData,
         fieldName,
-        newAutofillValue[0]
+        newAutofillValue[0],
+        undefined
       )
     } else {
       return setAutofillValue(
         fieldData,
         fieldName,
-        newAutofillValue
+        newAutofillValue,
+        undefined
       )
     }
   }
   }
   throw new Error('Dispactch not found')
 }
-export default fieldDataPrimeReducer
+export default fieldDataReducer

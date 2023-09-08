@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import type {
   HTMLAttributes,
   FC,
@@ -8,18 +8,18 @@ import type {
 import camelToTitleCase from '../../utils/camelToTitleCase'
 import SingleValueField from './SingleValueField'
 import MultiValueField from './MultiValueField'
-
-import type FieldDataProps from '../utils/FieldDataProps'
+import { FieldDataContext } from '../utils/fieldDataContext'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
-  fieldData: FieldDataProps
   setIsRenderAddField: Dispatch<SetStateAction<boolean>>
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
 const FieldRenderer: FC<FieldRendererProps> = ({
-  fieldData,
-  setIsRenderAddField
+  setIsRenderAddField,
+  setIsUnsavedChanges
 }) => {
+  const fieldData = useContext(FieldDataContext)
   const hasActiveItems = Object
     .values(fieldData)
     .some(field => { return field.isActive })
@@ -52,6 +52,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                       <SingleValueField
                         id={id}
                         key={key}
+                        setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}
                         value={value}
                       />
@@ -66,6 +67,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                         key={key}
                         multiValues={Object.values(data.autofillValue)}
                         setIsRenderAddField={setIsRenderAddField}
+                        setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}
                       />
                     )

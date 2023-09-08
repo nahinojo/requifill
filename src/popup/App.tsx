@@ -112,10 +112,18 @@ const App: FC = () => {
       >
         <ToggleAutofillHeader />
         <FieldRenderer
-          fieldData={fieldData}
           setIsRenderAddField={setIsRenderAddField}
+          setIsUnsavedChanges={setIsUnsavedFieldChanges}
         />
-        <AddNewField />
+        {
+          !!isRenderAddField && (
+            <AddNewField
+              isAddingField={isAddingField}
+              isRenderAddField={isRenderAddField}
+              setIsAddingField={setIsAddingField}
+            />
+          )
+        }
         {
           !!isUnsavedFieldChanges && (
             <UnsavedFieldPrompt />

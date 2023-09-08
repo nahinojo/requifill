@@ -1,16 +1,26 @@
-import React, { useRef, useState } from 'react'
-import type {
-  HTMLAttributes,
-  InputHTMLAttributes,
-  LabelHTMLAttributes,
-  FC,
-  SetStateAction
-} from 'react'
+import React, { useRef, useState, useContext } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 import CheveronPointerWhite from './icons/ChevronPointerWhite'
 import Trash from './icons/Trash'
 import VerticalArrows from './icons/VerticalArrows'
 import PlusWhite from './icons/PlusWhite'
+import { FieldDataDispatchContext } from '../utils/fieldDataContext'
+import getFieldIndex from '../utils/getFieldIndex'
+import getFieldName from '../utils/getFieldName'
+
+import type {
+  HTMLAttributes,
+  InputHTMLAttributes,
+  LabelHTMLAttributes,
+  FC,
+  SetStateAction,
+  Dispatch,
+  ChangeEventHandler,
+  ChangeEvent,
+  MouseEventHandler,
+  MouseEvent
+} from 'react'
+import type ActionProps from '../utils/ActionProps'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id' >
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
@@ -21,17 +31,71 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
   id: string
   multiValues: string[]
-  title: string
   setIsRenderAddField: Dispatch<SetStateAction<boolean>>
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  title: string
 }
 
 const MultiValueField: FC<MultiValueFieldProps> = ({
   id,
+  multiValues,
   setIsRenderAddField,
+  setIsUnsavedChanges,
   title
 }) => {
+  if (id === undefined) {
+    throw new Error('React component ID not found.')
+  }
+
+  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { value: autofillValue } = evt.target as HTMLInputElement
+    const fieldName = getFieldName(id)
+    const fieldIndex = getFieldIndex(id)
+    fieldDataDispatch({
+      autofillValue,
+      fieldIndex,
+      fieldName,
+      newFieldData: undefined,
+      type: 'sync-input'
+    })
+    setIsUnsavedChanges(true)
+  }
+
+  const handleAddItem: MouseEventHandler<HTMLDivElement> =
+  () => {
+    const fieldName = getFieldName(id)
+    fieldDataDispatch({
+      autofillValue: '',
+      fieldIndex: undefined,
+      fieldName,
+      newFieldData: undefined,
+      type: 'add-item'
+    })
+  }
+
+  const handleDeleteItem: MouseEventHandler<HTMLDivElement> =
+  (evt: MouseEvent<HTMLDivElement>) => {
+    const { id: targetId } = evt.target as HTMLDivElement
+    const fieldIndex = getFieldIndex(targetId)
+    const fieldName = getFieldName(targetId)
+    fieldDataDispatch({
+      autofillValue: '',
+      fieldIndex,
+      fieldName,
+      newFieldData: undefined,
+      type: 'delete-item'
+    })
+  }
+
+  const handleIncreasePrioty: MouseEventHandler<HTMLElement> =
+  (evt: MouseEvent<HTMLElement>) => {
+    const { id: targetId, value: autofillValue } = evt.target as HTMLElement
+  }
+
   return (
     <>
       {
@@ -119,8 +183,16 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                     >
                       <VerticalArrows
                         id={`${id}.${index}`}
-                        onClickDown={decreaseItemPriority}
-                        onClickUp={increaseItemPriority}
+                        onClickDown={
+                          () => {
+                            console.log('decrease item priority')
+                          }
+                        }
+                        onClickUp={
+                          () => {
+                            console.log('increase item priority')
+                          }
+                        }
                       />
                       <input
                         className='text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1 bg-opacity-0 bg-storm'
@@ -128,11 +200,11 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                         ref={inputRef}
                         type={'text'}
                         value={val}
-                        onChange={syncFieldDataState}
+                        onChange={handleInputChange}
                       />
                       <Trash
                         id={`${id}.${index}`}
-                        onClick={deleteAutofillItem}
+                        onClick={handleDeleteItem}
                       />
                     </div>
                   )
@@ -140,15 +212,15 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
             }
             <div
               className='flex justify-center mt-2 mb-3 mx-auto w-fit cursor-pointer'
-              id={`${id}.add-new-entry-wrapper`}
-              onClick={addAutofillItem}
+              id={`${id}.add-item-wrapper`}
+              onClick={handleAddItem}
             >
               <PlusWhite
                 id={`${id}`}
               />
               <button
                 className='text-sm text-bleach'
-                id={`${id}.add-new-entry-button`}
+                id={`${id}.add-item-button`}
                 type='button'
               >
                 Add New Entry

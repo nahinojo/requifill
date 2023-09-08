@@ -1,11 +1,19 @@
-import React, { useRef } from 'react'
+import React, { useRef, useContext } from 'react'
+import FieldContextMenu from './FieldContextMenu'
+import getFieldName from '../utils/getFieldName'
+
 import type {
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
-  FC
+  FC,
+  Dispatch,
+  SetStateAction,
+  ChangeEventHandler,
+  ChangeEvent
 } from 'react'
-import FieldContextMenu from './FieldContextMenu'
+import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
+import type ActionProps from '../utils/ActionProps'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
@@ -14,11 +22,31 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  id: string
 }
 
-const SingleValueField: FC<SingleValueFieldProps> = ({ id, title, value }) => {
+const SingleValueField: FC<SingleValueFieldProps> = ({
+  id,
+  setIsUnsavedChanges,
+  title
+}) => {
+  const fieldData = useContext(FieldDataContext)
+  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { value: autofillValue } = evt.target as HTMLInputElement
+    const fieldName = getFieldName(id)
+    fieldDataDispatch({
+      autofillValue,
+      fieldIndex: undefined,
+      fieldName,
+      newFieldData: undefined,
+      type: 'sync-input'
+    })
+    setIsUnsavedChanges(true)
+  }
   if (id === undefined) {
     throw new Error('React component ID not found.')
   }
@@ -43,12 +71,8 @@ const SingleValueField: FC<SingleValueFieldProps> = ({ id, title, value }) => {
           id={`${id}.input`}
           ref={inputRef}
           type={'text'}
-          value={value}
-          onChange={
-            () => {
-              console.log('single field changed!')
-            }
-          }
+          value={fieldData[getFieldName(id)].autofillValue as string}
+          onChange={handleInputChange}
         />
       </div>
       <FieldContextMenu

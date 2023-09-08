@@ -1,14 +1,18 @@
-import React, { type HTMLAttributes, type ReactEventHandler } from 'react'
+import React, { useContext } from 'react'
+import { FieldDataDispatchContext } from '../utils/fieldDataContext'
 
-interface UnsavedFieldPromptProps extends HTMLAttributes<HTMLElement> {
-  discardFieldChanges: ReactEventHandler
-  saveFieldChanges: ReactEventHandler
-}
+import type { FC, MouseEventHandler, MouseEvent } from 'react'
 
-const UnsavedFieldPrompt: React.FC<UnsavedFieldPromptProps> = ({
-  discardFieldChanges,
-  saveFieldChanges
-}) => {
+const UnsavedFieldPrompt: FC = () => {
+  const fieldDataDispatch = useContext(FieldDataDispatchContext)
+
+  const saveChanges: MouseEventHandler<HTMLButtonElement> =
+  (evt: MouseEvent<HTMLButtonElement>) => {
+    fieldDataDispatch({
+      autofillValue: 
+      type: 'save-changes'
+    })
+  }
   return (
     <div
       className='bg-aqua w-full h-1/6 fixed bottom-0'
@@ -24,13 +28,13 @@ const UnsavedFieldPrompt: React.FC<UnsavedFieldPromptProps> = ({
         <button
           className='font-semibold hover:underline'
           type='button'
-          onClick={discardFieldChanges}
+          onClick={discardChanges}
         >Discard
         </button>
         <button
           className='font-semibold hover:underline'
           type='button'
-          onClick={saveFieldChanges}
+          onClick={saveChanges}
         >Save
         </button>
       </div>
