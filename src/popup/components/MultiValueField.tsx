@@ -120,7 +120,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                 .map((
                   val, index
                 ) => {
-                  let divStyling = 'bg-night hover:bg-storm h-16 mx-1 border-t border-iron grid grid-cols-12 items-center'
+                  let divStyling = 'bg-night hover:bg-storm h-14 mx-1 border-t border-iron grid grid-cols-12 items-center'
                   if (index === multiValues.length - 1) {
                     divStyling = `${divStyling} mb-1 rounded-b`
                   }

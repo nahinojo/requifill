@@ -19,7 +19,8 @@ const Trash: FC<TrashProps> = ({ id, onClick }) => {
         stroke="rgb(214, 216, 220)"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
+        strokeWidth="1.75"
+        transform='scale(.85)'
         viewBox="0 0 24 24"
         width="24"
         xmlns="http://www.w3.org/2000/svg"

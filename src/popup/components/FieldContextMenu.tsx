@@ -76,7 +76,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
     }, []
   )
 
-  const menuBottomButtonStyling = 'w-full h-9 flex align-middle items-center text-start indent-1 pt-1 text-white'
+  const menuBottomButtonStyling = 'w-full h-9 flex align-middle items-center text-start indent-2 pt-1 text-white'
   // const menuButtonStyling = `${menuBottomButtonStyling} border-b border-solid border-iron`
 
   return (

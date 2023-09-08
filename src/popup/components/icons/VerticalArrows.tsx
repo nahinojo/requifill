@@ -31,11 +31,11 @@ const VerticalArrows: FC<VerticalArrowsProps> = ({ id, onClickDown, onClickUp })
       <ChevronPointerBleach
         id={upPointerId}
         transformDiv='rotate(180deg)'
-        transformSVG='scale(.7)'
+        transformSVG='scale(.55)'
       />
       <ChevronPointerBleach
         id={downPointerId}
-        transformSVG='scale(.7)'
+        transformSVG='scale(.55)'
       />
     </div>
   )
