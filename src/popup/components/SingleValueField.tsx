@@ -3,8 +3,7 @@ import type {
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
-  FC,
-  ReactEventHandler
+  FC
 } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 
@@ -15,10 +14,9 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
-  syncFieldDataState: ReactEventHandler<HTMLInputElement>
 }
 
-const SingleValueField: FC<SingleValueFieldProps> = ({ id, syncFieldDataState, title, value }) => {
+const SingleValueField: FC<SingleValueFieldProps> = ({ id, title, value }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   if (id === undefined) {
@@ -46,7 +44,11 @@ const SingleValueField: FC<SingleValueFieldProps> = ({ id, syncFieldDataState, t
           ref={inputRef}
           type={'text'}
           value={value}
-          onChange={syncFieldDataState}
+          onChange={
+            () => {
+              console.log('single field changed!')
+            }
+          }
         />
       </div>
       <FieldContextMenu

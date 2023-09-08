@@ -2,33 +2,23 @@ import React from 'react'
 import type {
   HTMLAttributes,
   FC,
-  ReactEventHandler,
-  Dispatch,
-  SetStateAction
+  SetStateAction,
+  Dispatch
 } from 'react'
 import camelToTitleCase from '../../utils/camelToTitleCase'
 import SingleValueField from './SingleValueField'
-import type { FieldDataProps } from '../../popup/App'
 import MultiValueField from './MultiValueField'
 
+import type FieldDataProps from '../utils/FieldDataProps'
+
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
-  addAutofillItem: ReactEventHandler<HTMLElement>
-  decreaseItemPriority: ReactEventHandler<HTMLElement>
-  deleteAutofillItem: ReactEventHandler<HTMLElement>
-  increaseItemPriority: ReactEventHandler<HTMLElement>
   fieldData: FieldDataProps
-  syncFieldDataState: ReactEventHandler<HTMLInputElement>
   setIsRenderAddField: Dispatch<SetStateAction<boolean>>
 }
 
 const FieldRenderer: FC<FieldRendererProps> = ({
-  addAutofillItem,
-  decreaseItemPriority,
-  deleteAutofillItem,
   fieldData,
-  increaseItemPriority,
-  setIsRenderAddField,
-  syncFieldDataState
+  setIsRenderAddField
 }) => {
   const hasActiveItems = Object
     .values(fieldData)
@@ -62,7 +52,6 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                       <SingleValueField
                         id={id}
                         key={key}
-                        syncFieldDataState={syncFieldDataState}
                         title={title}
                         value={value}
                       />
@@ -73,15 +62,10 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                   ) {
                     return (
                       <MultiValueField
-                        addAutofillItem={addAutofillItem}
-                        decreaseItemPriority={decreaseItemPriority}
-                        deleteAutofillItem={deleteAutofillItem}
                         id={id}
-                        increaseItemPriority={increaseItemPriority}
                         key={key}
                         multiValues={Object.values(data.autofillValue)}
                         setIsRenderAddField={setIsRenderAddField}
-                        syncFieldDataState={syncFieldDataState}
                         title={title}
                       />
                     )

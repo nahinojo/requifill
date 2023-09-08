@@ -4,8 +4,6 @@ import type {
   InputHTMLAttributes,
   LabelHTMLAttributes,
   FC,
-  ReactEventHandler,
-  Dispatch,
   SetStateAction
 } from 'react'
 import FieldContextMenu from './FieldContextMenu'
@@ -21,26 +19,15 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
-  addAutofillItem: ReactEventHandler<HTMLElement>
-  decreaseItemPriority: ReactEventHandler<HTMLElement>
-  deleteAutofillItem: ReactEventHandler<HTMLElement>
-  increaseItemPriority: ReactEventHandler<HTMLElement>
   id: string
   multiValues: string[]
   title: string
   setIsRenderAddField: Dispatch<SetStateAction<boolean>>
-  syncFieldDataState: ReactEventHandler<HTMLInputElement>
 }
 
 const MultiValueField: FC<MultiValueFieldProps> = ({
-  addAutofillItem,
-  decreaseItemPriority,
-  deleteAutofillItem,
   id,
-  increaseItemPriority,
-  multiValues,
   setIsRenderAddField,
-  syncFieldDataState,
   title
 }) => {
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
