@@ -1,7 +1,7 @@
 import React from 'react'
 import type { FC } from 'react'
 
-const Plus: FC = () => {
+const PlusSilver: FC = () => {
   return (
     <svg
       className='mr-1 mt-0.5'
@@ -19,4 +19,4 @@ const Plus: FC = () => {
   )
 }
 
-export default Plus
+export default PlusSilver

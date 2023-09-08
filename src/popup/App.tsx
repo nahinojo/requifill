@@ -16,8 +16,9 @@ export type FieldDataProps = Record<string, {
 
 const App: FC = () => {
   const [fieldData, setFieldData] = useState<FieldDataProps>({})
-  const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
-  const [isAddingField, setIsAddingField] = useState(false)
+  const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState<boolean>(false)
+  const [isAddingField, setIsAddingField] = useState<boolean>(false)
+  const [isRenderAddField, setIsRenderAddField] = useState<boolean>(true)
 
   /*
   Alters any specific autofillValue for both <SingleValueField /> <MultiValueField /> components.
@@ -55,7 +56,8 @@ const App: FC = () => {
   /*
   Keeps fieldData synchronized with values in <input> elements.
   */
-  const syncFieldDataState: ReactEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
+  const syncFieldDataState: ReactEventHandler<HTMLInputElement> =
+  (evt: ChangeEvent<HTMLInputElement>) => {
     const { id: targetId, value: autofillValue } = evt.target
     const fieldName = getFieldName(targetId)
     if (fieldData != null) {
@@ -130,68 +132,83 @@ const App: FC = () => {
   Decreases an item's priority for <MultiValueField /> component.
   */
   const decreaseItemPriority: MouseEventHandler<HTMLDivElement> =
-    (evt: MouseEvent<HTMLElement>): void => {
-      const { id: targetId } = evt.target as HTMLElement
-      const fieldName = getFieldName(targetId)
-      const fieldIndex = getFieldIndex(targetId)
-      const autofillValue = fieldData[fieldName].autofillValue as Record<string, string>
-      const indexLowerBoundary = Object.keys(autofillValue).length - 1
-      if (fieldIndex < indexLowerBoundary) {
-        swapAutofillItemIndeces(
-          fieldName,
-          fieldIndex,
-          fieldIndex + 1
-        )
-      }
+  (evt: MouseEvent<HTMLElement>): void => {
+    const { id: targetId } = evt.target as HTMLElement
+    const fieldName = getFieldName(targetId)
+    const fieldIndex = getFieldIndex(targetId)
+    const autofillValue = fieldData[fieldName].autofillValue as Record<string, string>
+    const indexLowerBoundary = Object.keys(autofillValue).length - 1
+    if (fieldIndex < indexLowerBoundary) {
+      swapAutofillItemIndeces(
+        fieldName,
+        fieldIndex,
+        fieldIndex + 1
+      )
     }
+  }
 
   /*
   Increases an item's priority for <MultiValueField /> component.
   */
   const increaseItemPriority: MouseEventHandler<HTMLDivElement> =
-    (evt: MouseEvent<HTMLElement>): void => {
-      const { id: targetId } = evt.target as HTMLElement
-      const fieldName = getFieldName(targetId)
-      const fieldIndex = getFieldIndex(targetId)
-      if (fieldIndex > 0) {
-        swapAutofillItemIndeces(
-          fieldName,
-          fieldIndex,
-          fieldIndex - 1
-        )
-      }
+  (evt: MouseEvent<HTMLElement>): void => {
+    const { id: targetId } = evt.target as HTMLElement
+    const fieldName = getFieldName(targetId)
+    const fieldIndex = getFieldIndex(targetId)
+    if (fieldIndex > 0) {
+      swapAutofillItemIndeces(
+        fieldName,
+        fieldIndex,
+        fieldIndex - 1
+      )
     }
+  }
 
   /*
-  Delete's an item for <MultiValueField /> component.
+  Adds an item to <MultiVlaueField />.
+  */
+  const addAutofillItem: MouseEventHandler<HTMLElement> =
+  (evt: MouseEvent<HTMLElement>): void => {
+    const { id: targetId } = evt.target as HTMLElement
+    const fieldName = getFieldName(targetId)
+    const newIndex = Object.keys(fieldData[fieldName].autofillValue).length
+    setAutofillValue(
+      fieldName,
+      '',
+      newIndex
+    )
+    setIsUnsavedFieldChanges(true)
+  }
+
+  /*
+  Deletes an item for <MultiValueField />.
   */
   const deleteAutofillItem: MouseEventHandler<HTMLElement> =
-      (evt: MouseEvent<HTMLElement>): void => {
-        console.log('Executing deleteAutofillItem()')
-        const { id: targetId } = evt.target as HTMLElement
-        const fieldName = getFieldName(targetId)
-        const fieldIndex = getFieldIndex(targetId)
-        const prevAutofillValue = fieldData[fieldName].autofillValue as Record<string, string>
-        const newAutofillValue: Record<string, string> = {}
-        let newIndex = 0
-        for (const idx in prevAutofillValue) {
-          const prevIndex = Number(idx)
-          if (prevIndex !== fieldIndex) {
-            newAutofillValue[newIndex] = prevAutofillValue[prevIndex]
-            newIndex++
-          }
-        }
-        if (Object.keys(newAutofillValue).length === 1) {
-          setAutofillValue(
-            fieldName, newAutofillValue[0]
-          )
-        } else {
-          setAutofillValue(
-            fieldName, newAutofillValue
-          )
-        }
-        setIsUnsavedFieldChanges(true)
+  (evt: MouseEvent<HTMLElement>): void => {
+    const { id: targetId } = evt.target as HTMLElement
+    const fieldName = getFieldName(targetId)
+    const fieldIndex = getFieldIndex(targetId)
+    const prevAutofillValue = fieldData[fieldName].autofillValue as Record<string, string>
+    const newAutofillValue: Record<string, string> = {}
+    let newIndex = 0
+    for (const idx in prevAutofillValue) {
+      const prevIndex = Number(idx)
+      if (prevIndex !== fieldIndex) {
+        newAutofillValue[newIndex] = prevAutofillValue[prevIndex]
+        newIndex++
       }
+    }
+    if (Object.keys(newAutofillValue).length === 1) {
+      setAutofillValue(
+        fieldName, newAutofillValue[0]
+      )
+    } else {
+      setAutofillValue(
+        fieldName, newAutofillValue
+      )
+    }
+    setIsUnsavedFieldChanges(true)
+  }
 
   /*
   Injects fieldData into field <input> elements on page load.
@@ -259,15 +276,18 @@ const App: FC = () => {
     <>
       <ToggleAutofillHeader />
       <FieldRenderer
+        addAutofillItem={addAutofillItem}
         decreaseItemPriority={decreaseItemPriority}
         deleteAutofillItem={deleteAutofillItem}
         fieldData={fieldData}
         increaseItemPriority={increaseItemPriority}
+        setIsRenderAddField={setIsRenderAddField}
         syncFieldDataState={syncFieldDataState}
       />
       <AddNewField
         fieldData={fieldData}
         isAddingField={isAddingField}
+        isRenderAddField={isRenderAddField}
         setIsAddingField={setIsAddingField}
       />
       {

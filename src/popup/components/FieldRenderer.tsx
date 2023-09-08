@@ -2,7 +2,9 @@ import React from 'react'
 import type {
   HTMLAttributes,
   FC,
-  ReactEventHandler
+  ReactEventHandler,
+  Dispatch,
+  SetStateAction
 } from 'react'
 import camelToTitleCase from '../../utils/camelToTitleCase'
 import SingleValueField from './SingleValueField'
@@ -10,14 +12,24 @@ import type { FieldDataProps } from '../../popup/App'
 import MultiValueField from './MultiValueField'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
+  addAutofillItem: ReactEventHandler<HTMLElement>
   decreaseItemPriority: ReactEventHandler<HTMLElement>
   deleteAutofillItem: ReactEventHandler<HTMLElement>
   increaseItemPriority: ReactEventHandler<HTMLElement>
   fieldData: FieldDataProps
   syncFieldDataState: ReactEventHandler<HTMLInputElement>
+  setIsRenderAddField: Dispatch<SetStateAction<boolean>>
 }
 
-const FieldRenderer: FC<FieldRendererProps> = ({ decreaseItemPriority, deleteAutofillItem, increaseItemPriority, syncFieldDataState, fieldData }) => {
+const FieldRenderer: FC<FieldRendererProps> = ({
+  addAutofillItem,
+  decreaseItemPriority,
+  deleteAutofillItem,
+  fieldData,
+  increaseItemPriority,
+  setIsRenderAddField,
+  syncFieldDataState
+}) => {
   const hasActiveItems = Object
     .values(fieldData)
     .some(field => { return field.isActive })
@@ -61,12 +73,14 @@ const FieldRenderer: FC<FieldRendererProps> = ({ decreaseItemPriority, deleteAut
                   ) {
                     return (
                       <MultiValueField
+                        addAutofillItem={addAutofillItem}
                         decreaseItemPriority={decreaseItemPriority}
                         deleteAutofillItem={deleteAutofillItem}
                         id={id}
                         increaseItemPriority={increaseItemPriority}
                         key={key}
                         multiValues={Object.values(data.autofillValue)}
+                        setIsRenderAddField={setIsRenderAddField}
                         syncFieldDataState={syncFieldDataState}
                         title={title}
                       />

@@ -4,12 +4,15 @@ import type {
   InputHTMLAttributes,
   LabelHTMLAttributes,
   FC,
-  ReactEventHandler
+  ReactEventHandler,
+  Dispatch,
+  SetStateAction
 } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 import CheveronPointerWhite from './icons/ChevronPointerWhite'
 import Trash from './icons/Trash'
 import VerticalArrows from './icons/VerticalArrows'
+import PlusWhite from './icons/PlusWhite'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id' >
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
@@ -18,16 +21,28 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
+  addAutofillItem: ReactEventHandler<HTMLElement>
   decreaseItemPriority: ReactEventHandler<HTMLElement>
   deleteAutofillItem: ReactEventHandler<HTMLElement>
   increaseItemPriority: ReactEventHandler<HTMLElement>
   id: string
   multiValues: string[]
   title: string
+  setIsRenderAddField: Dispatch<SetStateAction<boolean>>
   syncFieldDataState: ReactEventHandler<HTMLInputElement>
 }
 
-const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, deleteAutofillItem, increaseItemPriority, id, syncFieldDataState, title, multiValues }) => {
+const MultiValueField: FC<MultiValueFieldProps> = ({
+  addAutofillItem,
+  decreaseItemPriority,
+  deleteAutofillItem,
+  id,
+  increaseItemPriority,
+  multiValues,
+  setIsRenderAddField,
+  syncFieldDataState,
+  title
+}) => {
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
   return (
@@ -44,6 +59,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, delet
               onClick={
                 () => {
                   setIsListExpanded(true)
+                  setIsRenderAddField(false)
                 }
               }
             >
@@ -79,6 +95,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, delet
                 onClick={
                   () => {
                     setIsListExpanded(false)
+                    setIsRenderAddField(true)
                   }
                 }
               >
@@ -134,6 +151,22 @@ const MultiValueField: FC<MultiValueFieldProps> = ({ decreaseItemPriority, delet
                   )
                 })
             }
+            <div
+              className='flex justify-center mt-2 mb-3 mx-auto w-fit cursor-pointer'
+              id={`${id}.add-new-entry-wrapper`}
+              onClick={addAutofillItem}
+            >
+              <PlusWhite
+                id={`${id}`}
+              />
+              <button
+                className='text-sm text-bleach'
+                id={`${id}.add-new-entry-button`}
+                type='button'
+              >
+                Add New Entry
+              </button>
+            </div>
           </>
         )
       }
