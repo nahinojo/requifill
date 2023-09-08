@@ -21,7 +21,7 @@ const App: FC = () => {
   const [isRenderAddField, setIsRenderAddField] = useState<boolean>(true)
 
   /*
-  Alters any specific autofillValue for both <SingleValueField /> <MultiValueField /> components.
+  Changes autofillValue for any field within fieldData.
   */
   const setAutofillValue = (
     fieldName: string,
@@ -30,8 +30,8 @@ const App: FC = () => {
   ): void => {
     setFieldData(prevFieldData => {
       return fieldIndex === null
-        // Editing autofillValue if <SingleValueField /> component.
-        // Or, editing entire autofillValue object of <MultiValueField /> component.
+        // Editing autofillValue of <SingleValueField />.
+        // Or, editing entire autofillValue object of <MultiValueField />.
         ? {
           ...prevFieldData,
           [fieldName]: {
@@ -39,7 +39,7 @@ const App: FC = () => {
             autofillValue
           }
         }
-        // Editing a specific value within autofillValue of <MultiValueField /> component.
+        // Editing a specific value within autofillValue of <MultiValueField />.
         : {
           ...prevFieldData,
           [fieldName]: {
@@ -103,7 +103,7 @@ const App: FC = () => {
   }
 
   /*
-  Changes priority of two items for <MultiValueField /> component.
+  Changes priority of two items for <MultiValueField />
   */
   const swapAutofillItemIndeces = (
     fieldName: string,
@@ -129,7 +129,7 @@ const App: FC = () => {
   }
 
   /*
-  Decreases an item's priority for <MultiValueField /> component.
+  Decreases an item's priority within <MultiValueField />
   */
   const decreaseItemPriority: MouseEventHandler<HTMLDivElement> =
   (evt: MouseEvent<HTMLElement>): void => {
@@ -145,10 +145,11 @@ const App: FC = () => {
         fieldIndex + 1
       )
     }
+    setIsUnsavedFieldChanges(true)
   }
 
   /*
-  Increases an item's priority for <MultiValueField /> component.
+  Increases an item's priority within <MultiValueField />
   */
   const increaseItemPriority: MouseEventHandler<HTMLDivElement> =
   (evt: MouseEvent<HTMLElement>): void => {
@@ -162,10 +163,11 @@ const App: FC = () => {
         fieldIndex - 1
       )
     }
+    setIsUnsavedFieldChanges(true)
   }
 
   /*
-  Adds an item to <MultiVlaueField />.
+  Adds an item within <MultiVlaueField />
   */
   const addAutofillItem: MouseEventHandler<HTMLElement> =
   (evt: MouseEvent<HTMLElement>): void => {
@@ -181,7 +183,7 @@ const App: FC = () => {
   }
 
   /*
-  Deletes an item for <MultiValueField />.
+  Deletes an item within <MultiValueField />
   */
   const deleteAutofillItem: MouseEventHandler<HTMLElement> =
   (evt: MouseEvent<HTMLElement>): void => {
@@ -211,8 +213,8 @@ const App: FC = () => {
   }
 
   /*
-  Injects fieldData into field <input> elements on page load.
-  Ensures fieldData is in sync with browser storage.
+  Injects fieldData into field <input> elements on page load
+  Ensures fieldData is in sync with browser storage
   */
   useEffect(
     () => {
