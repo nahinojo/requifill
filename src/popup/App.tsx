@@ -5,8 +5,8 @@ import ToggleAutofillHeader from './components/ToggleAutofillHeader'
 import AddNewField from './components/AddNewField'
 import FieldRenderer from './components/FieldRenderer'
 import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
-import getFieldName from '../utils/getFieldName'
-import getFieldIndex from '../utils/getFieldIndex'
+import getFieldName from './utils/getFieldName'
+import getFieldIndex from './utils/getFieldIndex'
 
 export type FieldDataProps = Record<string, {
   title?: string
