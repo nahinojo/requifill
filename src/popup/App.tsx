@@ -5,12 +5,12 @@ import ToggleAutofillHeader from './components/ToggleAutofillHeader'
 import AddNewField from './components/AddNewField'
 import FieldRenderer from './components/FieldRenderer'
 import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
-import getFieldName from '../utils/getFieldId'
+import getFieldName from '../utils/getFieldName'
 import getFieldIndex from '../utils/getFieldIndex'
 
 export type FieldDataProps = Record<string, {
   title?: string
-  autofillValue: string | Record<number, string>
+  autofillValue: string | Record<string, string>
   isActive: boolean
 }>
 
@@ -19,17 +19,22 @@ const App: FC = () => {
   const [isUnsavedFieldChanges, setIsUnsavedFieldChanges] = useState(false)
   const [isAddingField, setIsAddingField] = useState(false)
 
+  console.log(
+    'fieldData:', fieldData
+  )
+
   /*
   Alters any specific autofillValue for both <SingleValueField /> <MultiValueField /> components.
   */
-  const setFieldDataAutofillValue = (
+  const setAutofillValue = (
     fieldName: string,
-    autofillValue: string,
+    autofillValue: string | Record<string, string>,
     fieldIndex: number | null = null
   ): void => {
     setFieldData(prevFieldData => {
       return fieldIndex === null
-        // Editing the value corresponding to <SingleValueField /> component.
+        // Editing autofillValue if <SingleValueField /> component.
+        // Or, editing entire autofillValue object of <MultiValueField /> component.
         ? {
           ...prevFieldData,
           [fieldName]: {
@@ -37,13 +42,13 @@ const App: FC = () => {
             autofillValue
           }
         }
-        // Editing a value corresponding within <MultiValueField /> component.
+        // Editing a specific value within autofillValue of <MultiValueField /> component.
         : {
           ...prevFieldData,
           [fieldName]: {
             ...prevFieldData[fieldName],
             autofillValue: {
-              ...prevFieldData[fieldName].autofillValue as Record<number, string>,
+              ...prevFieldData[fieldName].autofillValue as Record<string, string>,
               [fieldIndex]: autofillValue
             }
           }
@@ -59,12 +64,12 @@ const App: FC = () => {
     const fieldName = getFieldName(targetId)
     if (fieldData != null) {
       if (typeof fieldData[fieldName].autofillValue === 'string') {
-        setFieldDataAutofillValue(
+        setAutofillValue(
           fieldName, autofillValue
         )
       } else {
         const fieldIndex = getFieldIndex(targetId)
-        setFieldDataAutofillValue(
+        setAutofillValue(
           fieldName, autofillValue, fieldIndex
         )
       }
@@ -108,7 +113,7 @@ const App: FC = () => {
     fieldIndex2: number
   ): void => {
     setFieldData(prevFieldData => {
-      const prevAutofillValue = prevFieldData[fieldName].autofillValue as Record<number, string>
+      const prevAutofillValue = prevFieldData[fieldName].autofillValue as Record<string, string>
       const fieldValue1 = prevAutofillValue[fieldIndex1]
       const fieldValue2 = prevAutofillValue[fieldIndex2]
       return {
@@ -133,7 +138,7 @@ const App: FC = () => {
       const { id: targetId } = evt.target as HTMLElement
       const fieldName = getFieldName(targetId)
       const fieldIndex = getFieldIndex(targetId)
-      const autofillValue = fieldData[fieldName].autofillValue as Record<number, string>
+      const autofillValue = fieldData[fieldName].autofillValue as Record<string, string>
       const indexLowerBoundary = Object.keys(autofillValue).length - 1
       if (fieldIndex < indexLowerBoundary) {
         swapAutofillValueIndeces(
@@ -163,16 +168,30 @@ const App: FC = () => {
 
   const deleteAutofillValue: MouseEventHandler<HTMLElement> =
       (evt: MouseEvent<HTMLElement>): void => {
+        console.log('Executing deleteAutofillValue()')
         const { id: targetId } = evt.target as HTMLElement
         const fieldName = getFieldName(targetId)
         const fieldIndex = getFieldIndex(targetId)
-        const prevAutofillValue = fieldData[fieldName].autofillValue as Record<number, string>
-        const currAutofillValue: Record<number, string> = {}
-        for (const key in prevAutofillValue) {
-          console.log(
-            'key:', key
+        const prevAutofillValue = fieldData[fieldName].autofillValue as Record<string, string>
+        const newAutofillValue: Record<string, string> = {}
+        let newIndex = 0
+        for (const idx in prevAutofillValue) {
+          const prevIndex = Number(idx)
+          if (prevIndex !== fieldIndex) {
+            newAutofillValue[newIndex] = prevAutofillValue[prevIndex]
+            newIndex++
+          }
+        }
+        if (Object.keys(newAutofillValue).length === 1) {
+          setAutofillValue(
+            fieldName, newAutofillValue[0]
+          )
+        } else {
+          setAutofillValue(
+            fieldName, newAutofillValue
           )
         }
+        setIsUnsavedFieldChanges(true)
       }
 
   /*
