@@ -87,34 +87,38 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
     setIsUnsavedChanges(true)
   }
 
-  const handleIncreasePriority: MouseEventHandler<HTMLElement> =
-  (evt: MouseEvent<HTMLElement>) => {
-    const { id: targetId } = evt.target as HTMLElement
-    const fieldName = getFieldName(targetId)
-    const fieldIndex = getFieldIndex(targetId)
-    const { autofillValue } = fieldData[fieldName]
-    fieldDataDispatch({
-      autofillValue,
-      fieldIndex,
-      fieldName,
-      type: 'increase-priority'
-    })
-    setIsUnsavedChanges(true)
-  }
-
   const handleDecreasePriority: MouseEventHandler<HTMLElement> =
   (evt: MouseEvent<HTMLElement>) => {
     const { id: targetId } = evt.target as HTMLElement
-    const fieldName = getFieldName(targetId)
     const fieldIndex = getFieldIndex(targetId)
-    const { autofillValue } = fieldData[fieldName]
-    fieldDataDispatch({
-      autofillValue,
-      fieldIndex,
-      fieldName,
-      type: 'decrease-priority'
-    })
-    setIsUnsavedChanges(true)
+    const fieldName = getFieldName(targetId)
+    if (fieldIndex < (Object.keys(fieldData[fieldName].autofillValue).length - 1)) {
+      const { autofillValue } = fieldData[fieldName]
+      fieldDataDispatch({
+        autofillValue,
+        fieldIndex,
+        fieldName,
+        type: 'decrease-priority'
+      })
+      setIsUnsavedChanges(true)
+    }
+  }
+
+  const handleIncreasePriority: MouseEventHandler<HTMLElement> =
+  (evt: MouseEvent<HTMLElement>) => {
+    const { id: targetId } = evt.target as HTMLElement
+    const fieldIndex = getFieldIndex(targetId)
+    if (fieldIndex > 0) {
+      const fieldName = getFieldName(targetId)
+      const autofillValue = fieldData[fieldName].autofillValue as Record<string, string>
+      fieldDataDispatch({
+        autofillValue,
+        fieldIndex,
+        fieldName,
+        type: 'increase-priority'
+      })
+      setIsUnsavedChanges(true)
+    }
   }
 
   return (

@@ -115,8 +115,9 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
         fieldIndex,
         fieldIndex + 1
       )
+    } else {
+      return fieldData
     }
-    break
   }
   case 'increase-priority': {
     fieldName = assertDefined(fieldName) as string
@@ -128,8 +129,9 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
         fieldIndex,
         fieldIndex - 1
       )
+    } else {
+      return fieldData
     }
-    break
   }
   case 'add-item': {
     fieldName = assertDefined(fieldName) as string
@@ -188,6 +190,6 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     }
   }
   }
-  throw new Error('Dispactch not found')
+  throw new Error('Dispatch not found')
 }
 export default fieldDataReducer
