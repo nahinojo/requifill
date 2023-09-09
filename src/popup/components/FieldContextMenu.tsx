@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import VerticalDotsIcon from './icons/VerticalDots'
 import getFieldName from '../utils/getFieldName'
-import { FieldDataDispatchContext } from '../utils/fieldDataContext'
+import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
 
 import type {
   Dispatch,
   FC,
   HTMLAttributes,
+  MouseEvent,
   MouseEventHandler,
   SetStateAction
 } from 'react'
@@ -22,9 +23,12 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
   setIsUnsavedChanges,
   transformSVG
 }) => {
+  const fieldData = useContext(FieldDataContext)
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
   const openContextMenuId = `${id}.context-menu-vdots`
+  const isSingleValueField =
+    typeof fieldData[getFieldName(id)].autofillValue === 'string'
 
   const handleOpenContextMenu = (evt: React.MouseEvent<HTMLDivElement>): void => {
     evt.preventDefault()
@@ -52,6 +56,39 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
     setIsUnsavedChanges(true)
   }
 
+  const handleSetSingleValue: MouseEventHandler<HTMLButtonElement> =
+  (evt: MouseEvent<HTMLButtonElement>) => {
+    const { id: targetId } = evt.target as HTMLButtonElement
+    const fieldName = getFieldName(targetId)
+    const prevAutofillValue = fieldData[fieldName].autofillValue as Record<string, string>
+    const autofillValue = prevAutofillValue[0]
+    fieldDataDispatch({
+      autofillValue,
+      fieldName,
+      type: 'set-autofill'
+    })
+    setIsUnsavedChanges(true)
+  }
+  const handleSetMultiValue: MouseEventHandler<HTMLButtonElement> =
+  (evt: MouseEvent<HTMLButtonElement>) => {
+    const { id: targetId } = evt.target as HTMLButtonElement
+    const fieldName = getFieldName(targetId)
+    const prevAutofillValue = fieldData[fieldName].autofillValue as string
+    const autofillValue = {
+      0: prevAutofillValue,
+      1: ''
+    }
+    fieldDataDispatch({
+      autofillValue,
+      fieldName,
+      type: 'set-autofill'
+    })
+    setIsUnsavedChanges(true)
+  }
+
+  /*
+  Establishes 'click out' escapability from context menu popup
+  */
   useEffect(
     () => {
       document.addEventListener(
@@ -64,9 +101,9 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
       }
     }, []
   )
-
-  const menuBottomButtonStyling = 'w-full h-9 flex align-middle items-center text-start indent-2 pt-1 text-white'
-  // const menuButtonStyling = `${menuBottomButtonStyling} border-b border-solid border-iron`
+  const buttonStyling = 'w-full flex align-middle items-center text-start pl-2 pt-1 text-white'
+  const buttonRemoveStyling = `${buttonStyling} h-9 border-b border-solid border-iron`
+  const buttonToggleValueStyling = `${buttonStyling} h-9`
 
   return (
     <>
@@ -80,25 +117,41 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
           <div
             style={
               {
-                left: `calc(${position.left}px - 9rem)`,
+                left: `calc(${position.left}px - 10rem)`,
                 top: position.top
               }
             }
-            className='fixed w-36 h-fit bg-night border border-solid border-iron z-50'
+            className='fixed w-40 h-fit bg-night border border-solid border-iron z-50'
             id={`${id}.context-menu`}
           >
             <button
-              className={menuBottomButtonStyling}
-              id={`${id}.context-menu-option`}
+              className={buttonRemoveStyling}
+              id={`${id}.context-menu-remove`}
               type='button'
               onClick={handleDeactivateField}
             >Remove
             </button>
-            {/* <button
-              className={menuBottomButtonStyling}
-              type='button'
-            >Disable MultiValue
-            </button> */}
+            {
+              !!isSingleValueField && (
+                <button
+                  className={buttonToggleValueStyling}
+                  id={`${id}.context-menu-enable-multivalue`}
+                  type='button'
+                  onClick={handleSetMultiValue}
+                >Enable Multivalue
+                </button>
+              )
+            } {
+              !isSingleValueField && (
+                <button
+                  className={buttonToggleValueStyling}
+                  id={`${id}.context-menu-disable-multivalue`}
+                  type='button'
+                  onClick={handleSetSingleValue}
+                >Disable Multivalue
+                </button>
+              )
+            }
           </div>
         )
       }

@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react'
+import React, { useContext } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 import getFieldName from '../utils/getFieldName'
 
@@ -21,9 +21,9 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 'type' | 'pattern' | 'value' | 'inputMode' | 'onChange'
 >
 interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
-  title: string
-  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
   id: string
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  title: string
 }
 
 const SingleValueField: FC<SingleValueFieldProps> = ({
@@ -33,7 +33,6 @@ const SingleValueField: FC<SingleValueFieldProps> = ({
 }) => {
   const fieldData = useContext(FieldDataContext)
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
-  const inputRef = useRef<HTMLInputElement>(null)
   const value = fieldData[getFieldName(id)].autofillValue as string
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +41,7 @@ const SingleValueField: FC<SingleValueFieldProps> = ({
     fieldDataDispatch({
       autofillValue,
       fieldName,
-      type: 'sync-input'
+      type: 'set-autofill'
     })
     setIsUnsavedChanges(true)
   }
@@ -68,7 +67,6 @@ const SingleValueField: FC<SingleValueFieldProps> = ({
         <input
           className='bg-iron text-base h-9 ml-7 rounded indent-2 pt-1'
           id={`${id}.input`}
-          ref={inputRef}
           type={'text'}
           value={value}
           onChange={handleInputChange}

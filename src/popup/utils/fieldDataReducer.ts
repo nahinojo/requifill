@@ -1,32 +1,7 @@
+/* eslint-disable react/destructuring-assignment */
 import type FieldDataProps from './FieldDataProps'
 import type { Reducer } from 'react'
 import type ActionProps from './ActionProps'
-/* eslint-disable react/destructuring-assignment */
-
-// /*
-// Returns index of target field within MultiValueField component
-// */
-// const getFieldIndex = (targetElement: HTMLElement): number => {
-//   const { id: targetId } = targetElement
-//   if (targetId === undefined) {
-//     throw new Error('fieldIndex not found on component')
-//   }
-//   const fieldIdIndexRegex = /[0-9]*[0-9]/
-//   const fieldIndex = Number(targetId.match(fieldIdIndexRegex))
-//   return fieldIndex
-// }
-// /*
-// Returns index of target field within any xValueField component
-// */
-// const getFieldName = (targetElement: HTMLElement): string => {
-//   const { id: targetId } = targetElement
-//   if (targetId === undefined) {
-//     throw new Error('fieldName not found on component')
-//   }
-//   const fieldNameRegex = /^[^.]*/
-//   const fieldName = String(targetId.match(fieldNameRegex))
-//   return fieldName
-// }
 
 /*
 Checks 'undefined' possiblility in type-setting
@@ -43,9 +18,9 @@ const assertDefined = <T extends keyof ActionProps>(prop: ActionProps[T]): Actio
 Changes autofillValue for any field within fieldData.
 */
 const setAutofillValue = (
+  autofillValue: string | Record<string, string>,
   fieldData: FieldDataProps,
   fieldName: string,
-  autofillValue: string | Record<string, string>,
   fieldIndex?: number
 ): FieldDataProps => {
   return fieldIndex === undefined
@@ -112,19 +87,19 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     newFieldData = assertDefined(newFieldData) as FieldDataProps
     return newFieldData
   }
-  case 'sync-input': {
-    fieldName = assertDefined(fieldName) as string
+  case 'set-autofill': {
     autofillValue = assertDefined(autofillValue) as string | Record<string, string>
+    fieldName = assertDefined(fieldName) as string
     return fieldIndex === undefined
       ? setAutofillValue(
+        autofillValue,
         fieldData,
-        fieldName,
-        autofillValue
+        fieldName
       )
       : setAutofillValue(
+        autofillValue,
         fieldData,
         fieldName,
-        autofillValue,
         fieldIndex
       )
   }
@@ -160,9 +135,9 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     fieldName = assertDefined(fieldName) as string
     const newIndex = Object.keys(fieldData[fieldName].autofillValue).length
     return setAutofillValue(
+      '',
       fieldData,
       fieldName,
-      '',
       newIndex
     )
   }
@@ -180,15 +155,15 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     }
     if (Object.keys(newAutofillValue).length === 1) {
       return setAutofillValue(
+        newAutofillValue[0],
         fieldData,
-        fieldName,
-        newAutofillValue[0]
+        fieldName
       )
     } else {
       return setAutofillValue(
+        newAutofillValue,
         fieldData,
-        fieldName,
-        newAutofillValue
+        fieldName
       )
     }
   }

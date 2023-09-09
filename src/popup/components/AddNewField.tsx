@@ -27,7 +27,7 @@ const AddNewField: FC<AddNewFieldProps> = ({
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const fieldOptions = Object.keys(fieldData)
     .filter(key => { return !fieldData[key].isActive })
-  const buttonFieldStylingBase = 'text-left bg-night border border-solid border-overcast pl-3 py-2'
+  const buttonFieldStylingBase = 'mx-1 text-left bg-night border border-solid border-overcast pl-3 py-2'
 
   const handleActivateField: MouseEventHandler<HTMLButtonElement> =
   (evt: MouseEvent<HTMLButtonElement>) => {
@@ -40,34 +40,25 @@ const AddNewField: FC<AddNewFieldProps> = ({
     setIsAddingField(false)
     setIsUnsavedChanges(true)
   }
-
   return (
-    <div
-      className='mx-1 mt-2'
-      id='add-new-field'
-    >
+    <>
       {
         !isAddingField &&
           fieldOptions.length !== 0 && (
-          <div
-            className='flex justify-center w-fit mx-auto cursor-pointer'
-            id='new-field-initiator'
+          <button
+            className='mt-2 w-fit mx-auto cursor-pointer flex justify-center text-sm text-silver'
+            id='new-field'
+            type='button'
             onClick={() => { setIsAddingField(true) }}
           >
-            <PlusSilver />
-            <button
-              className='text-sm text-silver'
-              id='new-field'
-              type='button'
-            >New Field
-            </button>
-          </div>
+            <PlusSilver />New Field
+          </button>
         )
       }
       {
         !!isAddingField && (
           <div
-            className='flex flex-col'
+            className='mt-2 flex flex-col'
             id='field-selector'
           >
             <header
@@ -106,7 +97,7 @@ const AddNewField: FC<AddNewFieldProps> = ({
           </div>
         )
       }
-    </div>
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import FieldContextMenu from './FieldContextMenu'
 import CheveronPointerWhite from './icons/ChevronPointerWhite'
 import Trash from './icons/Trash'
@@ -9,16 +9,16 @@ import getFieldIndex from '../utils/getFieldIndex'
 import getFieldName from '../utils/getFieldName'
 
 import type {
+  ChangeEvent,
+  ChangeEventHandler,
+  Dispatch,
+  FC,
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
-  FC,
-  SetStateAction,
-  Dispatch,
-  ChangeEventHandler,
-  ChangeEvent,
+  MouseEvent,
   MouseEventHandler,
-  MouseEvent
+  SetStateAction
 } from 'react'
 import type ActionProps from '../utils/ActionProps'
 
@@ -49,7 +49,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
   const fieldData = useContext(FieldDataContext)
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+  setIsRenderAddField(!isListExpanded)
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
     const { id: targetId, value: autofillValue } = evt.target as HTMLInputElement
@@ -59,12 +59,12 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
       autofillValue,
       fieldIndex,
       fieldName,
-      type: 'sync-input'
+      type: 'set-autofill'
     })
     setIsUnsavedChanges(true)
   }
 
-  const handleAddItem: MouseEventHandler<HTMLDivElement> =
+  const handleAddItem: MouseEventHandler<HTMLButtonElement> =
   () => {
     const fieldName = getFieldName(id)
     fieldDataDispatch({
@@ -74,9 +74,9 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
     setIsUnsavedChanges(true)
   }
 
-  const handleDeleteItem: MouseEventHandler<HTMLDivElement> =
+  const handleDeleteItem: MouseEventHandler<HTMLElement> =
   (evt: MouseEvent<HTMLDivElement>) => {
-    const { id: targetId } = evt.target as HTMLDivElement
+    const { id: targetId } = evt.target as HTMLElement
     const fieldIndex = getFieldIndex(targetId)
     const fieldName = getFieldName(targetId)
     fieldDataDispatch({
@@ -85,9 +85,6 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
       type: 'delete-item'
     })
     setIsUnsavedChanges(true)
-    if (Object.keys(fieldData[fieldName].autofillValue).length <= 2) {
-      setIsRenderAddField(true)
-    }
   }
 
   const handleIncreasePriority: MouseEventHandler<HTMLElement> =
@@ -134,7 +131,6 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
               onClick={
                 () => {
                   setIsListExpanded(true)
-                  setIsRenderAddField(false)
                 }
               }
             >
@@ -171,7 +167,6 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                 onClick={
                   () => {
                     setIsListExpanded(false)
-                    setIsRenderAddField(true)
                   }
                 }
               >
@@ -215,7 +210,6 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                       <input
                         className='text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1 bg-opacity-0 bg-storm'
                         id={`${id}.${index}.input`}
-                        ref={inputRef}
                         type={'text'}
                         value={val}
                         onChange={handleInputChange}
@@ -228,22 +222,16 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                   )
                 })
             }
-            <div
-              className='flex justify-center mt-2 mb-3 mx-auto w-fit cursor-pointer'
-              id={`${id}.add-item-wrapper`}
+            <button
+              className='mt-2 mb-3 mx-auto w-fit cursor-pointer flex justify-center text-sm text-bleach'
+              id={`${id}.add-item-button`}
+              type='button'
               onClick={handleAddItem}
             >
               <PlusWhite
                 id={`${id}`}
-              />
-              <button
-                className='text-sm text-bleach'
-                id={`${id}.add-item-button`}
-                type='button'
-              >
-                Add New Entry
-              </button>
-            </div>
+              /> Add New Entry
+            </button>
           </>
         )
       }

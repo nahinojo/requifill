@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import type {
-  HTMLAttributes,
+  Dispatch,
   FC,
-  SetStateAction,
-  Dispatch
+  HTMLAttributes,
+  SetStateAction
 } from 'react'
 import camelToTitleCase from '../../utils/camelToTitleCase'
 import SingleValueField from './SingleValueField'
@@ -23,7 +23,9 @@ const FieldRenderer: FC<FieldRendererProps> = ({
   const hasActiveItems = Object
     .values(fieldData)
     .some(fieldName => { return fieldName.isActive })
-
+  if (!hasActiveItems) {
+    setIsRenderAddField(true)
+  }
   return (
     <>
       {
@@ -39,6 +41,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                 .map((
                   [id, data], index
                 ) => {
+                  setIsRenderAddField(true)
                   const title = data.title == null
                     ? camelToTitleCase(id)
                     : data.title

@@ -2,9 +2,9 @@ import type FieldDataProps from './FieldDataProps'
 
 type ActionTypeProps =
   'set-data' |
+  'set-autofill' |
   'deactivate-field' |
   'activate-field' |
-  'sync-input' |
   'add-item' |
   'delete-item' |
   'increase-priority' |
