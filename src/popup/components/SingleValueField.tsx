@@ -34,15 +34,14 @@ const SingleValueField: FC<SingleValueFieldProps> = ({
   const fieldData = useContext(FieldDataContext)
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const inputRef = useRef<HTMLInputElement>(null)
+  const value = fieldData[getFieldName(id)].autofillValue as string
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
     const { value: autofillValue } = evt.target as HTMLInputElement
     const fieldName = getFieldName(id)
     fieldDataDispatch({
       autofillValue,
-      fieldIndex: undefined,
       fieldName,
-      newFieldData: undefined,
       type: 'sync-input'
     })
     setIsUnsavedChanges(true)
@@ -71,12 +70,13 @@ const SingleValueField: FC<SingleValueFieldProps> = ({
           id={`${id}.input`}
           ref={inputRef}
           type={'text'}
-          value={fieldData[getFieldName(id)].autofillValue as string}
+          value={value}
           onChange={handleInputChange}
         />
       </div>
       <FieldContextMenu
         id={id}
+        setIsUnsavedChanges={setIsUnsavedChanges}
         transformSVG='scale(.33)'
       />
     </div>

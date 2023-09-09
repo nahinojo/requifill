@@ -1,5 +1,3 @@
-import syncStorage from '../../utils/syncStorage'
-
 import type FieldDataProps from './FieldDataProps'
 import type { Reducer } from 'react'
 import type ActionProps from './ActionProps'
@@ -33,11 +31,11 @@ import type ActionProps from './ActionProps'
 /*
 Checks 'undefined' possiblility in type-setting
 */
-const assertDefined = <T extends keyof ActionProps>(value: ActionProps[T]): ActionProps[T] => {
-  if (value === undefined) {
-    throw new Error('Value is undefined')
+const assertDefined = <T extends keyof ActionProps>(prop: ActionProps[T]): ActionProps[T] => {
+  if (prop === undefined) {
+    throw new Error('asserted property is undefined')
   } else {
-    return value
+    return prop
   }
 }
 
@@ -48,7 +46,7 @@ const setAutofillValue = (
   fieldData: FieldDataProps,
   fieldName: string,
   autofillValue: string | Record<string, string>,
-  fieldIndex: number | undefined
+  fieldIndex?: number
 ): FieldDataProps => {
   return fieldIndex === undefined
   // Editing autofillValue of <SingleValueField />.
@@ -110,7 +108,7 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     type
   } = action
   switch (type) {
-  case 'set': {
+  case 'set-data': {
     newFieldData = assertDefined(newFieldData) as FieldDataProps
     return newFieldData
   }
@@ -121,8 +119,7 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
       ? setAutofillValue(
         fieldData,
         fieldName,
-        autofillValue,
-        undefined
+        autofillValue
       )
       : setAutofillValue(
         fieldData,
@@ -131,26 +128,7 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
         fieldIndex
       )
   }
-  case 'save-changes': {
-    syncStorage
-      .set({ prevFieldData: fieldData })
-      .catch(error => {
-        console.log(error)
-      })
-    break
-  }
-  case 'discard-changes': {
-    syncStorage
-      .get()
-      .then(storage => {
-        return storage.fieldData
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    break
-  }
-  case 'decrease-item-priority': {
+  case 'decrease-priority': {
     autofillValue = assertDefined(autofillValue) as Record<string, string>
     fieldName = assertDefined(fieldName) as string
     fieldIndex = assertDefined(fieldIndex) as number
@@ -165,7 +143,7 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     }
     break
   }
-  case 'increase-item-priority': {
+  case 'increase-priority': {
     fieldName = assertDefined(fieldName) as string
     fieldIndex = assertDefined(fieldIndex) as number
     if (fieldIndex > 0) {
@@ -181,13 +159,12 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
   case 'add-item': {
     fieldName = assertDefined(fieldName) as string
     const newIndex = Object.keys(fieldData[fieldName].autofillValue).length
-    setAutofillValue(
+    return setAutofillValue(
       fieldData,
       fieldName,
       '',
       newIndex
     )
-    break
   }
   case 'delete-item': {
     fieldName = assertDefined(fieldName) as string
@@ -205,16 +182,34 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
       return setAutofillValue(
         fieldData,
         fieldName,
-        newAutofillValue[0],
-        undefined
+        newAutofillValue[0]
       )
     } else {
       return setAutofillValue(
         fieldData,
         fieldName,
-        newAutofillValue,
-        undefined
+        newAutofillValue
       )
+    }
+  }
+  case 'activate-field': {
+    fieldName = assertDefined(fieldName) as string
+    return {
+      ...fieldData,
+      [fieldName]: {
+        ...fieldData[fieldName],
+        isActive: true
+      }
+    }
+  }
+  case 'deactivate-field': {
+    fieldName = assertDefined(fieldName) as string
+    return {
+      ...fieldData,
+      [fieldName]: {
+        ...fieldData[fieldName],
+        isActive: false
+      }
     }
   }
   }

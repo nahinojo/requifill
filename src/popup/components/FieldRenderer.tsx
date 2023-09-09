@@ -22,7 +22,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({
   const fieldData = useContext(FieldDataContext)
   const hasActiveItems = Object
     .values(fieldData)
-    .some(field => { return field.isActive })
+    .some(fieldName => { return fieldName.isActive })
 
   return (
     <>

@@ -1,15 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import VerticalDotsIcon from './icons/VerticalDots'
-import syncStorage from '../../utils/syncStorage'
+import getFieldName from '../utils/getFieldName'
+import { FieldDataDispatchContext } from '../utils/fieldDataContext'
 
-import type { FC, HTMLAttributes, ReactEventHandler } from 'react'
-
+import type {
+  Dispatch,
+  FC,
+  HTMLAttributes,
+  MouseEventHandler,
+  SetStateAction
+} from 'react'
+import type ActionProps from '../utils/ActionProps'
 interface FieldContextMenuProps extends HTMLAttributes<HTMLElement> {
   id: string // Forces dependency in props
   transformSVG: string
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
-const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
+const FieldContextMenu: FC <FieldContextMenuProps> = ({
+  id,
+  setIsUnsavedChanges,
+  transformSVG
+}) => {
+  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
   const openContextMenuId = `${id}.context-menu-vdots`
 
@@ -20,54 +33,30 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
     setPosition({ left: x, top: y })
   }
 
-  const handleDeactivateField = (fieldName: string): ReactEventHandler<HTMLButtonElement> => {
-    const handleDeactivateFieldTemplate: ReactEventHandler<HTMLButtonElement> = () => {
-      syncStorage
-        .get('fieldData')
-        .then(storage => {
-          const prevFieldData = storage.fieldData !== undefined
-            ? storage.fieldData
-            : {}
-          const currFieldData = {
-            ...prevFieldData,
-            [fieldName]: {
-              ...prevFieldData[fieldName],
-              isActive: false
-            }
-          }
-          console.log(
-            'handleDeactivateField() currFieldData:', currFieldData
-          )
-          syncStorage
-            .set({
-              fieldData: currFieldData
-            })
-            .catch(error => {
-              console.log(error)
-            })
-        })
-        .catch(error => {
-          console.log(error)
-        })
+  const handleCloseContextMenu: EventListener = (evt): void => {
+    const clickTarget = evt.target as HTMLElement
+    const clickTargetId = clickTarget.id
+    const isClickedAway = !clickTargetId.includes(openContextMenuId)
+    if (isClickedAway) {
+      setPosition(null)
     }
-    return handleDeactivateFieldTemplate
+  }
+
+  const handleDeactivateField: MouseEventHandler<HTMLButtonElement> =
+  () => {
+    const fieldName = getFieldName(id)
+    fieldDataDispatch({
+      fieldName,
+      type: 'deactivate-field'
+    })
+    setIsUnsavedChanges(true)
   }
 
   useEffect(
     () => {
-      const handleCloseContextMenu = (evt: MouseEvent): void => {
-        const clickTarget = evt.target as HTMLElement
-        const clickTargetId = clickTarget.id
-        const isClickedAway = !clickTargetId.includes(openContextMenuId)
-        if (isClickedAway) {
-          setPosition(null)
-        }
-      }
-
       document.addEventListener(
         'click', handleCloseContextMenu
       )
-
       return () => {
         document.removeEventListener(
           'click', handleCloseContextMenu
@@ -102,15 +91,14 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({ id, transformSVG }) => {
               className={menuBottomButtonStyling}
               id={`${id}.context-menu-option`}
               type='button'
-              onClick={handleDeactivateField(id)}
+              onClick={handleDeactivateField}
             >Remove
             </button>
-            {/*
-            <button
+            {/* <button
               className={menuBottomButtonStyling}
-            >Disable
-            </button>
-            */}
+              type='button'
+            >Disable MultiValue
+            </button> */}
           </div>
         )
       }

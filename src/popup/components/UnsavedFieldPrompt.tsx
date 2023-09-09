@@ -1,18 +1,53 @@
 import React, { useContext } from 'react'
-import { FieldDataDispatchContext } from '../utils/fieldDataContext'
+import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
+import syncStorage from '../../utils/syncStorage'
 
-import type { FC, MouseEventHandler, MouseEvent } from 'react'
+import type {
+  Dispatch,
+  FC,
+  MouseEventHandler,
+  ReactEventHandler,
+  SetStateAction
+} from 'react'
+import type ActionProps from '../utils/ActionProps'
 
-const UnsavedFieldPrompt: FC = () => {
-  const fieldDataDispatch = useContext(FieldDataDispatchContext)
+interface UnsavedFieldPromptProps {
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+}
 
-  const saveChanges: MouseEventHandler<HTMLButtonElement> =
-  (evt: MouseEvent<HTMLButtonElement>) => {
-    fieldDataDispatch({
-      autofillValue: 
-      type: 'save-changes'
-    })
+const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
+  setIsUnsavedChanges
+}) => {
+  const fieldData = useContext(FieldDataContext)
+  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
+
+  const handleSaveChanges: ReactEventHandler<HTMLButtonElement> =
+  () => {
+    syncStorage
+      .set({ fieldData })
+      .catch(error => {
+        console.log(error)
+      })
+    setIsUnsavedChanges(false)
   }
+
+  const handleDiscardChanges: MouseEventHandler<HTMLButtonElement> =
+  () => {
+    syncStorage
+      .get()
+      .then(storage => {
+        const newFieldData = storage.fieldData
+        fieldDataDispatch({
+          newFieldData,
+          type: 'set-data'
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    setIsUnsavedChanges(false)
+  }
+
   return (
     <div
       className='bg-aqua w-full h-1/6 fixed bottom-0'
@@ -28,13 +63,13 @@ const UnsavedFieldPrompt: FC = () => {
         <button
           className='font-semibold hover:underline'
           type='button'
-          onClick={discardChanges}
+          onClick={handleDiscardChanges}
         >Discard
         </button>
         <button
           className='font-semibold hover:underline'
           type='button'
-          onClick={saveChanges}
+          onClick={handleSaveChanges}
         >Save
         </button>
       </div>

@@ -4,7 +4,7 @@ import CheveronPointerWhite from './icons/ChevronPointerWhite'
 import Trash from './icons/Trash'
 import VerticalArrows from './icons/VerticalArrows'
 import PlusWhite from './icons/PlusWhite'
-import { FieldDataDispatchContext } from '../utils/fieldDataContext'
+import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
 import getFieldIndex from '../utils/getFieldIndex'
 import getFieldName from '../utils/getFieldName'
 
@@ -46,20 +46,19 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
   if (id === undefined) {
     throw new Error('React component ID not found.')
   }
-
+  const fieldData = useContext(FieldDataContext)
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { value: autofillValue } = evt.target as HTMLInputElement
-    const fieldName = getFieldName(id)
-    const fieldIndex = getFieldIndex(id)
+    const { id: targetId, value: autofillValue } = evt.target as HTMLInputElement
+    const fieldName = getFieldName(targetId)
+    const fieldIndex = getFieldIndex(targetId)
     fieldDataDispatch({
       autofillValue,
       fieldIndex,
       fieldName,
-      newFieldData: undefined,
       type: 'sync-input'
     })
     setIsUnsavedChanges(true)
@@ -69,12 +68,10 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
   () => {
     const fieldName = getFieldName(id)
     fieldDataDispatch({
-      autofillValue: '',
-      fieldIndex: undefined,
       fieldName,
-      newFieldData: undefined,
       type: 'add-item'
     })
+    setIsUnsavedChanges(true)
   }
 
   const handleDeleteItem: MouseEventHandler<HTMLDivElement> =
@@ -83,17 +80,44 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
     const fieldIndex = getFieldIndex(targetId)
     const fieldName = getFieldName(targetId)
     fieldDataDispatch({
-      autofillValue: '',
       fieldIndex,
       fieldName,
-      newFieldData: undefined,
       type: 'delete-item'
     })
+    setIsUnsavedChanges(true)
+    if (Object.keys(fieldData[fieldName].autofillValue).length <= 2) {
+      setIsRenderAddField(true)
+    }
   }
 
-  const handleIncreasePrioty: MouseEventHandler<HTMLElement> =
+  const handleIncreasePriority: MouseEventHandler<HTMLElement> =
   (evt: MouseEvent<HTMLElement>) => {
-    const { id: targetId, value: autofillValue } = evt.target as HTMLElement
+    const { id: targetId } = evt.target as HTMLElement
+    const fieldName = getFieldName(targetId)
+    const fieldIndex = getFieldIndex(targetId)
+    const { autofillValue } = fieldData[fieldName]
+    fieldDataDispatch({
+      autofillValue,
+      fieldIndex,
+      fieldName,
+      type: 'increase-priority'
+    })
+    setIsUnsavedChanges(true)
+  }
+
+  const handleDecreasePriority: MouseEventHandler<HTMLElement> =
+  (evt: MouseEvent<HTMLElement>) => {
+    const { id: targetId } = evt.target as HTMLElement
+    const fieldName = getFieldName(targetId)
+    const fieldIndex = getFieldIndex(targetId)
+    const { autofillValue } = fieldData[fieldName]
+    fieldDataDispatch({
+      autofillValue,
+      fieldIndex,
+      fieldName,
+      type: 'decrease-priority'
+    })
+    setIsUnsavedChanges(true)
   }
 
   return (
@@ -128,6 +152,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
             </div>
             <FieldContextMenu
               id={id}
+              setIsUnsavedChanges={setIsUnsavedChanges}
               transformSVG='scale(.33)'
             />
           </div>
@@ -163,6 +188,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
               </div>
               <FieldContextMenu
                 id={id}
+                setIsUnsavedChanges={setIsUnsavedChanges}
                 transformSVG='scale(.33)'
               />
             </div>
@@ -183,16 +209,8 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                     >
                       <VerticalArrows
                         id={`${id}.${index}`}
-                        onClickDown={
-                          () => {
-                            console.log('decrease item priority')
-                          }
-                        }
-                        onClickUp={
-                          () => {
-                            console.log('increase item priority')
-                          }
-                        }
+                        onClickDown={handleDecreasePriority}
+                        onClickUp={handleIncreasePriority}
                       />
                       <input
                         className='text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1 bg-opacity-0 bg-storm'
