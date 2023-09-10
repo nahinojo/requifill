@@ -1,11 +1,11 @@
 /*
-Adds features to requisition form DOM elements.
+Adds features to requisition form DOM elements
 */
 import isProperURL from '../utils/isProperURL'
 
 if (isProperURL) {
   /*
-  Wrapper function for setting value of target <input> element.
+  Wrapper function for setting value of target <input>
   */
   type InputSetter = (value: string) => void
   const focusInputValue = (targetInput: HTMLInputElement): InputSetter => {
@@ -26,44 +26,44 @@ if (isProperURL) {
   }
 
   /*
-  Enchance any list-based input.
-  Scrolling cycles through list within target input element.
+  Enchance any list-based input
+  Scrolling cycles through list within target <input>
   */
-  const addOptionsScroller = (
+  const addAutofillValueScroller = (
     id: string,
-    options: string[]
+    autofillValue: string[]
   ): void => {
     const targetInput = document.getElementById(id) as HTMLInputElement
     const setInputValue = focusInputValue(targetInput)
     let currentIdx = (
-      options.includes(targetInput.value)
-        ? options.indexOf(targetInput.value)
+      autofillValue.includes(targetInput.value)
+        ? autofillValue.indexOf(targetInput.value)
         : 0
     )
     targetInput.addEventListener(
       'wheel', (evt) => {
         evt.preventDefault()
-        if (options.includes(targetInput.value)) {
+        if (autofillValue.includes(targetInput.value)) {
           if (evt.deltaY > 0) {
             currentIdx = modulo(
-              options.length, (currentIdx + 1)
+              autofillValue.length, (currentIdx + 1)
             )
           } else {
             currentIdx = modulo(
-              options.length, (currentIdx - 1)
+              autofillValue.length, (currentIdx - 1)
             )
           }
         } else {
           currentIdx = 0
         }
-        setInputValue(options[currentIdx])
+        setInputValue(autofillValue[currentIdx])
       }
     )
   }
 
   /*
-  Enchance any numeric input.
-  Scrolling increases or decreases target input element by 1.
+  Enchance any numeric <input>
+  Scrolling increases or decreases target input element by 1
   */
   const addNumericScroller = (
     id: string,
@@ -94,15 +94,15 @@ if (isProperURL) {
     )
   }
 
-  const addOptionsScrollerSelector = (
+  const addAutofillValueScrollerSelector = (
     selector: string,
-    options: string[]
+    autofillValue: string[]
   ): void => {
     const elements = document.querySelectorAll(selector)
     for (let i = 0; i < elements.length; i++) {
-      addOptionsScroller(
+      addAutofillValueScroller(
         elements[i].id,
-        options
+        autofillValue
       )
     }
   }
@@ -122,17 +122,17 @@ if (isProperURL) {
     }
   }
 
-  addOptionsScroller(
+  addAutofillValueScroller(
     'document.documentHeader.documentDescription',
     ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg']
   )
 
-  addOptionsScroller(
+  addAutofillValueScroller(
     'document.documentHeader.organizationDocumentNumber',
     ['080p', '081p']
   )
 
-  addOptionsScrollerSelector(
+  addAutofillValueScrollerSelector(
     '[id$=".itemUnitOfMeasureCode"]',
     ['UN', 'PK']
   )

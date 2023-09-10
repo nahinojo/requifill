@@ -76,6 +76,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
 
   const handleDeleteItem: MouseEventHandler<HTMLElement> =
   (evt: MouseEvent<HTMLDivElement>) => {
+    console.log('deleting item')
     const { id: targetId } = evt.target as HTMLElement
     const fieldIndex = getFieldIndex(targetId)
     const fieldName = getFieldName(targetId)

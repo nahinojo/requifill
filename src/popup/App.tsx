@@ -22,8 +22,8 @@ const App: FC = () => {
   const [isRenderAddField, setIsRenderAddField] = useState<boolean>(true)
 
   /*
-  Injects fieldData into field <input> elements on page load
-  Ensures fieldData is in sync with browser storage
+  Injects fieldData into field <input> elements.
+  Ensures fieldData is in sync with browser storage.
   */
   useEffect(
     () => {

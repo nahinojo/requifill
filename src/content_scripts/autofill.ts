@@ -5,35 +5,39 @@ elements.
 import syncStorage from '../utils/syncStorage'
 import isProperURL from '../utils/isProperURL'
 import getIsAutofill from '../utils/getIsAutofill'
+import nameToId from '../utils/nameToId'
+
+import type FieldDataProps from '../popup/utils/FieldDataProps'
+import type { nameToIdKeys } from '../utils/nameToId'
 
 if (isProperURL) {
-  /*
-  Since requisition form DOM IDs are absurdly long, a shorthand translation dict is used.
-  */
-  type NameToIdDictKeys = 'adHocUserId' | 'commodityCode' | 'roomNumber'
-  const nameToIdDict = {
-    adHocUserId: 'newAdHocRoutePerson.id',
-    commodityCode: 'newPurchasingItemLine.purchasingCommodityCode',
-    roomNumber: 'document.deliveryBuildingRoomNumber'
-  }
-
   /*
   Retrieves field data from browser storage to autofill requisition form <input> elements.
   */
   const autofill = (): void => {
-    syncStorage.get()
+    syncStorage
+      .get()
       .then(storage => {
-        const { fieldData } = storage
+        const fieldData = storage.fieldData as FieldDataProps
         for (const fieldName in fieldData) {
-          const fieldValue = fieldData[fieldName]
-          const targetInput = document.getElementById(nameToIdDict[fieldName as NameToIdDictKeys]) as HTMLInputElement
-          // Prevents duplicate injections of adHocUserId.
-          const neglectAdHocUserId = (
-            fieldName === 'adHocUserId' &&
+          if (fieldData[fieldName].isActive) {
+            let { autofillValue } = fieldData[fieldName]
+            if (typeof autofillValue === 'object') {
+              autofillValue = autofillValue[0]
+            }
+            const targetInput = document.getElementById(nameToId[fieldName as nameToIdKeys]) as HTMLInputElement
+            const isAlreadyAutofilled = targetInput.value === autofillValue
+            // Prevents duplicate injections of adHocUserId.
+            const hasSecondaryAdHocUserId = (
+              fieldName === 'adHocUserId' &&
                 document.getElementById('adHocRoutePerson[0].id') !== null
-          )
-          if (targetInput.value !== fieldValue && !neglectAdHocUserId) {
-            targetInput.value = fieldValue
+            )
+            if (
+              !isAlreadyAutofilled &&
+              !hasSecondaryAdHocUserId
+            ) {
+              targetInput.value = autofillValue
+            }
           }
         }
       })
@@ -47,16 +51,18 @@ if (isProperURL) {
   const autoclear = (): void => {
     syncStorage.get()
       .then(storage => {
-        const { fieldData } = storage
+        const fieldData = storage.fieldData as FieldDataProps
         for (const fieldName in fieldData) {
-          const targetInput = document.getElementById(nameToIdDict[fieldName as NameToIdDictKeys]) as HTMLInputElement
-          // Prevents duplicate injections of adHocUserId.
-          const neglectAdHocUserId = (
-            fieldName === 'adHocUserId' &&
-                document.getElementById('adHocRoutePerson[0].id') !== null
-          )
-          if (!neglectAdHocUserId) {
-            targetInput.value = ''
+          if (fieldData[fieldName].isActive) {
+            const targetInput = document.getElementById(nameToId[fieldName as nameToIdKeys]) as HTMLInputElement
+            // Prevents duplicate injections of adHocUserId.
+            const neglectAdHocUserId = (
+              fieldName === 'adHocUserId' &&
+                    document.getElementById('adHocRoutePerson[0].id') !== null
+            )
+            if (!neglectAdHocUserId) {
+              targetInput.value = ''
+            }
           }
         }
       })

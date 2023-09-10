@@ -20,16 +20,21 @@ const FieldRenderer: FC<FieldRendererProps> = ({
   setIsUnsavedChanges
 }) => {
   const fieldData = useContext(FieldDataContext)
-  const hasActiveItems = Object
+  const isActiveFields = Object
     .values(fieldData)
     .some(fieldName => { return fieldName.isActive })
-  if (!hasActiveItems) {
+  const isInactiveFields = Object
+    .values(fieldData)
+    .some(fieldName => { return !fieldName.isActive })
+
+  if (isInactiveFields) {
     setIsRenderAddField(true)
   }
+
   return (
     <>
       {
-        !!hasActiveItems && (
+        !!isActiveFields && (
           <>
             <header
               className='text-silver text-sm mt-3 ml-1'
@@ -41,15 +46,14 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                 .map((
                   [id, data], index
                 ) => {
-                  setIsRenderAddField(true)
                   const title = data.title == null
                     ? camelToTitleCase(id)
                     : data.title
-                  const key = `${id}-${index}`
-                  const value = data.autofillValue
+                  const key = `${id}.${index}`
+                  const { autofillValue } = data
                   if (
                     data.isActive &&
-                    typeof value === 'string'
+                    typeof autofillValue === 'string'
                   ) {
                     return (
                       <SingleValueField
@@ -57,7 +61,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                         key={key}
                         setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}
-                        value={value}
+                        value={autofillValue}
                       />
                     )
                   } else if (
