@@ -21,12 +21,12 @@ if (isProperURL) {
         const fieldData = storage.fieldData as FieldDataProps
         for (const fieldName in fieldData) {
           if (fieldData[fieldName].isActive) {
-            let { autofillValue } = fieldData[fieldName]
-            if (typeof autofillValue === 'object') {
-              autofillValue = autofillValue[0]
+            let { autofill } = fieldData[fieldName]
+            if (typeof autofill === 'object') {
+              autofill = autofill[0]
             }
             const targetInput = document.getElementById(nameToId[fieldName as nameToIdKeys]) as HTMLInputElement
-            const isAlreadyAutofilled = targetInput.value === autofillValue
+            const isAlreadyAutofilled = targetInput.value === autofill
             // Prevents duplicate injections of adHocUserId.
             const hasSecondaryAdHocUserId = (
               fieldName === 'adHocUserId' &&
@@ -36,7 +36,7 @@ if (isProperURL) {
               !isAlreadyAutofilled &&
               !hasSecondaryAdHocUserId
             ) {
-              targetInput.value = autofillValue
+              targetInput.value = autofill
             }
           }
         }

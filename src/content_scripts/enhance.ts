@@ -2,13 +2,14 @@
 Adds features to requisition form DOM elements
 */
 import isProperURL from '../utils/isProperURL'
+import syncStorage from '../utils/syncStorage'
 
 if (isProperURL) {
   /*
   Wrapper function for setting value of target <input>
   */
   type InputSetter = (value: string) => void
-  const focusInputValue = (targetInput: HTMLInputElement): InputSetter => {
+  const createSetInputValue = (targetInput: HTMLInputElement): InputSetter => {
     return (value: string): void => {
       targetInput.value = value
       targetInput.select()
@@ -29,34 +30,34 @@ if (isProperURL) {
   Enchance any list-based input
   Scrolling cycles through list within target <input>
   */
-  const addAutofillValueScroller = (
+  const addValuesScroller = (
     id: string,
-    autofillValue: string[]
+    autofillValues: string[]
   ): void => {
     const targetInput = document.getElementById(id) as HTMLInputElement
-    const setInputValue = focusInputValue(targetInput)
+    const setInputValue = createSetInputValue(targetInput)
     let currentIdx = (
-      autofillValue.includes(targetInput.value)
-        ? autofillValue.indexOf(targetInput.value)
+      autofillValues.includes(targetInput.value)
+        ? autofillValues.indexOf(targetInput.value)
         : 0
     )
     targetInput.addEventListener(
       'wheel', (evt) => {
         evt.preventDefault()
-        if (autofillValue.includes(targetInput.value)) {
+        if (autofillValues.includes(targetInput.value)) {
           if (evt.deltaY > 0) {
             currentIdx = modulo(
-              autofillValue.length, (currentIdx + 1)
+              autofillValues.length, (currentIdx + 1)
             )
           } else {
             currentIdx = modulo(
-              autofillValue.length, (currentIdx - 1)
+              autofillValues.length, (currentIdx - 1)
             )
           }
         } else {
           currentIdx = 0
         }
-        setInputValue(autofillValue[currentIdx])
+        setInputValue(autofillValues[currentIdx])
       }
     )
   }
@@ -71,7 +72,7 @@ if (isProperURL) {
     decimalPlace: number
   ): void => {
     const targetInput = document.getElementById(id) as HTMLInputElement
-    const setInputValue = focusInputValue(targetInput)
+    const setInputValue = createSetInputValue(targetInput)
     let currentNumber = defaultNumber
     targetInput.addEventListener(
       'wheel', (evt) => {
@@ -94,15 +95,15 @@ if (isProperURL) {
     )
   }
 
-  const addAutofillValueScrollerSelector = (
+  const addValuesScrollerSelector = (
     selector: string,
-    autofillValue: string[]
+    autofillValues: string[]
   ): void => {
     const elements = document.querySelectorAll(selector)
     for (let i = 0; i < elements.length; i++) {
-      addAutofillValueScroller(
+      addValuesScroller(
         elements[i].id,
-        autofillValue
+        autofillValues
       )
     }
   }
@@ -121,18 +122,33 @@ if (isProperURL) {
       )
     }
   }
+  // Do this for all autofill objects in fieldData
+  // Ignore cases where isActive is true
+  // Reset if syncStorage fiedData changes
+  // Ensure indexing is right and proper
+  syncStorage
+    .get('fieldData')
+    .then(({ fieldData }) => {
+      const fieldNames = Object.keys(fieldData)
+      for (const fieldName of fieldNames) {
+        const autofill = fieldData[fieldName].autofill as string | Record<string, string>
+        if (typeof autofill === 'object') {
+          addValuesScroller(
+            'document.documentHeader.documentDescription',
+            autofill as Record<string, string>
+          )
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
 
-  addAutofillValueScroller(
-    'document.documentHeader.documentDescription',
-    ['Amazon', 'Ebay', 'McMaster-Carr', 'Newegg']
-  )
-
-  addAutofillValueScroller(
+  addValuesScroller(
     'document.documentHeader.organizationDocumentNumber',
     ['080p', '081p']
   )
 
-  addAutofillValueScrollerSelector(
+  addValuesScrollerSelector(
     '[id$=".itemUnitOfMeasureCode"]',
     ['UN', 'PK']
   )

@@ -50,10 +50,10 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                     ? camelToTitleCase(id)
                     : data.title
                   const key = `${id}.${index}`
-                  const { autofillValue } = data
+                  const { autofill } = data
                   if (
                     data.isActive &&
-                    typeof autofillValue === 'string'
+                    typeof autofill === 'string'
                   ) {
                     return (
                       <SingleValueField
@@ -61,18 +61,18 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                         key={key}
                         setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}
-                        value={autofillValue}
+                        value={autofill}
                       />
                     )
                   } else if (
                     data.isActive &&
-                    typeof data.autofillValue === 'object'
+                    typeof data.autofill === 'object'
                   ) {
                     return (
                       <MultiValueField
                         id={id}
                         key={key}
-                        multiValues={Object.values(data.autofillValue)}
+                        multiValues={Object.values(data.autofill)}
                         setIsRenderAddField={setIsRenderAddField}
                         setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}

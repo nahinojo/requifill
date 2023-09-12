@@ -18,16 +18,16 @@ async function fieldDataInitializer (): Promise<FieldDataProps> {
       if (Object.keys(storage).length <= 0) {
         const initialFieldData = {
           adHocUserId: {
-            autofillValue: 'adarami',
+            autofill: 'adarami',
             isActive: true,
             title: 'Ad Hoc User ID'
           },
           commodityCode: {
-            autofillValue: '7786413',
+            autofill: '7786413',
             isActive: false
           },
           description: {
-            autofillValue: {
+            autofill: {
               0: 'Amazon',
               1: 'Digikey',
               2: 'Home Depot',
@@ -36,7 +36,7 @@ async function fieldDataInitializer (): Promise<FieldDataProps> {
             isActive: true
           },
           phoneNumber: {
-            autofillValue: '9491234567',
+            autofill: '9491234567',
             isActive: false
           }
         }

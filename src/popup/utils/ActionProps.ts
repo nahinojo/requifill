@@ -12,7 +12,7 @@ type ActionTypeProps =
   'save-changes'
 
 interface ActionProps {
-  autofillValue?: string | Record<string, string>
+  autofill?: string | Record<string, string>
   fieldIndex?: number
   fieldName?: string
   newFieldData?: FieldDataProps

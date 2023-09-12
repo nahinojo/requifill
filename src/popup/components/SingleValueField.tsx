@@ -33,13 +33,13 @@ const SingleValueField: FC<SingleValueFieldProps> = ({
 }) => {
   const fieldData = useContext(FieldDataContext)
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
-  const value = fieldData[getFieldName(id)].autofillValue as string
+  const value = fieldData[getFieldName(id)].autofill as string
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { value: autofillValue } = evt.target as HTMLInputElement
+    const { value: autofill } = evt.target as HTMLInputElement
     const fieldName = getFieldName(id)
     fieldDataDispatch({
-      autofillValue,
+      autofill,
       fieldName,
       type: 'set-autofill'
     })

@@ -28,7 +28,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
   const openContextMenuId = `${id}.context-menu-vdots`
   const isSingleValueField =
-    typeof fieldData[getFieldName(id)].autofillValue === 'string'
+    typeof fieldData[getFieldName(id)].autofill === 'string'
 
   const handleOpenContextMenu = (evt: React.MouseEvent<HTMLDivElement>): void => {
     evt.preventDefault()
@@ -60,10 +60,10 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
   (evt: MouseEvent<HTMLButtonElement>) => {
     const { id: targetId } = evt.target as HTMLButtonElement
     const fieldName = getFieldName(targetId)
-    const prevAutofillValue = fieldData[fieldName].autofillValue as Record<string, string>
-    const autofillValue = prevAutofillValue[0]
+    const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
+    const autofill = prevAutofillValue[0]
     fieldDataDispatch({
-      autofillValue,
+      autofill,
       fieldName,
       type: 'set-autofill'
     })
@@ -73,13 +73,13 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
   (evt: MouseEvent<HTMLButtonElement>) => {
     const { id: targetId } = evt.target as HTMLButtonElement
     const fieldName = getFieldName(targetId)
-    const prevAutofillValue = fieldData[fieldName].autofillValue as string
-    const autofillValue = {
+    const prevAutofillValue = fieldData[fieldName].autofill as string
+    const autofill = {
       0: prevAutofillValue,
       1: ''
     }
     fieldDataDispatch({
-      autofillValue,
+      autofill,
       fieldName,
       type: 'set-autofill'
     })

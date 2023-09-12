@@ -1,5 +1,5 @@
 /*
-Since requisition form DOM IDs are absurdly long, a shorthand translation dict is used.
+Since requisition form DOM IDs are absurdly long, a shorthand translation dictionary is used.
 */
 const nameToId = {
   adHocUserId: 'newAdHocRoutePerson.id',

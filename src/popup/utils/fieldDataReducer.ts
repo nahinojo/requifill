@@ -15,32 +15,32 @@ const assertDefined = <T extends keyof ActionProps>(prop: ActionProps[T]): Actio
 }
 
 /*
-Changes autofillValue for any field within fieldData.
+Changes autofill for any field within fieldData.
 */
 const setAutofillValue = (
-  autofillValue: string | Record<string, string>,
+  autofill: string | Record<string, string>,
   fieldData: FieldDataProps,
   fieldName: string,
   fieldIndex?: number
 ): FieldDataProps => {
   return fieldIndex === undefined
-  // Editing autofillValue of <SingleValueField />.
-  // Or, editing entire autofillValue object of <MultiValueField />.
+  // Editing autofill of <SingleValueField />.
+  // Or, editing entire autofill object of <MultiValueField />.
     ? {
       ...fieldData,
       [fieldName]: {
         ...fieldData[fieldName],
-        autofillValue
+        autofill
       }
     }
-  // Editing a specific value within autofillValue of <MultiValueField />.
+  // Editing a specific value within autofill of <MultiValueField />.
     : {
       ...fieldData,
       [fieldName]: {
         ...fieldData[fieldName],
-        autofillValue: {
-          ...fieldData[fieldName].autofillValue as Record<string, string>,
-          [fieldIndex]: autofillValue
+        autofill: {
+          ...fieldData[fieldName].autofill as Record<string, string>,
+          [fieldIndex]: autofill
         }
       }
     }
@@ -55,14 +55,14 @@ const swapAutofillItemIndeces = (
   fieldIndex1: number,
   fieldIndex2: number
 ): FieldDataProps => {
-  const prevAutofillValue = fieldData[fieldName].autofillValue as Record<string, string>
+  const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
   const fieldValue1 = prevAutofillValue[fieldIndex1]
   const fieldValue2 = prevAutofillValue[fieldIndex2]
   return {
     ...fieldData,
     [fieldName]: {
       ...fieldData[fieldName],
-      autofillValue: {
+      autofill: {
         ...prevAutofillValue,
         [fieldIndex1]: fieldValue2,
         [fieldIndex2]: fieldValue1
@@ -76,7 +76,7 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
   action: ActionProps
 ): FieldDataProps => {
   let {
-    autofillValue,
+    autofill,
     fieldIndex,
     fieldName,
     newFieldData,
@@ -88,26 +88,26 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     return newFieldData
   }
   case 'set-autofill': {
-    autofillValue = assertDefined(autofillValue) as string | Record<string, string>
+    autofill = assertDefined(autofill) as string | Record<string, string>
     fieldName = assertDefined(fieldName) as string
     return fieldIndex === undefined
       ? setAutofillValue(
-        autofillValue,
+        autofill,
         fieldData,
         fieldName
       )
       : setAutofillValue(
-        autofillValue,
+        autofill,
         fieldData,
         fieldName,
         fieldIndex
       )
   }
   case 'decrease-priority': {
-    autofillValue = assertDefined(autofillValue) as Record<string, string>
+    autofill = assertDefined(autofill) as Record<string, string>
     fieldName = assertDefined(fieldName) as string
     fieldIndex = assertDefined(fieldIndex) as number
-    const indexLowerBoundary = Object.keys(autofillValue).length - 1
+    const indexLowerBoundary = Object.keys(autofill).length - 1
     if (fieldIndex < indexLowerBoundary) {
       return swapAutofillItemIndeces(
         fieldData,
@@ -135,7 +135,7 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
   }
   case 'add-item': {
     fieldName = assertDefined(fieldName) as string
-    const newIndex = Object.keys(fieldData[fieldName].autofillValue).length
+    const newIndex = Object.keys(fieldData[fieldName].autofill).length
     return setAutofillValue(
       '',
       fieldData,
@@ -145,7 +145,7 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
   }
   case 'delete-item': {
     fieldName = assertDefined(fieldName) as string
-    const prevAutofillValue = fieldData[fieldName].autofillValue as Record<string, string>
+    const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
     const newAutofillValue: Record<string, string> = {}
     let newIndex = 0
     for (const idx in prevAutofillValue) {

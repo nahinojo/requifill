@@ -52,11 +52,11 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
   setIsRenderAddField(!isListExpanded)
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { id: targetId, value: autofillValue } = evt.target as HTMLInputElement
+    const { id: targetId, value: autofill } = evt.target as HTMLInputElement
     const fieldName = getFieldName(targetId)
     const fieldIndex = getFieldIndex(targetId)
     fieldDataDispatch({
-      autofillValue,
+      autofill,
       fieldIndex,
       fieldName,
       type: 'set-autofill'
@@ -93,10 +93,10 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
     const { id: targetId } = evt.target as HTMLElement
     const fieldIndex = getFieldIndex(targetId)
     const fieldName = getFieldName(targetId)
-    if (fieldIndex < (Object.keys(fieldData[fieldName].autofillValue).length - 1)) {
-      const { autofillValue } = fieldData[fieldName]
+    if (fieldIndex < (Object.keys(fieldData[fieldName].autofill).length - 1)) {
+      const { autofill } = fieldData[fieldName]
       fieldDataDispatch({
-        autofillValue,
+        autofill,
         fieldIndex,
         fieldName,
         type: 'decrease-priority'
@@ -111,9 +111,9 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
     const fieldIndex = getFieldIndex(targetId)
     if (fieldIndex > 0) {
       const fieldName = getFieldName(targetId)
-      const autofillValue = fieldData[fieldName].autofillValue as Record<string, string>
+      const autofill = fieldData[fieldName].autofill as Record<string, string>
       fieldDataDispatch({
-        autofillValue,
+        autofill,
         fieldIndex,
         fieldName,
         type: 'increase-priority'
