@@ -9,7 +9,7 @@ async function fieldDataInitializer (): Promise<FieldDataProps> {
   //       return storage.fieldData
   //     })
   //     .catch(error => {
-  //       console.log(error)
+  //       console.error(error)
   //     })
   // })
   return await syncStorage
@@ -45,14 +45,14 @@ async function fieldDataInitializer (): Promise<FieldDataProps> {
             fieldData: initialFieldData
           })
           .catch(error => {
-            console.log(error)
+            console.error(error)
           })
       } else {
         return storage.fieldData
       }
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
     })
 }
 

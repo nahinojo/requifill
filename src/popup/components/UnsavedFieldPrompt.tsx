@@ -26,7 +26,7 @@ const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
     syncStorage
       .set({ fieldData })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
     setIsUnsavedChanges(false)
   }
@@ -43,7 +43,7 @@ const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
         })
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
     setIsUnsavedChanges(false)
   }

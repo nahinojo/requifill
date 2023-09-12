@@ -9,7 +9,7 @@ const getIsAutofill = async (): Promise<boolean> => {
       return Boolean(storage?.settings?.isAutofill)
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
       return false
     })
 }

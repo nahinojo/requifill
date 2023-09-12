@@ -60,7 +60,7 @@ const App: FC = () => {
                 fieldData: initialFieldData
               })
               .catch(error => {
-                console.log(error)
+                console.error(error)
               })
             fieldDataDispatch({
               newFieldData: initialFieldData,
@@ -74,7 +74,7 @@ const App: FC = () => {
           }
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
         })
       syncStorage.onChanged.addListener(() => {
         syncStorage
@@ -86,7 +86,7 @@ const App: FC = () => {
             })
           })
           .catch(error => {
-            console.log(error)
+            console.error(error)
           })
       })
     }, []

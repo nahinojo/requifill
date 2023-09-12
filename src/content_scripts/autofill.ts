@@ -42,7 +42,7 @@ if (isProperURL) {
         }
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
   }
   /*
@@ -67,7 +67,7 @@ if (isProperURL) {
         }
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
   }
 
@@ -81,7 +81,7 @@ if (isProperURL) {
       }
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
     })
 
   /*
@@ -97,7 +97,7 @@ if (isProperURL) {
         }
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
   })
 }

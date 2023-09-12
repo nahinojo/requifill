@@ -18,7 +18,7 @@ const ToggleAutofillHeader: React.FC = () => {
       }
     })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
     setIsAutofill(isAutofill => {
       return !isAutofill
@@ -36,7 +36,7 @@ const ToggleAutofillHeader: React.FC = () => {
           setIsLoading(false)
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
         })
     }, []
   )
