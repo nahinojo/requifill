@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
-import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
-import syncStorage from '../../objects/syncStorage'
+import {
+  fieldDataContext,
+  fieldDataDispatchContext
+} from '../hooks'
+import { syncStorage } from '../../objects'
 
 import type {
   Dispatch,
@@ -9,17 +12,17 @@ import type {
   ReactEventHandler,
   SetStateAction
 } from 'react'
-import type ActionProps from '../utils/ActionProps'
+import type { ActionProps } from '../../types'
 
 interface UnsavedFieldPromptProps {
   setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
-const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
+export const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
   setIsUnsavedChanges
 }) => {
-  const fieldData = useContext(FieldDataContext)
-  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
+  const fieldData = useContext(fieldDataContext)
+  const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
 
   const handleSaveChanges: ReactEventHandler<HTMLButtonElement> =
   () => {
@@ -76,5 +79,3 @@ const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
     </div>
   )
 }
-
-export default UnsavedFieldPrompt

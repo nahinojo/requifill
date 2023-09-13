@@ -1,6 +1,6 @@
 type BaseElement = string | number | boolean | null | undefined
 
-const removeReadOnlyFromArray = <T extends BaseElement>(arr: readonly T[]): T[] => {
+export const removeReadOnlyFromArray = <T extends BaseElement>(arr: readonly T[]): T[] => {
   let newArr: T[] = []
   for (let i = 0; i < arr.length; i++) {
     newArr = arr.concat(
@@ -9,4 +9,3 @@ const removeReadOnlyFromArray = <T extends BaseElement>(arr: readonly T[]): T[] 
   }
   return newArr
 }
-export default removeReadOnlyFromArray

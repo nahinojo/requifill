@@ -1,4 +1,4 @@
-const kebabToCamelCase = (kebabString: string): string => {
+export const kebabToCamelCase = (kebabString: string): string => {
   let camelString = kebabString[0]
   let i = 1
   let isUpperNextChar = false
@@ -22,4 +22,3 @@ const kebabToCamelCase = (kebabString: string): string => {
   }
   return camelString
 }
-export default kebabToCamelCase

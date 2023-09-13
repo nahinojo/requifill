@@ -1,5 +1,6 @@
 import React from 'react'
-import ChevronPointerBleach from './ChevronPointerBleach'
+import { ChevronPointerBleach } from './'
+
 import type { FC, HTMLAttributes, MouseEventHandler } from 'react'
 
 interface VerticalArrowsProps extends HTMLAttributes<HTMLElement> {
@@ -8,7 +9,7 @@ interface VerticalArrowsProps extends HTMLAttributes<HTMLElement> {
   id: string
 }
 
-const VerticalArrows: FC<VerticalArrowsProps> = ({ id, onClickDown, onClickUp }) => {
+export const VerticalArrows: FC<VerticalArrowsProps> = ({ id, onClickDown, onClickUp }) => {
   const upPointerId = `${id}.up`
   const downPointerId = `${id}.down`
 
@@ -40,5 +41,3 @@ const VerticalArrows: FC<VerticalArrowsProps> = ({ id, onClickDown, onClickUp })
     </div>
   )
 }
-
-export default VerticalArrows

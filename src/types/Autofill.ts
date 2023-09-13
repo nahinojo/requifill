@@ -1,2 +1,1 @@
-type Autofill = string | Record<number, string>
-export default Autofill
+export type Autofill = string | Record<number, string>

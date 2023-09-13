@@ -1,9 +1,10 @@
 import React from 'react'
+
 import type { FC } from 'react'
 
 interface PlusWhiteProps extends Pick<HTMLElement, 'id'> {}
 
-const PlusWhite: FC<PlusWhiteProps> = ({ id }) => {
+export const PlusWhite: FC<PlusWhiteProps> = ({ id }) => {
   return (
     <svg
       className='mr-1 mt-0.5'
@@ -21,5 +22,3 @@ const PlusWhite: FC<PlusWhiteProps> = ({ id }) => {
     </svg>
   )
 }
-
-export default PlusWhite

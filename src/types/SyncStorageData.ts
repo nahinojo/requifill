@@ -1,9 +1,10 @@
-import type FieldData from './FieldData'
+import type {
+  FieldData
+} from './'
 
-interface SyncStorageData {
+export interface SyncStorageData {
   fieldData: FieldData
   settings: {
     isAutofill: boolean
   }
 }
-export default SyncStorageData

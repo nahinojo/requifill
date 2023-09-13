@@ -1,4 +1,4 @@
-const initialFieldData = {
+export const initialFieldData = {
   adHocUserId: {
     autofill: 'adarami',
     isActive: true,
@@ -26,5 +26,3 @@ const initialFieldData = {
     isActive: false
   }
 }
-
-export default initialFieldData

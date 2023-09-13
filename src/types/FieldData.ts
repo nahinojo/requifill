@@ -1,11 +1,12 @@
-import type { FieldName } from '../objects/fieldNames'
-import type Autofill from './Autofill'
+import type {
+  Autofill,
+  FieldName
+} from './'
 
-type FieldData = {
+export type FieldData = {
   [K in FieldName]: {
     autofill: Autofill
     isActive: boolean
     title?: string
   }
 }
-export default FieldData

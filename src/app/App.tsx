@@ -3,15 +3,23 @@ import React, {
   useState,
   useReducer
 } from 'react'
+import {
+  AddNewField,
+  FieldRenderer,
+  ToggleAutofillHeader,
+  UnsavedFieldPrompt
+} from './components'
+import {
+  fieldDataContext,
+  fieldDataDispatchContext,
+  fieldDataReducer
+} from './hooks'
+import {
+  initialFieldData,
+  syncStorage
+} from '../objects'
+
 import type { FC } from 'react'
-import fieldDataReducer from './utils/fieldDataReducer'
-import ToggleAutofillHeader from './components/ToggleAutofillHeader'
-import AddNewField from './components/AddNewField'
-import FieldRenderer from './components/FieldRenderer'
-import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
-import { FieldDataContext, FieldDataDispatchContext } from './utils/fieldDataContext'
-import syncStorage from '../objects/syncStorage'
-import initialFieldData from '../objects/initialFieldData'
 
 const App: FC = () => {
   const [fieldData, fieldDataDispatch] = useReducer(
@@ -66,10 +74,10 @@ const App: FC = () => {
   )
 
   return (
-    <FieldDataContext.Provider
+    <fieldDataContext.Provider
       value={fieldData}
     >
-      <FieldDataDispatchContext.Provider
+      <fieldDataDispatchContext.Provider
         value={fieldDataDispatch}
       >
         <ToggleAutofillHeader />
@@ -93,8 +101,8 @@ const App: FC = () => {
             />
           )
         }
-      </FieldDataDispatchContext.Provider>
-    </FieldDataContext.Provider>
+      </fieldDataDispatchContext.Provider>
+    </fieldDataContext.Provider>
   )
 }
 

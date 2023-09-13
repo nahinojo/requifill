@@ -1,6 +1,6 @@
-import syncStorage from '../objects/syncStorage'
+import { syncStorage } from '../objects'
 
-const getIsAutofill = async (): Promise<boolean> => {
+export const getIsAutofill = async (): Promise<boolean> => {
   return await syncStorage.get('settings')
     .then(storage => {
       return Boolean(storage?.settings?.isAutofill)
@@ -10,4 +10,3 @@ const getIsAutofill = async (): Promise<boolean> => {
       return false
     })
 }
-export default getIsAutofill

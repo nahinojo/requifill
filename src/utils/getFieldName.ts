@@ -1,18 +1,25 @@
 /*
 Returns index of target field within any InputValueField component
 */
-import type { FieldName, FieldNames } from '../../objects/fieldNames'
-import fieldNames from '../../objects/fieldNames'
+import {
+  fieldNames
+} from '../objects'
+import type {
+  FieldName,
+  FieldNames
+} from '../types'
 
 /*
-fieldNames cannot be searched through because Typescript only permits searching using
-variables whose type matches the string-literal of elements within fieldNames.
+fieldNames cannot be searched through because Typescript only permits searching Type[] using
+variables whose type matches the type of elements within fieldNames, and these elements are
+typed as string-literals. Essentially, you can only search fieldNames using strings that exactly
+match those within fieldNames, defeating the entire purpose behind searching.
 
 Identical array fieldNamesSearchable is typed to permit searching using any string variable.
 */
 const fieldNamesSearchable = fieldNames as readonly string[]
 
-const getFieldName = (targetId: string | undefined): FieldNames[number] => {
+export const getFieldName = (targetId: string | undefined): FieldNames[number] => {
   if (targetId === undefined) {
     throw new Error('id not found on component')
   }
@@ -27,5 +34,3 @@ const getFieldName = (targetId: string | undefined): FieldNames[number] => {
     throw new Error('field name not found on id')
   }
 }
-
-export default getFieldName

@@ -3,11 +3,17 @@ Since the requisition form DOM Ids are absurdly long, fieldNameToId
 is used to translate between Requifill's stored field name and the
 corresponding <input>'s id within the requisition form DOM.
 */
-import fieldNamesReadonly from './fieldNames'
-import fieldRequisitionDOMIdsReadonly from './fieldRequisitionDOMIds'
+import {
+  fieldNamesReadonly,
+  fieldRequisitionDOMIdsReadonly
+} from '../objects'
 
-import type { FieldName, FieldNames } from './fieldNames'
-import type { FieldRequisitionDOMId, FieldRequisitionDOMIds } from './fieldRequisitionDOMIds'
+import type {
+  FieldName,
+  FieldNames,
+  FieldRequisitionDOMId,
+  FieldRequisitionDOMIds
+} from '../types'
 
 type FieldNameToIdPrototype<T extends number> = {
   [K in FieldNames[T]]?: FieldRequisitionDOMIds[T]
@@ -31,5 +37,4 @@ for (let i = 0; i < fieldNamesReadonly.length; i++) {
 export type FieldNameToId<T extends number> = {
   [K in FieldNames[T]]: FieldRequisitionDOMIds[T]
 }
-const fieldNameToId = fieldNameToIdPrototype as FieldNameToId<number>
-export default fieldNameToId
+export const fieldNameToId = fieldNameToIdPrototype as FieldNameToId<number>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import FieldContextMenu from './FieldContextMenu'
-import getFieldName from '../utils/getFieldName'
+import { FieldContextMenu } from '../components'
+import { getFieldName } from '../../utils'
 
 import type {
   HTMLAttributes,
@@ -12,8 +12,11 @@ import type {
   ChangeEventHandler,
   ChangeEvent
 } from 'react'
-import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
-import type ActionProps from '../utils/ActionProps'
+import {
+  fieldDataContext,
+  fieldDataDispatchContext
+} from '../hooks'
+import type { ActionProps } from '../../types'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id'>
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
@@ -26,13 +29,13 @@ interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
 
-const SingleValueField: FC<SingleValueFieldProps> = ({
+export const SingleValueField: FC<SingleValueFieldProps> = ({
   id,
   setIsUnsavedChanges,
   title
 }) => {
-  const fieldData = useContext(FieldDataContext)
-  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
+  const fieldData = useContext(fieldDataContext)
+  const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const value = fieldData[getFieldName(id)].autofill as string
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -80,5 +83,3 @@ const SingleValueField: FC<SingleValueFieldProps> = ({
     </div>
   )
 }
-
-export default SingleValueField

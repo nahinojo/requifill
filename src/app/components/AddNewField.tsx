@@ -1,8 +1,13 @@
 import React, { useContext } from 'react'
-import PlusSilver from './icons/PlusSilver'
-import camelToTitleCase from '../../utils/camelToTitleCase'
-import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
-import getFieldName from '../utils/getFieldName'
+import { PlusSilver } from './icons'
+import {
+  fieldDataContext,
+  fieldDataDispatchContext
+} from '../hooks'
+import {
+  camelToTitleCase,
+  getFieldName
+} from '../../utils'
 
 import type {
   Dispatch,
@@ -11,21 +16,24 @@ import type {
   MouseEvent,
   MouseEventHandler
 } from 'react'
-import type ActionProps from '../utils/ActionProps'
-import type { FieldNames } from '../../objects/fieldNames'
+import type {
+  ActionProps,
+  FieldNames
+} from '../../types'
+
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
   isAddingField: boolean
   setIsAddingField: React.Dispatch<React.SetStateAction<boolean>>
   setIsUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AddNewField: FC<AddNewFieldProps> = ({
+export const AddNewField: FC<AddNewFieldProps> = ({
   isAddingField,
   setIsAddingField,
   setIsUnsavedChanges
 }) => {
-  const fieldData = useContext(FieldDataContext)
-  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
+  const fieldData = useContext(fieldDataContext)
+  const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const activeFieldNames = Object.keys(fieldData)
     .filter((key: FieldNames[number]) => { return !fieldData[key].isActive })
   const buttonFieldStylingBase = 'mx-1 text-left bg-night border border-solid border-overcast pl-3 py-2'
@@ -101,5 +109,3 @@ const AddNewField: FC<AddNewFieldProps> = ({
     </>
   )
 }
-
-export default AddNewField

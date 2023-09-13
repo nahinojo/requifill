@@ -1,4 +1,4 @@
-const camelToTitleCase = (camelString: string): string => {
+export const camelToTitleCase = (camelString: string): string => {
   let titleString = camelString[0].toUpperCase()
   let i = 1
   while (i < camelString.length) {
@@ -16,4 +16,3 @@ const camelToTitleCase = (camelString: string): string => {
   }
   return titleString
 }
-export default camelToTitleCase

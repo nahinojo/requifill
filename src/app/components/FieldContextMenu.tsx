@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import VerticalDotsIcon from './icons/VerticalDots'
-import getFieldName from '../utils/getFieldName'
-import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
+import { getFieldName } from '../../utils'
+import { VerticalDots } from './icons'
+import {
+  fieldDataContext,
+  fieldDataDispatchContext
+} from '../hooks'
 
 import type {
   Dispatch,
@@ -11,20 +14,22 @@ import type {
   MouseEventHandler,
   SetStateAction
 } from 'react'
-import type ActionProps from '../utils/ActionProps'
+
+import type { ActionProps } from '../../types'
+
 interface FieldContextMenuProps extends HTMLAttributes<HTMLElement> {
   id: string // Forces dependency in props
   transformSVG: string
   setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
-const FieldContextMenu: FC <FieldContextMenuProps> = ({
+export const FieldContextMenu: FC <FieldContextMenuProps> = ({
   id,
   setIsUnsavedChanges,
   transformSVG
 }) => {
-  const fieldData = useContext(FieldDataContext)
-  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
+  const fieldData = useContext(fieldDataContext)
+  const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
   const openContextMenuId = `${id}.context-menu-vdots`
   const isSingleValueField = typeof fieldData[getFieldName(id)].autofill === 'string'
@@ -106,7 +111,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
 
   return (
     <>
-      <VerticalDotsIcon
+      <VerticalDots
         id={openContextMenuId}
         transformSVG={transformSVG}
         onClick={handleOpenContextMenu}
@@ -157,5 +162,3 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
     </>
   )
 }
-
-export default FieldContextMenu

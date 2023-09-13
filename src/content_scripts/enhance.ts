@@ -1,11 +1,15 @@
 /*
 Adds features to requisition form DOM elements
 */
-import isProperURL from '../objects/isProperURL'
-import fieldNameToId from '../objects/fieldNameToId'
-import syncStorage from '../objects/syncStorage'
-import type { FieldNames } from '../objects/fieldNames'
-import type SyncStorageData from '../types/SyncStorageData'
+import {
+  fieldNameToId,
+  isProperURL,
+  syncStorage
+} from '../objects'
+import type {
+  FieldNames,
+  SyncStorageData
+} from '../types'
 
 console.log('enchance.ts()')
 

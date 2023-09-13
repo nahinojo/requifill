@@ -1,13 +1,10 @@
-import removeReadOnlyFromArray from '../utils/removeReadOnlyFromArray'
+import { removeReadOnlyFromArray } from '../utils'
 
-const fieldRequisitionDOMIdsReadonly = [
+export const fieldRequisitionDOMIdsReadonly = [
   'newAdHocRoutePerson.id',
   'newPurchasingItemLine.purchasingCommodityCode',
   'document.documentHeader.documentDescription',
   'document.deliveryToPhoneNumber',
   'document.deliveryBuildingRoomNumber'
 ] as const
-export type FieldRequisitionDOMIds = typeof fieldRequisitionDOMIdsReadonly
-export type FieldRequisitionDOMId = FieldRequisitionDOMIds[number]
-const fieldRequisitionDOMIds = removeReadOnlyFromArray(fieldRequisitionDOMIdsReadonly)
-export default fieldRequisitionDOMIds
+export const fieldRequisitionDOMIds = removeReadOnlyFromArray(fieldRequisitionDOMIdsReadonly)

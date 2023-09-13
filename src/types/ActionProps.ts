@@ -1,8 +1,10 @@
-import type { FieldNames } from '../../objects/fieldNames'
-import type FieldData from '../../types/FieldData'
-import type Autofill from '../../types/Autofill'
+import type {
+  Autofill,
+  FieldData,
+  FieldNames
+} from './'
 
-type ActionTypeProps =
+type ActionType =
   'set-data' |
   'set-autofill' |
   'deactivate-field' |
@@ -13,12 +15,10 @@ type ActionTypeProps =
   'decrease-priority' |
   'save-changes'
 
-interface ActionProps {
+export interface ActionProps {
   autofill?: Autofill
   fieldIndex?: number
   fieldName?: FieldNames[number]
   newFieldData?: FieldData
-  type: ActionTypeProps
+  type: ActionType
 }
-
-export default ActionProps

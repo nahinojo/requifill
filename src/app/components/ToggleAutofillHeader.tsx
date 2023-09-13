@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Switch from './icons/Switch'
-import syncStorage from '../../objects/syncStorage'
-import getIsAutofill from '../../utils/getIsAutofill'
+import { Switch } from './icons'
+import { syncStorage } from '../../objects'
+import { getIsAutofill } from '../../utils'
+
 import type { ReactEventHandler } from 'react'
 
-const ToggleAutofillHeader: React.FC = () => {
+export const ToggleAutofillHeader: React.FC = () => {
   const [isAutofill, setIsAutofill] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
@@ -59,5 +60,3 @@ const ToggleAutofillHeader: React.FC = () => {
     </div>
   )
 }
-
-export default ToggleAutofillHeader

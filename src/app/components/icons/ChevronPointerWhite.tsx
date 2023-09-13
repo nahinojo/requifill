@@ -1,4 +1,5 @@
 import React from 'react'
+
 import type { FC, HTMLAttributes } from 'react'
 
 interface ChevronPointerProps extends HTMLAttributes<HTMLElement> {
@@ -7,7 +8,7 @@ interface ChevronPointerProps extends HTMLAttributes<HTMLElement> {
   transformDiv?: string
 }
 
-const ChevronPointerBleach: FC<ChevronPointerProps> = ({ id, transformSVG, transformDiv }) => {
+export const ChevronPointerWhite: FC<ChevronPointerProps> = ({ id, transformSVG, transformDiv }) => {
   transformDiv = transformDiv !== undefined
     ? transformDiv
     : ''
@@ -37,5 +38,3 @@ const ChevronPointerBleach: FC<ChevronPointerProps> = ({ id, transformSVG, trans
     </div>
   )
 }
-
-export default ChevronPointerBleach

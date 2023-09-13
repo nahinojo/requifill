@@ -1,4 +1,4 @@
-const camelToKebabCase = (camelString: string): string => {
+export const camelToKebabCase = (camelString: string): string => {
   let kebabString = camelString[0]
   let i = 1
   while (i < camelString.length) {
@@ -16,4 +16,3 @@ const camelToKebabCase = (camelString: string): string => {
   }
   return kebabString
 }
-export default camelToKebabCase

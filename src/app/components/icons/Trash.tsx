@@ -1,11 +1,12 @@
 import React from 'react'
+
 import type { FC, HTMLAttributes } from 'react'
 
 interface TrashProps extends HTMLAttributes<HTMLDivElement> {
   id: string
 }
 
-const Trash: FC<TrashProps> = ({ id, onClick }) => {
+export const Trash: FC<TrashProps> = ({ id, onClick }) => {
   return (
     <div
       className='justify-self-center mr-1 col-span-2 hover:cursor-pointer'
@@ -64,5 +65,3 @@ const Trash: FC<TrashProps> = ({ id, onClick }) => {
     </div>
   )
 }
-
-export default Trash

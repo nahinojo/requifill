@@ -1,12 +1,20 @@
 import React, { useState, useContext } from 'react'
-import FieldContextMenu from './FieldContextMenu'
-import CheveronPointerWhite from './icons/ChevronPointerWhite'
-import Trash from './icons/Trash'
-import VerticalArrows from './icons/VerticalArrows'
-import PlusWhite from './icons/PlusWhite'
-import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
-import getFieldIndex from '../utils/getFieldIndex'
-import getFieldName from '../utils/getFieldName'
+import { FieldContextMenu } from './FieldContextMenu'
+import {
+  fieldDataContext,
+  fieldDataDispatchContext
+} from '../hooks'
+import {
+  ChevronPointerWhite,
+  PlusWhite,
+  Trash,
+  VerticalArrows
+
+} from './icons'
+import {
+  getFieldIndex,
+  getFieldName
+} from '../../utils'
 
 import type {
   ChangeEvent,
@@ -20,7 +28,7 @@ import type {
   MouseEventHandler,
   SetStateAction
 } from 'react'
-import type ActionProps from '../utils/ActionProps'
+import type { ActionProps } from '../../types'
 
 type HTMLProps = Pick<HTMLAttributes<HTMLElement>, 'id' >
 type LabelProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'>
@@ -36,7 +44,7 @@ interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
   title: string
 }
 
-const MultiValueField: FC<MultiValueFieldProps> = ({
+export const MultiValueField: FC<MultiValueFieldProps> = ({
   id,
   multiValues,
   setIsRenderAddField,
@@ -46,8 +54,8 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
   if (id === undefined) {
     throw new Error('React component ID not found.')
   }
-  const fieldData = useContext(FieldDataContext)
-  const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
+  const fieldData = useContext(fieldDataContext)
+  const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   setIsRenderAddField(!isListExpanded)
 
@@ -144,7 +152,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                 id={`${id}.label`}
               >{title}
               </label>
-              <CheveronPointerWhite
+              <ChevronPointerWhite
                 id={`${id}.expander`}
                 transformDiv='rotate(90deg)'
                 transformSVG='scale(0.75)'
@@ -180,7 +188,7 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
                   id={`${id}-label`}
                 >{title}
                 </label>
-                <CheveronPointerWhite
+                <ChevronPointerWhite
                   id={`${id}-expander`}
                   transformSVG='scale(0.75)'
                 />
@@ -242,5 +250,3 @@ const MultiValueField: FC<MultiValueFieldProps> = ({
     </>
   )
 }
-
-export default MultiValueField

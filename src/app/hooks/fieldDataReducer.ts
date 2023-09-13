@@ -1,10 +1,12 @@
 /* eslint-disable react/destructuring-assignment */
-import type FieldData from '../../types/FieldData'
 import type { Reducer } from 'react'
-import type ActionProps from './ActionProps'
-import type { FieldName } from '../../objects/fieldNames'
-import type Autofill from '../../types/Autofill'
 
+import type {
+  Autofill,
+  ActionProps,
+  FieldData,
+  FieldName
+} from '../../types'
 /*
 Checks 'undefined' possiblility in type-setting
 */
@@ -72,7 +74,7 @@ const swapAutofillItemIndeces = (
   }
 }
 
-const fieldDataReducer: Reducer<FieldData, ActionProps> = (
+export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
   fieldData: FieldData,
   action: ActionProps
 ): FieldData => {
@@ -194,4 +196,3 @@ const fieldDataReducer: Reducer<FieldData, ActionProps> = (
   }
   throw new Error('Invalid dispatch id')
 }
-export default fieldDataReducer

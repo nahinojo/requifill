@@ -5,21 +5,23 @@ import type {
   HTMLAttributes,
   SetStateAction
 } from 'react'
-import camelToTitleCase from '../../utils/camelToTitleCase'
-import SingleValueField from './SingleValueField'
-import MultiValueField from './MultiValueField'
-import { FieldDataContext } from '../utils/fieldDataContext'
+import { camelToTitleCase } from '../../utils'
+import {
+  SingleValueField,
+  MultiValueField
+} from './'
+import { fieldDataContext } from '../hooks'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
   setIsRenderAddField: Dispatch<SetStateAction<boolean>>
   setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
-const FieldRenderer: FC<FieldRendererProps> = ({
+export const FieldRenderer: FC<FieldRendererProps> = ({
   setIsRenderAddField,
   setIsUnsavedChanges
 }) => {
-  const fieldData = useContext(FieldDataContext)
+  const fieldData = useContext(fieldDataContext)
   const isActiveFields = Object
     .values(fieldData)
     .some(fieldName => { return fieldName.isActive })
@@ -88,5 +90,3 @@ const FieldRenderer: FC<FieldRendererProps> = ({
     </>
   )
 }
-
-export default FieldRenderer

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import type { FC, HTMLAttributes } from 'react'
 
 interface VerticalDotsProps extends HTMLAttributes<HTMLElement> {
@@ -6,7 +7,7 @@ interface VerticalDotsProps extends HTMLAttributes<HTMLElement> {
   transformSVG: string
 }
 
-const VerticalDots: FC<VerticalDotsProps> = ({ id, transformSVG, onClick }) => {
+export const VerticalDots: FC<VerticalDotsProps> = ({ id, transformSVG, onClick }) => {
   return (
     <div
       className='w-6 h-full flex items-center cursor-pointer'
@@ -31,5 +32,3 @@ const VerticalDots: FC<VerticalDotsProps> = ({ id, transformSVG, onClick }) => {
     </div>
   )
 }
-
-export default VerticalDots

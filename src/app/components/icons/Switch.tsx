@@ -1,4 +1,5 @@
 import React from 'react'
+
 import type { HTMLAttributes, ReactEventHandler } from 'react'
 
 interface SwitchProps extends HTMLAttributes<HTMLInputElement> {
@@ -7,7 +8,7 @@ interface SwitchProps extends HTMLAttributes<HTMLInputElement> {
   isToggled: boolean
 }
 
-const Switch: React.FC<SwitchProps> = ({ handleToggle, isToggled, isLoading }) => {
+export const Switch: React.FC<SwitchProps> = ({ handleToggle, isToggled, isLoading }) => {
   if (isLoading) {
     return (
       <div
@@ -36,5 +37,3 @@ const Switch: React.FC<SwitchProps> = ({ handleToggle, isToggled, isLoading }) =
     </>
   )
 }
-
-export default Switch

@@ -7,7 +7,7 @@ interface ChevronPointerProps extends HTMLAttributes<HTMLElement> {
   transformDiv?: string
 }
 
-const ChevronPointerBleach: FC<ChevronPointerProps> = ({ id, transformSVG, transformDiv }) => {
+export const ChevronPointerBleach: FC<ChevronPointerProps> = ({ id, transformSVG, transformDiv }) => {
   transformDiv = transformDiv !== undefined
     ? transformDiv
     : ''
@@ -37,5 +37,3 @@ const ChevronPointerBleach: FC<ChevronPointerProps> = ({ id, transformSVG, trans
     </div>
   )
 }
-
-export default ChevronPointerBleach
