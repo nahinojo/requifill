@@ -1,10 +1,10 @@
-import type { FieldNames } from '../objects/fieldNames'
+import type { FieldName } from '../objects/fieldNames'
+import type Autofill from './Autofill'
 
 type FieldData = {
-  [K in FieldNames[number]]: {
-    autofill: string | Record<number, string>
+  [K in FieldName]: {
+    autofill: Autofill
     isActive: boolean
-    title?: string
   }
 }
 export default FieldData

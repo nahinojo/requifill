@@ -8,6 +8,7 @@ import getIsAutofill from '../utils/getIsAutofill'
 import fieldNameToId from '../objects/fieldNameToId'
 
 import type FieldData from '../types/FieldData'
+import type SyncStorageData from '../types/SyncStorageData'
 
 if (isProperURL) {
   /*
@@ -16,8 +17,8 @@ if (isProperURL) {
   const autofill = (): void => {
     syncStorage
       .get()
-      .then(storage => {
-        const fieldData = storage.fieldData as FieldData
+      .then((storage: SyncStorageData) => {
+        const { fieldData } = storage
         for (const fieldName in fieldData) {
           if (fieldData[fieldName].isActive) {
             let { autofill } = fieldData[fieldName]
