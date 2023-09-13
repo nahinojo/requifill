@@ -19,6 +19,7 @@ if (isProperURL) {
       .get()
       .then((storage: SyncStorageData) => {
         const { fieldData } = storage
+        // When type-setting, figure out how to incorporate parameters in type definitions, maybe...
         for (const fieldName in fieldData) {
           if (fieldData[fieldName].isActive) {
             let { autofill } = fieldData[fieldName]
