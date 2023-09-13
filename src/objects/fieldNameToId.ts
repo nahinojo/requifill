@@ -15,13 +15,34 @@ import type {
   FieldRequisitionDOMIds
 } from '../types'
 
+console.log(
+  'fieldNamesReadonly:',
+  fieldNamesReadonly
+)
+
+try {
+  console.log('Able to access fieldNamesReadonly')
+} catch {
+  throw new Error('Unable to access fieldNamesReadonly')
+}
+try {
+  console.log(
+    'fieldRequisitionDOMIdsReadonly:',
+    fieldRequisitionDOMIdsReadonly
+  )
+} catch {
+  throw new Error('Unable to access fieldRequisitionDOMIdsReadonly')
+}
+
 type FieldNameToIdPrototype<T extends number> = {
   [K in FieldNames[T]]?: FieldRequisitionDOMIds[T]
 }
 const fieldNameToIdPrototype: FieldNameToIdPrototype<number> = {}
 for (let i = 0; i < fieldNamesReadonly.length; i++) {
+  console.count('Count fieldNameToIdPrototype')
   let fieldName: FieldName
   let fieldRequisitionDOMId: FieldRequisitionDOMId
+
   try {
     fieldName = fieldNamesReadonly[i]
   } catch {
