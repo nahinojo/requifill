@@ -46,7 +46,7 @@ const FieldRenderer: FC<FieldRendererProps> = ({
                 .map((
                   [id, data], index
                 ) => {
-                  const title = data.title == null
+                  const title = data.title === undefined
                     ? camelToTitleCase(id)
                     : data.title
                   const key = `${id}.${index}`

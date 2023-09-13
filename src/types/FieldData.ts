@@ -5,6 +5,7 @@ type FieldData = {
   [K in FieldName]: {
     autofill: Autofill
     isActive: boolean
+    title?: string
   }
 }
 export default FieldData

@@ -7,8 +7,6 @@ import syncStorage from '../objects/syncStorage'
 import type { FieldNames } from '../objects/fieldNames'
 import type FieldData from '../types/FieldData'
 
-console.log('Executing enchance.ts...')
-
 if (isProperURL) {
   /*
   Wrapper function for setting value of target <input>
@@ -134,10 +132,7 @@ if (isProperURL) {
   syncStorage
     .get('fieldData')
     .then((fieldData: FieldData) => {
-      console.log(
-        'enhance-fieldData:', fieldData
-      )
-      const fieldNames: FieldNames = Object.keys(fieldData) as unknown as FieldNames
+      const fieldNames = Object.keys(fieldData) as unknown as FieldNames
       for (const fieldName of fieldNames) {
         const { autofill } = fieldData[fieldName]
         let autofillValue: string | string[]
@@ -146,8 +141,9 @@ if (isProperURL) {
         } else {
           autofillValue = Object.values(autofill)
         }
+        const id = fieldNameToId[fieldName]
         addValuesScroller(
-          fieldNameToId[fieldName],
+          id,
           autofillValue
         )
       }

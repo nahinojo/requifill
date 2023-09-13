@@ -8,5 +8,6 @@ const fieldRequisitionDOMIdsReadonly = [
   'document.deliveryBuildingRoomNumber'
 ] as const
 export type FieldRequisitionDOMIds = typeof fieldRequisitionDOMIdsReadonly
+export type FieldRequisitionDOMId = FieldRequisitionDOMIds[number]
 const fieldRequisitionDOMIds = removeReadOnlyFromArray(fieldRequisitionDOMIdsReadonly)
 export default fieldRequisitionDOMIds

@@ -6,12 +6,30 @@ corresponding <input>'s id within the requisition form DOM.
 import fieldNamesReadonly from './fieldNames'
 import fieldRequisitionDOMIdsReadonly from './fieldRequisitionDOMIds'
 
-import type { FieldNames } from './fieldNames'
-import type { FieldRequisitionDOMIds } from './fieldRequisitionDOMIds'
-type FieldNameToId = Record<FieldNames[number], FieldRequisitionDOMIds[number]>
+import type { FieldName, FieldNames } from './fieldNames'
+import type { FieldRequisitionDOMId, FieldRequisitionDOMIds } from './fieldRequisitionDOMIds'
 
-const fieldNameToId: FieldNameToId | Record<string, string> = {}
-for (let i = 0; i < fieldNamesReadonly.length; i++) {
-  fieldNameToId[fieldNamesReadonly[i]] = fieldRequisitionDOMIdsReadonly[i]
+type FieldNameToIdPrototype<T extends number> = {
+  [K in FieldNames[T]]?: FieldRequisitionDOMIds[T]
 }
+const fieldNameToIdPrototype: FieldNameToIdPrototype<number> = {}
+for (let i = 0; i < fieldNamesReadonly.length; i++) {
+  let fieldName: FieldName
+  let fieldRequisitionDOMId: FieldRequisitionDOMId
+  try {
+    fieldName = fieldNamesReadonly[i]
+  } catch {
+    throw new Error('fieldName not found when defining fieldNameToId')
+  }
+  try {
+    fieldRequisitionDOMId = fieldRequisitionDOMIdsReadonly[i]
+  } catch {
+    throw new Error('fieldRequisitionDOMId not found when defining fieldNameToId')
+  }
+  fieldNameToIdPrototype[fieldName] = fieldRequisitionDOMId
+}
+export type FieldNameToId<T extends number> = {
+  [K in FieldNames[T]]: FieldRequisitionDOMIds[T]
+}
+const fieldNameToId = fieldNameToIdPrototype as FieldNameToId<number>
 export default fieldNameToId

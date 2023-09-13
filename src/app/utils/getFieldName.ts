@@ -1,18 +1,26 @@
+/*
+Returns index of target field within any InputValueField component
+*/
 import type { FieldNames } from '../../objects/fieldNames'
-import fieldNamesReadonly from '../../objects/fieldNames'
+import fieldNames from '../../objects/fieldNames'
 
 /*
-  Returns index of target field within any xValueField component
+fieldNames cannot be searched through because Typescript only permits searching using
+variables whose type matches the string-literal of elements within fieldNames.
+
+Identical array fieldNamesSearchable is typed to permit searching using any string variable.
 */
+const fieldNamesSearchable = fieldNames as readonly string[]
+
 const getFieldName = (targetId: string | undefined): FieldNames[number] => {
   if (targetId === undefined) {
     throw new Error('id not found on component')
   }
   const fieldNameRegex = /^[^.]*/
-  const fieldNameMatch = targetId.match(fieldNameRegex)
+  const fieldNameMatch = String(targetId.match(fieldNameRegex))
   if (
     fieldNameMatch !== null &&
-    fieldNamesReadonly.includes(fieldNameMatch[0])
+    fieldNamesSearchable.includes(fieldNameMatch)
   ) {
     return 'adHocUserId'
   } else {

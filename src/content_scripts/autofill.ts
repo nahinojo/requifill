@@ -7,8 +7,8 @@ import isProperURL from '../objects/isProperURL'
 import getIsAutofill from '../utils/getIsAutofill'
 import fieldNameToId from '../objects/fieldNameToId'
 
-import type FieldData from '../types/FieldData'
 import type SyncStorageData from '../types/SyncStorageData'
+import type { FieldNames } from '../objects/fieldNames'
 
 if (isProperURL) {
   /*
@@ -19,8 +19,9 @@ if (isProperURL) {
       .get()
       .then((storage: SyncStorageData) => {
         const { fieldData } = storage
+        const fieldNames = Object.keys(fieldData) as unknown as FieldNames
         // When type-setting, figure out how to incorporate parameters in type definitions, maybe...
-        for (const fieldName in fieldData) {
+        for (const fieldName of fieldNames) {
           if (fieldData[fieldName].isActive) {
             let { autofill } = fieldData[fieldName]
             if (typeof autofill === 'object') {
@@ -51,9 +52,10 @@ if (isProperURL) {
   */
   const autoclear = (): void => {
     syncStorage.get()
-      .then(storage => {
-        const fieldData = storage.fieldData as FieldData
-        for (const fieldName in fieldData) {
+      .then((storage: SyncStorageData) => {
+        const { fieldData } = storage
+        const fieldNames = Object.keys(fieldData) as unknown as FieldNames
+        for (const fieldName of fieldNames) {
           if (fieldData[fieldName].isActive) {
             const targetInput = document.getElementById(fieldNameToId[fieldName]) as HTMLInputElement
             // Prevents duplicate injections of adHocUserId.

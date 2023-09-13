@@ -1,9 +1,7 @@
-type BaseElement = string | number | boolean | null
-type BaseArray = BaseElement[]
-type BaseArrayReadonly = readonly BaseElement[]
+type BaseElement = string | number | boolean | null | undefined
 
-const removeReadOnlyFromArray = (arr: BaseArrayReadonly): BaseArray => {
-  let newArr: BaseArray = []
+const removeReadOnlyFromArray = <T extends BaseElement>(arr: readonly T[]): T[] => {
+  let newArr: T[] = []
   for (let i = 0; i < arr.length; i++) {
     newArr = arr.concat(
       newArr, arr[i]

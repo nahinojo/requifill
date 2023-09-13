@@ -7,7 +7,9 @@ module.exports = {
     compress: true,
     port: 9000,
     static: {
-      directory: path.join(__dirname, 'dist')
+      directory: path.join(
+        __dirname, 'dist'
+      )
     }
   },
   entry: {
@@ -21,7 +23,7 @@ module.exports = {
     },
     main: {
       filename: 'bundle.js',
-      import: './src/popup/index.tsx'
+      import: './src/app/index.tsx'
     }
   },
   mode: 'production',
@@ -43,7 +45,9 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(
+      __dirname, 'dist'
+    )
   },
   performance: {
     maxAssetSize: 512000,
@@ -52,7 +56,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './src/popup/index.html'
+      template: './src/app/index.html'
     })
   ],
   resolve: {
