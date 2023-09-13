@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { FieldDataContext, FieldDataDispatchContext } from '../utils/fieldDataContext'
-import syncStorage from '../../utils/syncStorage'
+import syncStorage from '../../objects/syncStorage'
 
 import type {
   Dispatch,
@@ -26,7 +26,7 @@ const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
     syncStorage
       .set({ fieldData })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
     setIsUnsavedChanges(false)
   }
@@ -43,7 +43,7 @@ const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
         })
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
     setIsUnsavedChanges(false)
   }

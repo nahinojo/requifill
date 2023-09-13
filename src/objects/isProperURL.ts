@@ -1,4 +1,6 @@
-/* Ensures webpage is requistion form */
+/*
+Ensures target DOM is the requistion form, and not the Requifill extension
+*/
 import { minimatch } from 'minimatch'
 
 const windowURL: string = window.location.href

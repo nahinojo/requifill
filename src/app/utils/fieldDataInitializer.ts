@@ -1,7 +1,7 @@
-import syncStorage from '../../utils/syncStorage'
-import type FieldDataProps from './FieldDataProps'
+import syncStorage from '../../objects/syncStorage'
+import type FieldData from '../../types/FieldData'
 
-async function fieldDataInitializer (): Promise<FieldDataProps> {
+async function fieldDataInitializer (): Promise<FieldData> {
   // syncStorage.onChanged.addListener(async () => {
   //   return await syncStorage
   //     .get()
@@ -9,7 +9,7 @@ async function fieldDataInitializer (): Promise<FieldDataProps> {
   //       return storage.fieldData
   //     })
   //     .catch(error => {
-  //       console.log(error)
+  //       console.error(error)
   //     })
   // })
   return await syncStorage
@@ -45,14 +45,14 @@ async function fieldDataInitializer (): Promise<FieldDataProps> {
             fieldData: initialFieldData
           })
           .catch(error => {
-            console.log(error)
+            console.error(error)
           })
       } else {
         return storage.fieldData
       }
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
     })
 }
 

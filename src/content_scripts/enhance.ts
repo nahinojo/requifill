@@ -1,8 +1,13 @@
 /*
 Adds features to requisition form DOM elements
 */
-import isProperURL from '../utils/isProperURL'
-import syncStorage from '../utils/syncStorage'
+import isProperURL from '../objects/isProperURL'
+import fieldNameToId from '../objects/fieldNameToId'
+import syncStorage from '../objects/syncStorage'
+import type { FieldNames } from '../objects/fieldNames'
+import type FieldData from '../types/FieldData'
+
+console.log('Executing enchance.ts...')
 
 if (isProperURL) {
   /*
@@ -128,19 +133,27 @@ if (isProperURL) {
   // Ensure indexing is right and proper
   syncStorage
     .get('fieldData')
-    .then(({ fieldData }) => {
-      const fieldNames = Object.keys(fieldData)
+    .then((fieldData: FieldData) => {
+      console.log(
+        'enhance-fieldData:', fieldData
+      )
+      const fieldNames: FieldNames = Object.keys(fieldData) as unknown as FieldNames
       for (const fieldName of fieldNames) {
-        const autofill = fieldData[fieldName].autofill as string | Record<string, string>
-        if (typeof autofill === 'object') {
-          addValuesScroller(
-            'document.documentHeader.documentDescription',
-            autofill as Record<string, string>
-          )
+        const { autofill } = fieldData[fieldName]
+        let autofillValue: string | string[]
+        if (typeof autofill === 'string') {
+          autofillValue = [autofill]
+        } else {
+          autofillValue = Object.values(autofill)
+        }
+        addValuesScroller(
+          fieldNameToId[fieldName],
+          autofillValue
+        )
       }
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
     })
 
   addValuesScroller(

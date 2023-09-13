@@ -1,4 +1,6 @@
-import type FieldDataProps from './FieldDataProps'
+import type { FieldNames } from '../../objects/fieldNames'
+import type FieldData from '../../types/FieldData'
+import type Autofill from '../../types/Autofill'
 
 type ActionTypeProps =
   'set-data' |
@@ -12,10 +14,10 @@ type ActionTypeProps =
   'save-changes'
 
 interface ActionProps {
-  autofill?: string | Record<string, string>
+  autofill?: Autofill
   fieldIndex?: number
-  fieldName?: string
-  newFieldData?: FieldDataProps
+  fieldName?: FieldNames[number]
+  newFieldData?: FieldData
   type: ActionTypeProps
 }
 

@@ -1,16 +1,16 @@
 /* eslint-disable react/destructuring-assignment */
-import type FieldDataProps from './FieldDataProps'
+import type FieldData from '../../types/FieldData'
 import type { Reducer } from 'react'
 import type ActionProps from './ActionProps'
+import type { FieldName } from '../../objects/fieldNames'
+import type Autofill from '../../types/Autofill'
 
 /*
 Checks 'undefined' possiblility in type-setting
 */
-const assertDefined = <T extends keyof ActionProps>(prop: ActionProps[T]): ActionProps[T] => {
+function assertDefined <T extends keyof ActionProps> (prop: ActionProps[T]): asserts prop is Exclude<ActionProps[T], undefined> {
   if (prop === undefined) {
     throw new Error('asserted property is undefined')
-  } else {
-    return prop
   }
 }
 
@@ -18,11 +18,11 @@ const assertDefined = <T extends keyof ActionProps>(prop: ActionProps[T]): Actio
 Changes autofill for any field within fieldData.
 */
 const setAutofillValue = (
-  autofill: string | Record<string, string>,
-  fieldData: FieldDataProps,
-  fieldName: string,
+  autofill: Autofill,
+  fieldData: FieldData,
+  fieldName: FieldName,
   fieldIndex?: number
-): FieldDataProps => {
+): FieldData => {
   return fieldIndex === undefined
   // Editing autofill of <SingleValueField />.
   // Or, editing entire autofill object of <MultiValueField />.
@@ -50,11 +50,11 @@ const setAutofillValue = (
 Changes priority of two items for <MultiValueField />
 */
 const swapAutofillItemIndeces = (
-  fieldData: FieldDataProps,
-  fieldName: string,
+  fieldData: FieldData,
+  fieldName: FieldName,
   fieldIndex1: number,
   fieldIndex2: number
-): FieldDataProps => {
+): FieldData => {
   const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
   const fieldValue1 = prevAutofillValue[fieldIndex1]
   const fieldValue2 = prevAutofillValue[fieldIndex2]
@@ -71,25 +71,27 @@ const swapAutofillItemIndeces = (
   }
 }
 
-const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
-  fieldData: FieldDataProps,
+const fieldDataReducer: Reducer<FieldData, ActionProps> = (
+  fieldData: FieldData,
   action: ActionProps
-): FieldDataProps => {
+): FieldData => {
   let {
     autofill,
     fieldIndex,
     fieldName,
     newFieldData,
     type
-  } = action
+  }: ActionProps = action
   switch (type) {
   case 'set-data': {
-    newFieldData = assertDefined(newFieldData) as FieldDataProps
-    return newFieldData
+    assertDefined(newFieldData as FieldData)
+    return newFieldData as FieldData
   }
   case 'set-autofill': {
-    autofill = assertDefined(autofill) as string | Record<string, string>
-    fieldName = assertDefined(fieldName) as string
+    assertDefined(fieldName as FieldName)
+    assertDefined(autofill as Record<number, string>)
+    fieldName = fieldName as FieldName
+    autofill = autofill as Autofill
     return fieldIndex === undefined
       ? setAutofillValue(
         autofill,
@@ -104,10 +106,12 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
       )
   }
   case 'decrease-priority': {
-    autofill = assertDefined(autofill) as Record<string, string>
-    fieldName = assertDefined(fieldName) as string
-    fieldIndex = assertDefined(fieldIndex) as number
-    const indexLowerBoundary = Object.keys(autofill).length - 1
+    assertDefined(autofill as Autofill)
+    assertDefined(fieldName as FieldName)
+    assertDefined(fieldIndex as number)
+    fieldName = fieldName as FieldName
+    fieldIndex = fieldIndex as number
+    const indexLowerBoundary = Object.keys(autofill as Record<number, string>).length - 1
     if (fieldIndex < indexLowerBoundary) {
       return swapAutofillItemIndeces(
         fieldData,
@@ -120,8 +124,10 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     }
   }
   case 'increase-priority': {
-    fieldName = assertDefined(fieldName) as string
-    fieldIndex = assertDefined(fieldIndex) as number
+    assertDefined(fieldName as FieldName)
+    assertDefined(fieldIndex as number)
+    fieldName = fieldName as FieldName
+    fieldIndex = fieldIndex as number
     if (fieldIndex > 0) {
       return swapAutofillItemIndeces(
         fieldData,
@@ -134,7 +140,8 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     }
   }
   case 'add-item': {
-    fieldName = assertDefined(fieldName) as string
+    assertDefined(fieldName as FieldName)
+    fieldName = fieldName as FieldName
     const newIndex = Object.keys(fieldData[fieldName].autofill).length
     return setAutofillValue(
       '',
@@ -144,7 +151,8 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     )
   }
   case 'delete-item': {
-    fieldName = assertDefined(fieldName) as string
+    assertDefined(fieldName as FieldName)
+    fieldName = fieldName as FieldName
     const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
     const newAutofillValue: Record<string, string> = {}
     let newIndex = 0
@@ -170,7 +178,8 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     }
   }
   case 'activate-field': {
-    fieldName = assertDefined(fieldName) as string
+    assertDefined(fieldName as FieldName)
+    fieldName = fieldName as FieldName
     return {
       ...fieldData,
       [fieldName]: {
@@ -180,7 +189,8 @@ const fieldDataReducer: Reducer<FieldDataProps, ActionProps> = (
     }
   }
   case 'deactivate-field': {
-    fieldName = assertDefined(fieldName) as string
+    assertDefined(fieldName as FieldName)
+    fieldName = fieldName as FieldName
     return {
       ...fieldData,
       [fieldName]: {

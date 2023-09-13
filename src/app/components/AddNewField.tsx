@@ -12,6 +12,7 @@ import type {
   MouseEventHandler
 } from 'react'
 import type ActionProps from '../utils/ActionProps'
+import type { FieldNames } from '../../objects/fieldNames'
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
   isAddingField: boolean
   setIsAddingField: React.Dispatch<React.SetStateAction<boolean>>
@@ -25,8 +26,8 @@ const AddNewField: FC<AddNewFieldProps> = ({
 }) => {
   const fieldData = useContext(FieldDataContext)
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
-  const fieldOptions = Object.keys(fieldData)
-    .filter(key => { return !fieldData[key].isActive })
+  const activeFieldNames = Object.keys(fieldData)
+    .filter((key: FieldNames[number]) => { return !fieldData[key].isActive })
   const buttonFieldStylingBase = 'mx-1 text-left bg-night border border-solid border-overcast pl-3 py-2'
 
   const handleActivateField: MouseEventHandler<HTMLButtonElement> =
@@ -44,7 +45,7 @@ const AddNewField: FC<AddNewFieldProps> = ({
     <>
       {
         !isAddingField &&
-          fieldOptions.length !== 0 && (
+          activeFieldNames.length !== 0 && (
           <button
             className='mt-2 w-fit mx-auto cursor-pointer flex justify-center text-sm text-silver'
             id='new-field'
@@ -66,18 +67,18 @@ const AddNewField: FC<AddNewFieldProps> = ({
             >Add Autofill Field
             </header>
             {
-              fieldOptions.map((
+              activeFieldNames.map((
                 id, index
               ) => {
                 let buttonFieldStyling: string
                 if (index === 0) {
                   buttonFieldStyling = `${buttonFieldStylingBase} rounded-t-md`
-                  if (fieldOptions.length > 1) {
+                  if (activeFieldNames.length > 1) {
                     buttonFieldStyling = `${buttonFieldStyling} border-b-0`
                   } else {
                     buttonFieldStyling = `${buttonFieldStyling} rounded-b-md`
                   }
-                } else if (index < fieldOptions.length - 1) {
+                } else if (index < activeFieldNames.length - 1) {
                   buttonFieldStyling = `${buttonFieldStylingBase} border-b-0`
                 } else {
                   buttonFieldStyling = `${buttonFieldStylingBase} rounded-b-md`

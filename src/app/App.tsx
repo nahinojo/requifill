@@ -10,12 +10,13 @@ import AddNewField from './components/AddNewField'
 import FieldRenderer from './components/FieldRenderer'
 import UnsavedFieldPrompt from './components/UnsavedFieldPrompt'
 import { FieldDataContext, FieldDataDispatchContext } from './utils/fieldDataContext'
-import syncStorage from '../utils/syncStorage'
+import syncStorage from '../objects/syncStorage'
+import initialFieldData from '../objects/initialFieldData'
 
 const App: FC = () => {
   const [fieldData, fieldDataDispatch] = useReducer(
     fieldDataReducer,
-    {}
+    initialFieldData
   )
   const [isUnsavedChanges, setIsUnsavedChanges] = useState<boolean>(false)
   const [isAddingField, setIsAddingField] = useState<boolean>(false)
@@ -31,36 +32,12 @@ const App: FC = () => {
         .get()
         .then(storage => {
           if (Object.keys(storage).length <= 0) {
-            const initialFieldData = {
-              adHocUserId: {
-                autofill: 'adarami',
-                isActive: true,
-                title: 'Ad Hoc User ID'
-              },
-              commodityCode: {
-                autofill: '7786413',
-                isActive: false
-              },
-              description: {
-                autofill: {
-                  0: 'Amazon',
-                  1: 'Digikey',
-                  2: 'Home Depot',
-                  3: 'Mouser'
-                },
-                isActive: true
-              },
-              phoneNumber: {
-                autofill: '9491234567',
-                isActive: false
-              }
-            }
             syncStorage
               .set({
                 fieldData: initialFieldData
               })
               .catch(error => {
-                console.log(error)
+                console.error(error)
               })
             fieldDataDispatch({
               newFieldData: initialFieldData,
@@ -74,7 +51,7 @@ const App: FC = () => {
           }
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
         })
       syncStorage.onChanged.addListener(() => {
         syncStorage
@@ -86,7 +63,7 @@ const App: FC = () => {
             })
           })
           .catch(error => {
-            console.log(error)
+            console.error(error)
           })
       })
     }, []

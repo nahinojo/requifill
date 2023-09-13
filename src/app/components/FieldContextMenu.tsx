@@ -27,8 +27,7 @@ const FieldContextMenu: FC <FieldContextMenuProps> = ({
   const fieldDataDispatch = useContext(FieldDataDispatchContext) as Dispatch<ActionProps>
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
   const openContextMenuId = `${id}.context-menu-vdots`
-  const isSingleValueField =
-    typeof fieldData[getFieldName(id)].autofill === 'string'
+  const isSingleValueField = typeof fieldData[getFieldName(id)].autofill === 'string'
 
   const handleOpenContextMenu = (evt: React.MouseEvent<HTMLDivElement>): void => {
     evt.preventDefault()

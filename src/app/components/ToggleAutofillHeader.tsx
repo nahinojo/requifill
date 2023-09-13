@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Switch from './icons/Switch'
-import syncStorage from '../../utils/syncStorage'
+import syncStorage from '../../objects/syncStorage'
 import getIsAutofill from '../../utils/getIsAutofill'
 import type { ReactEventHandler } from 'react'
 
@@ -18,7 +18,7 @@ const ToggleAutofillHeader: React.FC = () => {
       }
     })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
     setIsAutofill(isAutofill => {
       return !isAutofill
@@ -36,7 +36,7 @@ const ToggleAutofillHeader: React.FC = () => {
           setIsLoading(false)
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
         })
     }, []
   )

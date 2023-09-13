@@ -2,13 +2,12 @@
 Injects field values from browser storage into the requisition form's input
 elements.
 */
-import syncStorage from '../utils/syncStorage'
-import isProperURL from '../utils/isProperURL'
+import syncStorage from '../objects/syncStorage'
+import isProperURL from '../objects/isProperURL'
 import getIsAutofill from '../utils/getIsAutofill'
-import nameToId from '../utils/nameToId'
+import fieldNameToId from '../objects/fieldNameToId'
 
-import type FieldDataProps from '../popup/utils/FieldDataProps'
-import type { nameToIdKeys } from '../utils/nameToId'
+import type FieldData from '../types/FieldData'
 
 if (isProperURL) {
   /*
@@ -18,14 +17,14 @@ if (isProperURL) {
     syncStorage
       .get()
       .then(storage => {
-        const fieldData = storage.fieldData as FieldDataProps
+        const fieldData = storage.fieldData as FieldData
         for (const fieldName in fieldData) {
           if (fieldData[fieldName].isActive) {
             let { autofill } = fieldData[fieldName]
             if (typeof autofill === 'object') {
               autofill = autofill[0]
             }
-            const targetInput = document.getElementById(nameToId[fieldName as nameToIdKeys]) as HTMLInputElement
+            const targetInput = document.getElementById(fieldNameToId[fieldName]) as HTMLInputElement
             const isAlreadyAutofilled = targetInput.value === autofill
             // Prevents duplicate injections of adHocUserId.
             const hasSecondaryAdHocUserId = (
@@ -36,13 +35,13 @@ if (isProperURL) {
               !isAlreadyAutofilled &&
               !hasSecondaryAdHocUserId
             ) {
-              targetInput.value = autofill
+              targetInput.value = autofill as string
             }
           }
         }
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
   }
   /*
@@ -51,10 +50,10 @@ if (isProperURL) {
   const autoclear = (): void => {
     syncStorage.get()
       .then(storage => {
-        const fieldData = storage.fieldData as FieldDataProps
+        const fieldData = storage.fieldData as FieldData
         for (const fieldName in fieldData) {
           if (fieldData[fieldName].isActive) {
-            const targetInput = document.getElementById(nameToId[fieldName as nameToIdKeys]) as HTMLInputElement
+            const targetInput = document.getElementById(fieldNameToId[fieldName]) as HTMLInputElement
             // Prevents duplicate injections of adHocUserId.
             const neglectAdHocUserId = (
               fieldName === 'adHocUserId' &&
@@ -67,7 +66,7 @@ if (isProperURL) {
         }
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
   }
 
@@ -81,7 +80,7 @@ if (isProperURL) {
       }
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
     })
 
   /*
@@ -97,7 +96,7 @@ if (isProperURL) {
         }
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
   })
 }
