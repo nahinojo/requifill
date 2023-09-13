@@ -5,9 +5,12 @@ import isProperURL from '../objects/isProperURL'
 import fieldNameToId from '../objects/fieldNameToId'
 import syncStorage from '../objects/syncStorage'
 import type { FieldNames } from '../objects/fieldNames'
-import type FieldData from '../types/FieldData'
+import type SyncStorageData from '../types/SyncStorageData'
+
+console.log('enchance.ts()')
 
 if (isProperURL) {
+  const enhance = (): void => {
   /*
   Wrapper function for setting value of target <input>
   */
@@ -35,32 +38,32 @@ if (isProperURL) {
   */
   const addValuesScroller = (
     id: string,
-    autofillValues: string[]
+    autofill: readonly string[]
   ): void => {
     const targetInput = document.getElementById(id) as HTMLInputElement
     const setInputValue = createSetInputValue(targetInput)
     let currentIdx = (
-      autofillValues.includes(targetInput.value)
-        ? autofillValues.indexOf(targetInput.value)
+      autofill.includes(targetInput.value)
+        ? autofill.indexOf(targetInput.value)
         : 0
     )
     targetInput.addEventListener(
       'wheel', (evt) => {
         evt.preventDefault()
-        if (autofillValues.includes(targetInput.value)) {
+        if (autofill.includes(targetInput.value)) {
           if (evt.deltaY > 0) {
             currentIdx = modulo(
-              autofillValues.length, (currentIdx + 1)
+              autofill.length, (currentIdx + 1)
             )
           } else {
             currentIdx = modulo(
-              autofillValues.length, (currentIdx - 1)
+              autofill.length, (currentIdx - 1)
             )
           }
         } else {
           currentIdx = 0
         }
-        setInputValue(autofillValues[currentIdx])
+        setInputValue(autofill[currentIdx])
       }
     )
   }
@@ -130,9 +133,14 @@ if (isProperURL) {
   // Reset if syncStorage fiedData changes
   // Ensure indexing is right and proper
   syncStorage
-    .get('fieldData')
-    .then((fieldData: FieldData) => {
+    .get()
+    .then((storage: SyncStorageData) => {
+      console.log('Mapping multivalues in fieldData to targetInputs')
+      const { fieldData } = storage
       const fieldNames = Object.keys(fieldData) as unknown as FieldNames
+      console.log(
+        'fieldNames:', fieldNames
+      )
       for (const fieldName of fieldNames) {
         const { autofill } = fieldData[fieldName]
         let autofillValue: string | string[]
@@ -147,6 +155,7 @@ if (isProperURL) {
           autofillValue
         )
       }
+      console.log('Finalized multivalue mapping')
     })
     .catch(error => {
       console.error(error)
@@ -173,4 +182,7 @@ if (isProperURL) {
     0.99,
     2
   )
+  }
+  enhance()
+  syncStorage.onChanged.addListener(enhance)
 }

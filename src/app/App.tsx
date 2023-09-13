@@ -39,10 +39,6 @@ const App: FC = () => {
               .catch(error => {
                 console.error(error)
               })
-            fieldDataDispatch({
-              newFieldData: initialFieldData,
-              type: 'set-data'
-            })
           } else {
             fieldDataDispatch({
               newFieldData: storage.fieldData,

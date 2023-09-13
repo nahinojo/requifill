@@ -1,7 +1,7 @@
 /*
 Returns index of target field within any InputValueField component
 */
-import type { FieldNames } from '../../objects/fieldNames'
+import type { FieldName, FieldNames } from '../../objects/fieldNames'
 import fieldNames from '../../objects/fieldNames'
 
 /*
@@ -22,7 +22,7 @@ const getFieldName = (targetId: string | undefined): FieldNames[number] => {
     fieldNameMatch !== null &&
     fieldNamesSearchable.includes(fieldNameMatch)
   ) {
-    return 'adHocUserId'
+    return fieldNameMatch as FieldName
   } else {
     throw new Error('field name not found on id')
   }

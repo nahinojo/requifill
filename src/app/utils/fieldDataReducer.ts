@@ -123,12 +123,14 @@ const fieldDataReducer: Reducer<FieldData, ActionProps> = (
     assertDefined(fieldName)
     assertDefined(fieldIndex)
     if (fieldIndex > 0) {
-      return swapAutofillItemIndeces(
+      const someFieldData = swapAutofillItemIndeces(
         fieldData,
         fieldName,
         fieldIndex,
         fieldIndex - 1
       )
+
+      return someFieldData
     } else {
       return fieldData
     }
