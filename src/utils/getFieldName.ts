@@ -3,7 +3,7 @@ Returns index of target field within any InputValueField component
 */
 import {
   fieldNames
-} from '../objects'
+} from '../utils'
 import type {
   FieldName,
   FieldNames

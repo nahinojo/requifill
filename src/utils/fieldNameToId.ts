@@ -6,7 +6,7 @@ corresponding <input>'s id within the requisition form DOM.
 import {
   fieldNamesReadonly,
   fieldRequisitionDOMIdsReadonly
-} from '../objects'
+} from './'
 
 import type {
   FieldName,

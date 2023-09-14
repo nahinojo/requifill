@@ -8,7 +8,7 @@ import {
   isProperURL,
   syncStorage
 
-} from '../objects'
+} from '../utils'
 
 import { getIsAutofill } from '../utils'
 

@@ -3,7 +3,7 @@ import {
   fieldDataContext,
   fieldDataDispatchContext
 } from '../hooks'
-import { syncStorage } from '../../objects'
+import { syncStorage } from '../../utils'
 
 import type {
   Dispatch,

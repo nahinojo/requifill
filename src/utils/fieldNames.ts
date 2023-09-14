@@ -1,4 +1,4 @@
-import { removeReadOnlyFromArray } from '../utils'
+import { removeReadOnlyFromArray } from './'
 export const fieldNamesReadonly = [
   'adHocUserId',
   'commodityCode',

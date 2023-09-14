@@ -1,4 +1,3 @@
-console.log('Executing components/index.ts')
 export * from './AddNewField'
 export * from './FieldContextMenu'
 export * from './SingleValueField'

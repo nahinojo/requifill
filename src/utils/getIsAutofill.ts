@@ -1,4 +1,4 @@
-import { syncStorage } from '../objects'
+import { syncStorage } from '../utils'
 
 export const getIsAutofill = async (): Promise<boolean> => {
   return await syncStorage.get('settings')

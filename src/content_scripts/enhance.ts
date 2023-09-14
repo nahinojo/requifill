@@ -5,7 +5,7 @@ import {
   fieldNameToId,
   isProperURL,
   syncStorage
-} from '../objects'
+} from '../utils'
 import type {
   FieldNames,
   SyncStorageData
