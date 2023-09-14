@@ -1,7 +1,5 @@
 import { removeReadOnlyFromArray } from '../utils'
 
-console.log('Executing fieldRequisitionDOMIds.ts()')
-
 export const fieldRequisitionDOMIdsReadonly = [
   'newAdHocRoutePerson.id',
   'newPurchasingItemLine.purchasingCommodityCode',

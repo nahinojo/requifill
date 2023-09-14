@@ -11,8 +11,6 @@ import type {
   SyncStorageData
 } from '../types'
 
-console.log('enchance.ts()')
-
 if (isProperURL) {
   const enhance = (): void => {
   /*
@@ -139,12 +137,8 @@ if (isProperURL) {
   syncStorage
     .get()
     .then((storage: SyncStorageData) => {
-      console.log('Mapping multivalues in fieldData to targetInputs')
       const { fieldData } = storage
       const fieldNames = Object.keys(fieldData) as unknown as FieldNames
-      console.log(
-        'fieldNames:', fieldNames
-      )
       for (const fieldName of fieldNames) {
         const { autofill } = fieldData[fieldName]
         let autofillValue: string | string[]

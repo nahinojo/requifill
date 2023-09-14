@@ -1,3 +1,4 @@
+console.log('Executing utils/index.ts')
 export * from './camelToKebabCase'
 export * from './camelToTitleCase'
 export * from './getFieldIndex'

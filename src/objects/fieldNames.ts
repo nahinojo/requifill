@@ -1,5 +1,4 @@
 import { removeReadOnlyFromArray } from '../utils'
-
 export const fieldNamesReadonly = [
   'adHocUserId',
   'commodityCode',

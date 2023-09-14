@@ -26,6 +26,7 @@ const App: FC = () => {
     fieldDataReducer,
     initialFieldData
   )
+  console.log('Counter Render <App />')
   const [isUnsavedChanges, setIsUnsavedChanges] = useState<boolean>(false)
   const [isAddingField, setIsAddingField] = useState<boolean>(false)
   const [isRenderAddField, setIsRenderAddField] = useState<boolean>(true)

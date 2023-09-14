@@ -2,13 +2,6 @@
 Injects field values from browser storage into the requisition form's input
 elements.
 */
-// import syncStorage from '../objects/syncStorage'
-// import isProperURL from '../objects/isProperURL'
-// import fieldNameToId from '../objects/fieldNameToId'
-// import getIsAutofill from '../utils/getIsAutofill'
-
-// import type SyncStorageData from '../types/SyncStorageData'
-// import type { FieldNames } from '../objects/fieldNames'
 
 import {
   fieldNameToId,

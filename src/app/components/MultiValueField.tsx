@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { FieldContextMenu } from './FieldContextMenu'
+import { FieldContextMenu } from './'
 import {
   fieldDataContext,
   fieldDataDispatchContext
