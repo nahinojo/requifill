@@ -1,5 +1,7 @@
 /*
 Adds features to requisition form DOM elements
+
+NEEDS TOTAL OVERHAUL
 */
 import {
   fieldNameToId,
@@ -68,6 +70,9 @@ if (isProperURL) {
         setInputValue(autofill[currentIdx])
       }
     )
+    syncStorage.onChanged.addListener(() => {
+      currentIdx = 0
+    })
   }
 
   /*

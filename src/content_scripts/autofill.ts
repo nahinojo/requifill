@@ -6,11 +6,9 @@ elements.
 import {
   fieldNameToId,
   isProperURL,
-  syncStorage
-
+  syncStorage,
+  getIsAutofill
 } from '../utils'
-
-import { getIsAutofill } from '../utils'
 
 import type {
   FieldNames,

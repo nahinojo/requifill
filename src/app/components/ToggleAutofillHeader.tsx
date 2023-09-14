@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Switch } from './icons'
-import { syncStorage } from '../../utils'
-import { getIsAutofill } from '../../utils'
+import {
+  syncStorage,
+  getIsAutofill
+} from '../../utils'
 
 import type { ReactEventHandler } from 'react'
 
