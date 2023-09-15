@@ -19,7 +19,7 @@ module.exports = {
     },
     enchance: {
       filename: 'content_scripts/enhance.js',
-      import: './src/content_scripts/enhance.ts'
+      import: './src/content_scripts/enhance.tsx'
     },
     main: {
       filename: 'bundle.js',

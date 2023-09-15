@@ -1,12 +1,9 @@
 import type {
-  Autofill,
-  FieldName
+  Autofill
 } from './'
 
 export interface Field {
-  [fieldName: FieldName]: {
     autofill: Autofill
     isActive: boolean
     title?: string
-  }
 }

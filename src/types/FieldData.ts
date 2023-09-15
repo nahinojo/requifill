@@ -1,12 +1,8 @@
 import type {
-  Autofill,
+  Field,
   FieldName
 } from './'
 
 export type FieldData = {
-  [K in FieldName]: {
-    autofill: Autofill
-    isActive: boolean
-    title?: string
-  }
+  [K in FieldName]: Field
 }

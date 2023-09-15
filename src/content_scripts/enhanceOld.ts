@@ -158,7 +158,6 @@ if (isProperURL) {
           autofillValue
         )
       }
-      console.log('Finalized multivalue mapping')
     })
     .catch(error => {
       console.error(error)
