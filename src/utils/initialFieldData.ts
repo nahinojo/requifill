@@ -1,11 +1,13 @@
-export const initialFieldData = {
+import type { FieldData } from '../types'
+
+export const initialFieldData: FieldData = {
   adHocUserId: {
     autofill: 'adarami',
     isActive: true,
     title: 'Ad Hoc User ID'
   },
   commodityCode: {
-    autofill: '7786413',
+    autofill: '',
     isActive: false
   },
   description: {
@@ -18,7 +20,7 @@ export const initialFieldData = {
     isActive: true
   },
   phoneNumber: {
-    autofill: '9491234567',
+    autofill: '',
     isActive: false
   },
   roomNumber: {

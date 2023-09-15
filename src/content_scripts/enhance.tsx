@@ -3,6 +3,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   getTargetInput,
+  isProperURL,
   syncStorage
 } from '../utils'
 
@@ -11,60 +12,99 @@ import type {
   SyncStorageData
 } from '../types'
 
-// Setup for manual input of autofillValues
 // Look into reinstating scroll feature
 // Look into instating feature that shows all options, regardless of input value
 
-const attachAutofillValuesToInput = (fieldName: FieldName): void => {
-  syncStorage
-    .get()
-    .then((storage: SyncStorageData) => {
-      const field = storage.fieldData[fieldName]
-      const { isActive } = field
-      if (!isActive) {
-        throw new Error(`Cannot attach options because ${fieldName} is not active`)
-      }
-      const { autofill } = field
-      if (typeof autofill === 'string') {
-        throw new Error(`enhance.tsx: Cannot mount <OptionsList /> for ${fieldName}.autofill of type 'string'`)
-      }
-      const autofillValues = Object.values(autofill)
-      const targetInput = getTargetInput(fieldName)
-      const targetInputRoot = createRoot(targetInput)
-      targetInput.setAttribute(
-        'list',
-        fieldName
-      )
-      targetInput.removeAttribute('type')
-      targetInputRoot.render(
-        <datalist
-          id={`${fieldName}`}
-        >
-          {
-            autofillValues.map((autofillValue, index) => {
-              console.log(
-                '<OptionsList /> autofillValues.map() \n',
-                'autofillValue:',
-                autofillValue,
-                'index:',
-                index
-              )
-              return (
-                <option
-                  key={index}
-                  value={autofillValue}
-                >
-                </option>
-              )
+if (isProperURL) {
+  const enhanceRequisitionInput = (
+    fieldName: FieldName,
+    autofillValues?: string[]
+  ): void => {
+    syncStorage
+      .get()
+      .then((storage: SyncStorageData) => {
+        const field = storage.fieldData[fieldName]
+        const { isActive } = field
+        if (isActive) {
+          if (autofillValues === undefined) {
+            const { autofill } = field
+            if (typeof autofill === 'string') {
+              autofillValues = [autofill]
+            } else {
+              autofillValues = Object.values(autofill)
             }
-            )
           }
-        </datalist>)
-    })
-    .catch(error => {
-      console.error(error)
-      throw new Error(`enhance.tsx: Failed to execute attachOptionsToInput() for ${fieldName}`)
-    })
-}
+          const targetInput = getTargetInput(fieldName)
+          targetInput.style.borderColor = '#4C88FF'
+          targetInput.classList.add('requifill')
+          const targetInputRoot = createRoot(targetInput)
+          targetInput.setAttribute(
+            'list',
+            fieldName
+          )
+          targetInputRoot.render(
+            <datalist
+              className='requifill'
+              id={`${fieldName}`}
+            >
+              {
+                autofillValues.map((autofillValue, index) => {
+                  if (autofillValue !== '') {
+                    return (
+                      <option
+                        className='requifill'
+                        key={index}
+                        value={autofillValue}
+                      >
+                      </option>
+                    )
+                  }
+                  return null
+                }
+                )
+              }
+            </datalist>
+          )
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        throw new Error(`enhance.tsx: Failed to execute enhanceRequisitionInput() for ${fieldName}`)
+      })
+  }
 
-attachAutofillValuesToInput('description')
+  const enhanceAllRequisitionInputs = (): void => {
+    syncStorage
+      .get()
+      .then((storage: SyncStorageData) => {
+        const activeFieldNames = Object
+          .keys(storage.fieldData)
+          .filter((fieldName: FieldName) => {
+            return storage.fieldData[fieldName].isActive
+          }) as FieldName[]
+        for (const activeFieldName of activeFieldNames) {
+          enhanceRequisitionInput(activeFieldName)
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        throw new Error('enhance.tsx: Failed to execute enhanceAllRequisitionInputs()')
+      })
+  }
+
+  const undoEnhanceAllRequisitionInputs = (): void => {
+    const modifiedInputs = document.querySelectorAll('input.requifill')
+    modifiedInputs.forEach((modifiedInput: HTMLInputElement) => {
+      modifiedInput.style.borderColor = ''
+      while (modifiedInput.firstChild !== null) {
+        modifiedInput.removeChild(modifiedInput.firstChild)
+      }
+    })
+  }
+  enhanceAllRequisitionInputs()
+  syncStorage.onChanged.addListener(() => {
+    undoEnhanceAllRequisitionInputs()
+    enhanceAllRequisitionInputs()
+  }
+  )
+}

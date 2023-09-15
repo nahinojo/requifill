@@ -4,12 +4,20 @@
 
 ### Popup 
 
-- Save Changes banner blocks everything!
+- Save Changes banner needs to be placed below everything; it cannot bloc fields
 - Field does not unfocus on pressing keyboard 'Enter'
 
 ### Requisition Form Manipulation
 
-- Multivalue fields are not autofilled onto screen, nor are they even scrollable
+- (Potential) If a field is deleted, the value within Requisition input remains on screen
+- The 'Enable Autofill' switch is somewhat misleading:
+  - Say someone wants the Reqisition input to be empty, but, they still would like the dropdown.
+  - To achieve this as is, set everything as a multivalue field with the first autofill value as ''
+  - Solution 1:
+   - Switch becomes 'Enable Requifill'
+    - Determines if ANY Requisition DOM changes occur. If turned off, clears everything.
+   - (When Enable Requifill ON) The actual autofill feature can be toggled on a field-by-field bases.
+    - Users will see this difference by noticing
 
 ## **Features**
 
