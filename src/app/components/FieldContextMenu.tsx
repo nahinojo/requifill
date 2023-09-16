@@ -106,8 +106,8 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
     }, []
   )
   const buttonStyling = 'w-full flex align-middle items-center text-start pl-2 pt-1 text-white'
-  const buttonRemoveStyling = `${buttonStyling} h-9 border-b border-solid border-iron`
-  const buttonToggleValueStyling = `${buttonStyling} h-9`
+  const buttonRemoveStyling = `${buttonStyling} h-9`
+  const buttonToggleValueStyling = `${buttonStyling} h-9 border-b border-solid border-iron`
 
   return (
     <>
@@ -128,13 +128,6 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
             className='fixed w-40 h-fit bg-night border border-solid border-iron z-50'
             id={`${id}.context-menu`}
           >
-            <button
-              className={buttonRemoveStyling}
-              id={`${id}.context-menu-remove`}
-              type='button'
-              onClick={handleDeactivateField}
-            >Remove
-            </button>
             {
               !!isSingleValueField && (
                 <button
@@ -142,7 +135,7 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
                   id={`${id}.context-menu-enable-multivalue`}
                   type='button'
                   onClick={handleSetMultiValue}
-                >Enable Multivalue
+                >Set multi-value
                 </button>
               )
             } {
@@ -152,10 +145,17 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
                   id={`${id}.context-menu-disable-multivalue`}
                   type='button'
                   onClick={handleSetSingleValue}
-                >Disable Multivalue
+                >Set single-value
                 </button>
               )
             }
+            <button
+              className={buttonRemoveStyling}
+              id={`${id}.context-menu-remove`}
+              type='button'
+              onClick={handleDeactivateField}
+            >Remove
+            </button>
           </div>
         )
       }

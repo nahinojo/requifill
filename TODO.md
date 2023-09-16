@@ -10,15 +10,19 @@
 ### Requisition Form Manipulation
 
 - (Potential) If a field is deleted, the value within Requisition input remains on screen
-- The 'Enable Autofill' switch is somewhat misleading:
-  - Say someone wants the Reqisition input to be empty, but, they still would like the dropdown.
-  - To achieve this as is, set everything as a multivalue field with the first autofill value as ''
-  - Solution 1:
-   - Switch becomes 'Enable Requifill'
-    - Determines if ANY Requisition DOM changes occur. If turned off, clears everything.
-   - (When Enable Requifill ON) The actual autofill feature can be toggled on a field-by-field bases.
-    - Users will see this difference by noticing
 
+### Specific Issue: Enable Autofill and default to empty string
+
+[Description]
+- Say someone wants the Reqisition input to be empty, but, they still would like the dropdown. To achieve this as is, set everything as a multivalue field with the first autofill value as 
+
+[Solution: Separate into two states]
+- Switch becomes 'Enable Requifill.' This switch determines if ANY Requisition DOM changes occur. If turned off, clears everything.
+- (When Enable Requifill ON) The actual autofill feature can be toggled on a field-by-field basis.
+
+[Solution: Autofill is button]
+- Instead of Autofill being a togleable state, it's a button. Will execute autofill.ts when clicked.
+- Enable requifill will likely still exist, just in the extension settings
 ## **Features**
 
 ### Storage
