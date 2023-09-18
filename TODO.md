@@ -6,11 +6,18 @@
 
 - Save Changes banner needs to be placed below everything; it cannot block fields
 - Field does not unfocus on pressing keyboard 'Enter'
+- Autosort MultiValues
+- Prevent creation of multiple empty MultiValues
 
 ### Requisition Form Manipulation
 
 - (Potential) If a field is deleted, the value within Requisition input remains on screen
+- Redo enhance.tsx
 
+### Overhaul fieldName and fieldNameToId (again)
+[Objectives] 
+  - Only define the list of valid fieldNames and corresponding input ids once, each. 
+  - Define them within the same object for maintainability
 ### Specific Issue: "Enable Autofill" but Default to an Empty String
 
 [Context]

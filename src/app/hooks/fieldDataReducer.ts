@@ -24,14 +24,12 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
     newFieldData,
     type
   }: ActionProps = action
-  console.count('fieldDataReducer.ts:\'fieldData')
   switch (type) {
   case 'set-data': {
     assertDefined(newFieldData)
     return newFieldData
   }
   case 'set-autofill': {
-    console.log('fieldDataReducer.ts: set-autofill...')
     assertDefined(fieldName)
     assertDefined(autofill)
     if (fieldIndex === undefined) {
