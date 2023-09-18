@@ -6,5 +6,8 @@ dist/**/**
 !dist/manifest.json
 !dist/requifill-icon.svg
 
+# Sandbox playground
+**/**/*sandbox*
+
 # IDE
 .vscode
