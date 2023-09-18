@@ -4,11 +4,13 @@ export const initialFieldData: FieldData = {
   adHocUserId: {
     autofill: 'adarami',
     isActive: true,
+    isFillToForm: true,
     title: 'Ad Hoc User ID'
   },
   commodityCode: {
     autofill: '',
-    isActive: false
+    isActive: false,
+    isFillToForm: false
   },
   description: {
     autofill: {
@@ -17,14 +19,17 @@ export const initialFieldData: FieldData = {
       2: 'Home Depot',
       3: 'Mouser'
     },
-    isActive: true
+    isActive: true,
+    isFillToForm: false
   },
   phoneNumber: {
     autofill: '',
-    isActive: false
+    isActive: false,
+    isFillToForm: false
   },
   roomNumber: {
     autofill: '237',
-    isActive: false
+    isActive: false,
+    isFillToForm: true
   }
 }

@@ -2,75 +2,14 @@
 import type { Reducer } from 'react'
 
 import type {
-  Autofill,
   ActionProps,
-  FieldData,
-  FieldName
+  FieldData
 } from '../../types'
-/*
-Checks 'undefined' possiblility in type-setting
-*/
+import { alteredFieldData } from '../../utils'
+
 function assertDefined <T extends keyof ActionProps> (prop: ActionProps[T]): asserts prop is Exclude<ActionProps[T], undefined> {
-  // eslint-disable-next-line valid-typeof
   if (prop === undefined) {
-    throw new Error('asserted property is undefined')
-  }
-}
-
-/*
-Changes autofill for any field within fieldData.
-*/
-const setAutofillValue = (
-  autofill: Autofill,
-  fieldData: FieldData,
-  fieldName: FieldName,
-  fieldIndex?: number
-): FieldData => {
-  return fieldIndex === undefined
-  // Editing autofill of <SingleValueField />.
-  // Or, editing entire autofill object of <MultiValueField />.
-    ? {
-      ...fieldData,
-      [fieldName]: {
-        ...fieldData[fieldName],
-        autofill
-      }
-    }
-  // Editing a specific value within autofill of <MultiValueField />.
-    : {
-      ...fieldData,
-      [fieldName]: {
-        ...fieldData[fieldName],
-        autofill: {
-          ...fieldData[fieldName].autofill as Record<string, string>,
-          [fieldIndex]: autofill
-        }
-      }
-    }
-}
-
-/*
-Changes priority of two items for <MultiValueField />
-*/
-const swapAutofillItemIndeces = (
-  fieldData: FieldData,
-  fieldName: FieldName,
-  fieldIndex1: number,
-  fieldIndex2: number
-): FieldData => {
-  const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
-  const fieldValue1 = prevAutofillValue[fieldIndex1]
-  const fieldValue2 = prevAutofillValue[fieldIndex2]
-  return {
-    ...fieldData,
-    [fieldName]: {
-      ...fieldData[fieldName],
-      autofill: {
-        ...prevAutofillValue,
-        [fieldIndex1]: fieldValue2,
-        [fieldIndex2]: fieldValue1
-      }
-    }
+    throw new Error('fieldDataReducer.tsx: Asserted property is undefined')
   }
 }
 
@@ -85,113 +24,106 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
     newFieldData,
     type
   }: ActionProps = action
+  console.count('fieldDataReducer.ts:\'fieldData')
   switch (type) {
   case 'set-data': {
     assertDefined(newFieldData)
     return newFieldData
   }
   case 'set-autofill': {
+    console.log('fieldDataReducer.ts: set-autofill...')
     assertDefined(fieldName)
     assertDefined(autofill)
-    return fieldIndex === undefined
-      ? setAutofillValue(
-        autofill,
-        fieldData,
-        fieldName
-      )
-      : setAutofillValue(
-        autofill,
+    if (fieldIndex === undefined) {
+      return alteredFieldData({
+        attributeName: 'autofill',
         fieldData,
         fieldName,
-        fieldIndex
-      )
-  }
-  case 'decrease-priority': {
-    assertDefined(fieldName)
-    assertDefined(fieldIndex)
-    const indexLowerBoundary = Object.keys(fieldData[fieldName].autofill).length - 1
-    if (fieldIndex < indexLowerBoundary) {
-      return swapAutofillItemIndeces(
-        fieldData,
-        fieldName,
-        fieldIndex,
-        fieldIndex + 1
-      )
+        value: autofill as string
+      })
     } else {
-      return fieldData
-    }
-  }
-  case 'increase-priority': {
-    assertDefined(fieldName)
-    assertDefined(fieldIndex)
-    if (fieldIndex > 0) {
-      const someFieldData = swapAutofillItemIndeces(
+      return alteredFieldData({
+        attributeName: 'autofill',
         fieldData,
         fieldName,
-        fieldIndex,
-        fieldIndex - 1
-      )
-
-      return someFieldData
-    } else {
-      return fieldData
+        value: autofill as string
+      })
     }
   }
   case 'add-item': {
     assertDefined(fieldName)
     const newIndex = Object.keys(fieldData[fieldName].autofill).length
-    return setAutofillValue(
-      '',
+    return alteredFieldData({
+      attributeIndex: newIndex,
+      attributeName: 'autofill',
       fieldData,
       fieldName,
-      newIndex
-    )
+      value: ''
+    })
   }
   case 'delete-item': {
     assertDefined(fieldName)
-    const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
-    const newAutofillValue: Record<number, string> = {}
+    const prevAutofill = fieldData[fieldName].autofill as Record<number, string>
+    const newAutofill: Record<number, string> = {}
     let newIndex = 0
-    for (const idx in prevAutofillValue) {
+    for (const idx in prevAutofill) {
       const prevIndex = Number(idx)
       if (prevIndex !== fieldIndex) {
-        newAutofillValue[newIndex] = prevAutofillValue[prevIndex]
+        newAutofill[newIndex] = prevAutofill[prevIndex]
         newIndex++
       }
     }
-    if (Object.keys(newAutofillValue).length === 1) {
-      return setAutofillValue(
-        newAutofillValue[0],
+    if (Object.keys(newAutofill).length > 1) {
+      return alteredFieldData({
+        attributeName: 'autofill',
         fieldData,
-        fieldName
-      )
+        fieldName,
+        value: newAutofill
+      })
     } else {
-      return setAutofillValue(
-        newAutofillValue,
+      return alteredFieldData({
+        attributeName: 'autofill',
         fieldData,
-        fieldName
-      )
+        fieldName,
+        value: newAutofill[0]
+      })
     }
   }
-  case 'activate-field': {
+  case 'enable-is-active': {
     assertDefined(fieldName)
-    return {
-      ...fieldData,
-      [fieldName]: {
-        ...fieldData[fieldName],
-        isActive: true
-      }
-    }
+    return alteredFieldData({
+      attributeName: 'isActive',
+      fieldData,
+      fieldName,
+      value: true
+    })
   }
-  case 'deactivate-field': {
+  case 'disable-is-active': {
     assertDefined(fieldName)
-    return {
-      ...fieldData,
-      [fieldName]: {
-        ...fieldData[fieldName],
-        isActive: false
-      }
-    }
+    return alteredFieldData({
+      attributeName: 'isActive',
+      fieldData,
+      fieldName,
+      value: false
+    })
+  }
+  case 'enable-is-fill-to-form': {
+    assertDefined(fieldName)
+    return alteredFieldData({
+      attributeName: 'isFillToForm',
+      fieldData,
+      fieldName,
+      value: true
+    })
+  }
+  case 'disable-is-fill-to-form': {
+    assertDefined(fieldName)
+    return alteredFieldData({
+      attributeName: 'isFillToForm',
+      fieldData,
+      fieldName,
+      value: false
+    })
   }
   }
   throw new Error('Invalid dispatch id')

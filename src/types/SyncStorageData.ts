@@ -5,6 +5,6 @@ import type {
 export interface SyncStorageData {
   fieldData: FieldData
   settings: {
-    isAutofill: boolean
+    isEnabled: boolean
   }
 }

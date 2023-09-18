@@ -5,5 +5,6 @@ import type {
 export interface Field {
     autofill: Autofill
     isActive: boolean
+    isFillToForm: boolean
     title?: string
 }

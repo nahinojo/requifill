@@ -30,11 +30,17 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
 }) => {
   const fieldData = useContext(fieldDataContext)
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
+  const fieldName = getFieldName(id)
+  const isFillToForm = fieldData[fieldName].isFillToForm
+  const isSingleValueField = typeof fieldData[fieldName].autofill === 'string'
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
-  const openContextMenuId = `${id}.context-menu-vdots`
-  const isSingleValueField = typeof fieldData[getFieldName(id)].autofill === 'string'
 
-  const handleOpenContextMenu = (evt: React.MouseEvent<HTMLDivElement>): void => {
+  const openContextMenuId = `${id}.context-menu-vdots`
+  const buttonStyling = 'w-full flex align-middle items-center text-start pl-2 pt-1 text-white'
+  const buttonRemoveStyling = `${buttonStyling} h-9`
+  const buttonToggleValueStyling = `${buttonStyling} h-9 border-b border-solid border-iron`
+
+  const handleOpenContextMenu: MouseEventHandler<HTMLDivElement> = (evt: MouseEvent<HTMLDivElement>): void => {
     evt.preventDefault()
     const x = evt.clientX
     const y = evt.clientY
@@ -55,7 +61,7 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
     const fieldName = getFieldName(id)
     fieldDataDispatch({
       fieldName,
-      type: 'deactivate-field'
+      type: 'disable-is-active'
     })
     setIsUnsavedChanges(true)
   }
@@ -90,6 +96,22 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
     setIsUnsavedChanges(true)
   }
 
+  const handleEnableFillToForm: MouseEventHandler<HTMLButtonElement> =
+  (evt: MouseEvent<HTMLButtonElement>) => {
+    const { id: targetId } = evt.target as HTMLButtonElement
+    const fieldName = getFieldName(targetId)
+    fieldData[fieldName].isFillToForm = true
+    setIsUnsavedChanges(true)
+  }
+
+  const handleDisableFillToForm: MouseEventHandler<HTMLButtonElement> =
+  (evt: MouseEvent<HTMLButtonElement>) => {
+    const { id: targetId } = evt.target as HTMLButtonElement
+    const fieldName = getFieldName(targetId)
+    fieldData[fieldName].isFillToForm = false
+    setIsUnsavedChanges(true)
+  }
+
   /*
   Establishes 'click out' escapability from context menu popup
   */
@@ -105,10 +127,6 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
       }
     }, []
   )
-  const buttonStyling = 'w-full flex align-middle items-center text-start pl-2 pt-1 text-white'
-  const buttonRemoveStyling = `${buttonStyling} h-9`
-  const buttonToggleValueStyling = `${buttonStyling} h-9 border-b border-solid border-iron`
-
   return (
     <>
       <VerticalDots
@@ -129,16 +147,43 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
             id={`${id}.context-menu`}
           >
             {
-              !!isSingleValueField && (
-                <button
-                  className={buttonToggleValueStyling}
-                  id={`${id}.context-menu-enable-multivalue`}
-                  type='button'
-                  onClick={handleSetMultiValue}
-                >Set multi-value
-                </button>
+              !!isSingleValueField &&
+              (
+                <>
+                  {
+                    !isFillToForm &&
+                       (
+                         <button
+                           className={buttonToggleValueStyling}
+                           id={`${id}.context-menu-enable-fill-to-form`}
+                           type='button'
+                           onClick={handleEnableFillToForm}
+                         >Enable fill to form
+                         </button>
+                       )
+                  } {
+                    !!isFillToForm &&
+                        (
+                          <button
+                            className={buttonToggleValueStyling}
+                            id={`${id}.context-menu-enable-fill-to-form`}
+                            type='button'
+                            onClick={handleDisableFillToForm}
+                          >Disable fill to form
+                          </button>
+                        )
+                  }
+                  <button
+                    className={buttonToggleValueStyling}
+                    id={`${id}.context-menu-enable-multivalue`}
+                    type='button'
+                    onClick={handleSetMultiValue}
+                  >Set multi-value
+                  </button>
+                </>
               )
-            } {
+            }
+            {
               !isSingleValueField && (
                 <button
                   className={buttonToggleValueStyling}

@@ -5,14 +5,14 @@ import type {
 } from './'
 
 type ActionType =
-  'set-data' |
-  'set-autofill' |
-  'deactivate-field' |
-  'activate-field' |
   'add-item' |
   'delete-item' |
-  'increase-priority' |
-  'decrease-priority' |
+  'disable-is-active' |
+  'disable-is-fill-to-form' |
+  'enable-is-active' |
+  'enable-is-fill-to-form' |
+  'set-autofill' |
+  'set-data' |
   'save-changes'
 
 export interface ActionProps {

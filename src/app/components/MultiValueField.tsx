@@ -1,15 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { FieldContextMenu } from './'
 import {
-  fieldDataContext,
   fieldDataDispatchContext
 } from '../hooks'
 import {
   ChevronPointerWhite,
   PlusWhite,
-  Trash,
-  VerticalArrows
-
+  Trash
 } from './icons'
 import {
   getFieldIndex,
@@ -54,7 +51,6 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
   if (id === undefined) {
     throw new Error('React component ID not found.')
   }
-  const fieldData = useContext(fieldDataContext)
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   setIsRenderAddField(!isListExpanded)
@@ -93,40 +89,6 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
       type: 'delete-item'
     })
     setIsUnsavedChanges(true)
-  }
-
-  const handleDecreasePriority: MouseEventHandler<HTMLElement> =
-  (evt: MouseEvent<HTMLElement>) => {
-    const { id: targetId } = evt.target as HTMLElement
-    const fieldIndex = getFieldIndex(targetId)
-    const fieldName = getFieldName(targetId)
-    if (fieldIndex < (Object.keys(fieldData[fieldName].autofill).length - 1)) {
-      const { autofill } = fieldData[fieldName]
-      fieldDataDispatch({
-        autofill,
-        fieldIndex,
-        fieldName,
-        type: 'decrease-priority'
-      })
-      setIsUnsavedChanges(true)
-    }
-  }
-
-  const handleIncreasePriority: MouseEventHandler<HTMLElement> =
-  (evt: MouseEvent<HTMLElement>) => {
-    const { id: targetId } = evt.target as HTMLElement
-    const fieldIndex = getFieldIndex(targetId)
-    if (fieldIndex > 0) {
-      const fieldName = getFieldName(targetId)
-      const autofill = fieldData[fieldName].autofill as Record<string, string>
-      fieldDataDispatch({
-        autofill,
-        fieldIndex,
-        fieldName,
-        type: 'increase-priority'
-      })
-      setIsUnsavedChanges(true)
-    }
   }
 
   return (
@@ -214,13 +176,8 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
                       id={`${id}.${index}.option-wrapper`}
                       key={`${index}`}
                     >
-                      <VerticalArrows
-                        id={`${id}.${index}`}
-                        onClickDown={handleDecreasePriority}
-                        onClickUp={handleIncreasePriority}
-                      />
                       <input
-                        className='text-base h-9 ml-2 col-span-9 rounded indent-2 pt-1 bg-opacity-0 bg-storm'
+                        className='text-base h-9 ml-2 col-span-10 rounded indent-2 pt-1 bg-opacity-0 bg-storm'
                         id={`${id}.${index}.input`}
                         type={'text'}
                         value={val}

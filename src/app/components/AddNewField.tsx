@@ -44,7 +44,7 @@ export const AddNewField: FC<AddNewFieldProps> = ({
     const fieldName = getFieldName(targetId)
     fieldDataDispatch({
       fieldName,
-      type: 'activate-field'
+      type: 'enable-is-active'
     })
     setIsAddingField(false)
     setIsUnsavedChanges(true)

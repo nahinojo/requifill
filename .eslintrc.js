@@ -24,6 +24,7 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/indent': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
     'arrow-body-style': ['error', 'always'],
     'function-call-argument-newline': ['error', 'consistent'],
     'function-paren-newline': ['error', {
