@@ -1,5 +1,4 @@
 import { fieldNameToRequisitionFormId } from './'
+import type { FieldName } from '../types'
 
-import type { FieldNames } from '../types'
-
-export const fieldNames = Object.keys(fieldNameToRequisitionFormId) as FieldNames
+export const fieldNames = new Set(Object.keys(fieldNameToRequisitionFormId) as FieldName[])

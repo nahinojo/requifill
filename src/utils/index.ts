@@ -1,6 +1,5 @@
-export * from './removeReadOnlyFromArray'
 export * from './fieldNameToRequsitionFormId'
-export * from './fieldRequisitionDOMIds'
+export * from './requisitionFormIds'
 export * from './fieldNames'
 export * from './initialFieldData'
 export * from './isProperURL'
