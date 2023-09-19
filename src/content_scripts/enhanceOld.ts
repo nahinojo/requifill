@@ -4,7 +4,7 @@ Adds features to requisition form DOM elements
 NEEDS TOTAL OVERHAUL
 */
 import {
-  fieldNameToId,
+  fieldNameToRequisitionFormId,
   isProperURL,
   syncStorage
 } from '../utils'
@@ -152,7 +152,7 @@ if (isProperURL) {
         } else {
           autofillValue = Object.values(autofill)
         }
-        const id = fieldNameToId[fieldName]
+        const id = fieldNameToRequisitionFormId[fieldName]
         addValuesScroller(
           id,
           autofillValue

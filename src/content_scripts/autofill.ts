@@ -4,7 +4,7 @@ elements.
 */
 
 import {
-  fieldNameToId,
+  fieldNameToRequisitionFormId,
   isProperURL,
   syncStorage,
   getIsAutofill
@@ -32,7 +32,7 @@ if (isProperURL) {
             if (typeof autofill === 'object') {
               autofill = autofill[0]
             }
-            const targetInput = document.getElementById(fieldNameToId[fieldName]) as HTMLInputElement
+            const targetInput = document.getElementById(fieldNameToRequisitionFormId[fieldName]) as HTMLInputElement
             const isAlreadyAutofilled = targetInput.value === autofill
             // Prevents duplicate injections of adHocUserId.
             const hasSecondaryAdHocUserId = (
@@ -62,7 +62,7 @@ if (isProperURL) {
         const fieldNames = Object.keys(fieldData) as unknown as FieldNames
         for (const fieldName of fieldNames) {
           if (fieldData[fieldName].isActive) {
-            const targetInput = document.getElementById(fieldNameToId[fieldName]) as HTMLInputElement
+            const targetInput = document.getElementById(fieldNameToRequisitionFormId[fieldName]) as HTMLInputElement
             // Prevents duplicate injections of adHocUserId.
             const neglectAdHocUserId = (
               fieldName === 'adHocUserId' &&

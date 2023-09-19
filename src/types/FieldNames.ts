@@ -1,4 +1,4 @@
-import type { fieldNamesReadonly } from '../utils'
+import type { fieldNameToRequisitionFormId } from '../utils'
 
-export type FieldNames = typeof fieldNamesReadonly
-export type FieldName = FieldNames[number]
+export type FieldName = keyof typeof fieldNameToRequisitionFormId
+export type FieldNames = FieldName[]
