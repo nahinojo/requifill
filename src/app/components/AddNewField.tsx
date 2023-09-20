@@ -42,6 +42,11 @@ export const AddNewField: FC<AddNewFieldProps> = ({
     const { id: targetId } = evt.target as HTMLButtonElement
     const fieldName = getFieldName(targetId)
     fieldDataDispatch({
+      autofill: '',
+      fieldName,
+      type: 'set-autofill'
+    })
+    fieldDataDispatch({
       fieldName,
       type: 'enable-is-active'
     })
