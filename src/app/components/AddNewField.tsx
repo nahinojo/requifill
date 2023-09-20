@@ -8,7 +8,6 @@ import {
   camelToTitleCase,
   getFieldName
 } from '../../utils'
-
 import type {
   Dispatch,
   FC,
@@ -18,7 +17,7 @@ import type {
 } from 'react'
 import type {
   ActionProps,
-  FieldNames
+  FieldName
 } from '../../types'
 
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
@@ -35,7 +34,7 @@ export const AddNewField: FC<AddNewFieldProps> = ({
   const fieldData = useContext(fieldDataContext)
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const activeFieldNames = Object.keys(fieldData)
-    .filter((key: FieldNames[number]) => { return !fieldData[key].isActive })
+    .filter((key: FieldName) => { return !fieldData[key].isActive })
   const buttonFieldStylingBase = 'mx-1 text-left bg-night border border-solid border-overcast pl-3 py-2'
 
   const handleActivateField: MouseEventHandler<HTMLButtonElement> =

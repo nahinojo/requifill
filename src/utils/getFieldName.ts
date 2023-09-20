@@ -5,31 +5,20 @@ import {
   fieldNames
 } from '../utils'
 import type {
-  FieldName,
-  FieldNames
+  FieldName
 } from '../types'
 
-/*
-fieldNames cannot be searched through because Typescript only permits searching Type[] using
-variables whose type matches the type of elements within fieldNames, and these elements are
-typed as string-literals. Essentially, you can only search fieldNames using strings that exactly
-match those within fieldNames, defeating the entire purpose behind searching.
-
-Identical array fieldNamesSearchable is typed to permit searching using any string variable.
-*/
-const fieldNamesSearchable = fieldNames as readonly string[]
-
-export const getFieldName = (targetId: string | undefined): FieldNames[number] => {
+export const getFieldName = (targetId: string | undefined): FieldName => {
   if (targetId === undefined) {
     throw new Error('id not found on component')
   }
   const fieldNameRegex = /^[^.]*/
-  const fieldNameMatch = String(targetId.match(fieldNameRegex))
+  const fieldNameMatch = String(targetId.match(fieldNameRegex)) as FieldName
   if (
     fieldNameMatch !== null &&
-    fieldNamesSearchable.includes(fieldNameMatch)
+    fieldNames.has(fieldNameMatch)
   ) {
-    return fieldNameMatch as FieldName
+    return fieldNameMatch
   } else {
     throw new Error('field name not found on id')
   }

@@ -1,7 +1,7 @@
 import type {
   Autofill,
   FieldData,
-  FieldNames
+  FieldName
 } from './'
 
 type ActionType =
@@ -18,7 +18,7 @@ type ActionType =
 export interface ActionProps {
   autofill?: Autofill
   fieldIndex?: number
-  fieldName?: FieldNames[number]
+  fieldName?: FieldName
   newFieldData?: FieldData
   type: ActionType
 }

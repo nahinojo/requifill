@@ -5,7 +5,6 @@ import {
   fieldDataContext,
   fieldDataDispatchContext
 } from '../hooks'
-
 import type {
   Dispatch,
   FC,
@@ -14,7 +13,6 @@ import type {
   MouseEventHandler,
   SetStateAction
 } from 'react'
-
 import type { ActionProps } from '../../types'
 
 interface FieldContextMenuProps extends HTMLAttributes<HTMLElement> {
@@ -34,7 +32,6 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
   const isFillToForm = fieldData[fieldName].isFillToForm
   const isSingleValueField = typeof fieldData[fieldName].autofill === 'string'
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
-
   const openContextMenuId = `${id}.context-menu-vdots`
   const buttonStyling = 'w-full flex align-middle items-center text-start pl-2 pt-1 text-white'
   const buttonRemoveStyling = `${buttonStyling} h-9`
@@ -58,7 +55,6 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
 
   const handleDeactivateField: MouseEventHandler<HTMLButtonElement> =
   () => {
-    const fieldName = getFieldName(id)
     fieldDataDispatch({
       fieldName,
       type: 'disable-is-active'
@@ -68,8 +64,6 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
 
   const handleSetSingleValue: MouseEventHandler<HTMLButtonElement> =
   (evt: MouseEvent<HTMLButtonElement>) => {
-    const { id: targetId } = evt.target as HTMLButtonElement
-    const fieldName = getFieldName(targetId)
     const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
     const autofill = prevAutofillValue[0]
     fieldDataDispatch({
@@ -81,8 +75,6 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
   }
   const handleSetMultiValue: MouseEventHandler<HTMLButtonElement> =
   (evt: MouseEvent<HTMLButtonElement>) => {
-    const { id: targetId } = evt.target as HTMLButtonElement
-    const fieldName = getFieldName(targetId)
     const prevAutofillValue = fieldData[fieldName].autofill as string
     const autofill = {
       0: prevAutofillValue,
@@ -98,16 +90,12 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
 
   const handleEnableFillToForm: MouseEventHandler<HTMLButtonElement> =
   (evt: MouseEvent<HTMLButtonElement>) => {
-    const { id: targetId } = evt.target as HTMLButtonElement
-    const fieldName = getFieldName(targetId)
     fieldData[fieldName].isFillToForm = true
     setIsUnsavedChanges(true)
   }
 
   const handleDisableFillToForm: MouseEventHandler<HTMLButtonElement> =
   (evt: MouseEvent<HTMLButtonElement>) => {
-    const { id: targetId } = evt.target as HTMLButtonElement
-    const fieldName = getFieldName(targetId)
     fieldData[fieldName].isFillToForm = false
     setIsUnsavedChanges(true)
   }
