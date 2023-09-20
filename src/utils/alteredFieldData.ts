@@ -43,7 +43,7 @@ export const alteredFieldData = (params: modifyFieldDataParameters): FieldData =
       }
     }
   }
-  return {
+  const testFieldData = {
     ...fieldData,
     [fieldName]: {
       ...fieldData[fieldName],
@@ -53,4 +53,5 @@ export const alteredFieldData = (params: modifyFieldDataParameters): FieldData =
       }
     }
   }
+  return testFieldData
 }

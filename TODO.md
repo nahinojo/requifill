@@ -6,8 +6,8 @@
 
 - Save Changes banner needs to be placed below everything; it cannot block fields
 - Field does not unfocus on pressing keyboard 'Enter'
-- Autosort MultiValues
-- Prevent creation of multiple empty MultiValues
+- Autosort MultiValueswer
+- When creating a new field, ensure autofill is empty
 
 ### Requisition Form Manipulation
 

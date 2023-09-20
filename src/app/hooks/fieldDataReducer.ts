@@ -41,6 +41,7 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
       })
     } else {
       return alteredFieldData({
+        attributeIndex: fieldIndex,
         attributeName: 'autofill',
         fieldData,
         fieldName,
