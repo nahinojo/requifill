@@ -7,7 +7,7 @@ import {
   AddNewField,
   FieldRenderer,
   ToggleAutofillHeader,
-  UnsavedFieldPrompt
+  UnsavedChangesPrompt
 } from './components'
 import {
   fieldDataContext,
@@ -29,7 +29,19 @@ const App: FC = () => {
   const [isUnsavedChanges, setIsUnsavedChanges] = useState<boolean>(false)
   const [isAddingField, setIsAddingField] = useState<boolean>(false)
   const [isRenderAddField, setIsRenderAddField] = useState<boolean>(true)
-
+  const root = document.getElementById('root') as HTMLDivElement
+  const { body } = document
+  // Almost works properly, but not exactly.
+  const isUnsavedChangesNeedsMoreSpace = root.clientHeight > 0.8 * body.clientHeight
+  if (
+    isUnsavedChangesNeedsMoreSpace
+  ) {
+    if (isUnsavedChanges) {
+      body.style.height = `${root.clientHeight + 150}px`
+    } else {
+      body.style.height = `${root.clientHeight + 100}px`
+    }
+  }
   /*
   Injects fieldData into field <input> elements.
   Ensures fieldData is in sync with browser storage.
@@ -96,7 +108,7 @@ const App: FC = () => {
         }
         {
           !!isUnsavedChanges && (
-            <UnsavedFieldPrompt
+            <UnsavedChangesPrompt
               setIsUnsavedChanges={setIsUnsavedChanges}
             />
           )

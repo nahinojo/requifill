@@ -14,11 +14,11 @@ import type {
 } from 'react'
 import type { ActionProps } from '../../types'
 
-interface UnsavedFieldPromptProps {
+interface UnsavedChangesPromptProps {
   setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
-export const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
+export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
   setIsUnsavedChanges
 }) => {
   const fieldData = useContext(fieldDataContext)
@@ -53,7 +53,8 @@ export const UnsavedFieldPrompt: FC<UnsavedFieldPromptProps> = ({
 
   return (
     <div
-      className='bg-aqua w-full h-1/6 fixed bottom-0'
+      className='bg-aqua w-full h-1/5 fixed bottom-0'
+      id='unsaved-changes'
     >
       <p
         className='text-center mt-4 font-semibold'

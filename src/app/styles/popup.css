@@ -18,5 +18,5 @@ html {
 body {
   background-color: #111113;
   width: 360px;
-  height: 600px;
+  min-height: 600px;
 }
