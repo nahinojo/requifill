@@ -6,7 +6,7 @@ import type {
 type AttributeIndex = number
 type IndexableRecord = Record<number, string>
 type Value = string | boolean | IndexableRecord | Field
-interface modifyFieldDataParameters {
+interface alterFieldDataParameters {
   fieldData: FieldData
   fieldName: FieldName
   attributeName?: keyof Field
@@ -20,7 +20,7 @@ type AttributeNameOfIndexableRecord = Exclude <{
   [K in keyof Field]: Field[K] extends IndexableRecord ? K : never
 }[keyof Field], undefined>
 
-export const alteredFieldData = (params: modifyFieldDataParameters): FieldData => {
+export const alterFieldData = (params: alterFieldDataParameters): FieldData => {
   const {
     fieldData,
     fieldName,

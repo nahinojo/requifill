@@ -15,11 +15,11 @@ import type {
 import type { ActionProps } from '../../types'
 
 interface UnsavedChangesPromptProps {
-  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  toggleIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
 export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
-  setIsUnsavedChanges
+  toggleIsUnsavedChanges
 }) => {
   const fieldData = useContext(fieldDataContext)
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
@@ -31,7 +31,7 @@ export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
       .catch(error => {
         console.error(error)
       })
-    setIsUnsavedChanges(false)
+    toggleIsUnsavedChanges(false)
   }
 
   const handleDiscardChanges: MouseEventHandler<HTMLButtonElement> =
@@ -48,12 +48,12 @@ export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
       .catch(error => {
         console.error(error)
       })
-    setIsUnsavedChanges(false)
+    toggleIsUnsavedChanges(false)
   }
 
   return (
     <div
-      className='bg-aqua w-full h-1/5 fixed bottom-0'
+      className='bg-aqua w-full h-24 fixed bottom-0'
       id='unsaved-changes'
     >
       <p

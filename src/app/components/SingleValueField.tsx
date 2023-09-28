@@ -25,13 +25,13 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 >
 interface SingleValueFieldProps extends HTMLProps, LabelProps, InputProps {
   id: string
-  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  toggleIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
   title: string
 }
 
 export const SingleValueField: FC<SingleValueFieldProps> = ({
   id,
-  setIsUnsavedChanges,
+  toggleIsUnsavedChanges,
   title
 }) => {
   const fieldData = useContext(fieldDataContext)
@@ -46,7 +46,7 @@ export const SingleValueField: FC<SingleValueFieldProps> = ({
       fieldName,
       type: 'set-autofill'
     })
-    setIsUnsavedChanges(true)
+    toggleIsUnsavedChanges(true)
   }
   if (id === undefined) {
     throw new Error('React component ID not found.')
@@ -77,7 +77,7 @@ export const SingleValueField: FC<SingleValueFieldProps> = ({
       </div>
       <FieldContextMenu
         id={id}
-        setIsUnsavedChanges={setIsUnsavedChanges}
+        toggleIsUnsavedChanges={toggleIsUnsavedChanges}
         transformSVG='scale(.33)'
       />
     </div>

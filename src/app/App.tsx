@@ -26,20 +26,34 @@ const App: FC = () => {
     fieldDataReducer,
     initialFieldData
   )
+  console.count('App render')
   const [isUnsavedChanges, setIsUnsavedChanges] = useState<boolean>(false)
   const [isAddingField, setIsAddingField] = useState<boolean>(false)
   const [isRenderAddField, setIsRenderAddField] = useState<boolean>(true)
-  const root = document.getElementById('root') as HTMLDivElement
-  const { body } = document
-  // Almost works properly, but not exactly.
-  const isUnsavedChangesNeedsMoreSpace = root.clientHeight > 0.8 * body.clientHeight
-  if (
-    isUnsavedChangesNeedsMoreSpace
-  ) {
-    if (isUnsavedChanges) {
-      body.style.height = `${root.clientHeight + 150}px`
+
+  /* You can somehow listen for if the UnsavedChangesPrompt is onscreen, but set the isUnsavedChanges at the same time
+     This is because the listener/checker will only return true after the app refresh, not on state update.
+     You cannot make changes to <body> on state update becuase you need the size of new root, not prior root.
+     Yet hmmm you also don't want to double render, one root without and one root with.
+     Maybe, wait for the new size of root before adding unsaved changes.
+     How would this work??
+  */
+  const toggleIsUnsavedChanges = (newIsUnsavedChanges: boolean): void => {
+    setIsUnsavedChanges(newIsUnsavedChanges)
+    const { body } = document
+    if (newIsUnsavedChanges) {
+      const root = document.getElementById('root') as HTMLDivElement
+      const rootHeight = root.clientHeight
+      const bodyHeight = body.clientHeight
+      const unsavedChangesHeight = 96
+      const componentTreeHeight = rootHeight + unsavedChangesHeight
+      const isUnsavedChangesNeedsMoreSpace = componentTreeHeight > bodyHeight
+      if (isUnsavedChangesNeedsMoreSpace) {
+        console.log('Increasing <body/> height')
+        body.style.height = `${componentTreeHeight}px`
+      }
     } else {
-      body.style.height = `${root.clientHeight + 100}px`
+      body.style.height = '600px'
     }
   }
   /*
@@ -95,21 +109,21 @@ const App: FC = () => {
         <ToggleAutofillHeader />
         <FieldRenderer
           setIsRenderAddField={setIsRenderAddField}
-          setIsUnsavedChanges={setIsUnsavedChanges}
+          toggleIsUnsavedChanges={toggleIsUnsavedChanges}
         />
         {
           !!isRenderAddField && (
             <AddNewField
               isAddingField={isAddingField}
               setIsAddingField={setIsAddingField}
-              setIsUnsavedChanges={setIsUnsavedChanges}
+              toggleIsUnsavedChanges={toggleIsUnsavedChanges}
             />
           )
         }
         {
           !!isUnsavedChanges && (
             <UnsavedChangesPrompt
-              setIsUnsavedChanges={setIsUnsavedChanges}
+              toggleIsUnsavedChanges={toggleIsUnsavedChanges}
             />
           )
         }

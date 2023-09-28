@@ -14,12 +14,12 @@ import { fieldDataContext } from '../hooks'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
   setIsRenderAddField: Dispatch<SetStateAction<boolean>>
-  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  toggleIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
 export const FieldRenderer: FC<FieldRendererProps> = ({
   setIsRenderAddField,
-  setIsUnsavedChanges
+  toggleIsUnsavedChanges
 }) => {
   const fieldData = useContext(fieldDataContext)
   const isActiveFields = Object
@@ -61,7 +61,7 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
                       <SingleValueField
                         id={id}
                         key={key}
-                        setIsUnsavedChanges={setIsUnsavedChanges}
+                        toggleIsUnsavedChanges={toggleIsUnsavedChanges}
                         title={title}
                         value={autofill}
                       />
@@ -76,7 +76,7 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
                         key={key}
                         multiValues={Object.values(data.autofill)}
                         setIsRenderAddField={setIsRenderAddField}
-                        setIsUnsavedChanges={setIsUnsavedChanges}
+                        toggleIsUnsavedChanges={toggleIsUnsavedChanges}
                         title={title}
                       />
                     )

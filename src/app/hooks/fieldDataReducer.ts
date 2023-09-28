@@ -5,7 +5,7 @@ import type {
   ActionProps,
   FieldData
 } from '../../types'
-import { alteredFieldData } from '../../utils'
+import { alterFieldData } from '../../utils'
 
 function assertDefined <T extends keyof ActionProps> (prop: ActionProps[T]): asserts prop is Exclude<ActionProps[T], undefined> {
   if (prop === undefined) {
@@ -33,14 +33,14 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
     assertDefined(fieldName)
     assertDefined(autofill)
     if (fieldIndex === undefined) {
-      return alteredFieldData({
+      return alterFieldData({
         attributeName: 'autofill',
         fieldData,
         fieldName,
         value: autofill as string
       })
     } else {
-      return alteredFieldData({
+      return alterFieldData({
         attributeIndex: fieldIndex,
         attributeName: 'autofill',
         fieldData,
@@ -52,7 +52,7 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
   case 'add-item': {
     assertDefined(fieldName)
     const newIndex = Object.keys(fieldData[fieldName].autofill).length
-    return alteredFieldData({
+    return alterFieldData({
       attributeIndex: newIndex,
       attributeName: 'autofill',
       fieldData,
@@ -73,14 +73,14 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
       }
     }
     if (Object.keys(newAutofill).length > 1) {
-      return alteredFieldData({
+      return alterFieldData({
         attributeName: 'autofill',
         fieldData,
         fieldName,
         value: newAutofill
       })
     } else {
-      return alteredFieldData({
+      return alterFieldData({
         attributeName: 'autofill',
         fieldData,
         fieldName,
@@ -90,7 +90,7 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
   }
   case 'enable-is-active': {
     assertDefined(fieldName)
-    return alteredFieldData({
+    return alterFieldData({
       attributeName: 'isActive',
       fieldData,
       fieldName,
@@ -99,7 +99,7 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
   }
   case 'disable-is-active': {
     assertDefined(fieldName)
-    return alteredFieldData({
+    return alterFieldData({
       attributeName: 'isActive',
       fieldData,
       fieldName,
@@ -108,7 +108,7 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
   }
   case 'enable-is-fill-to-form': {
     assertDefined(fieldName)
-    return alteredFieldData({
+    return alterFieldData({
       attributeName: 'isFillToForm',
       fieldData,
       fieldName,
@@ -117,7 +117,7 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
   }
   case 'disable-is-fill-to-form': {
     assertDefined(fieldName)
-    return alteredFieldData({
+    return alterFieldData({
       attributeName: 'isFillToForm',
       fieldData,
       fieldName,
