@@ -39,7 +39,7 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
         !!isActiveFields && (
           <>
             <header
-              className='text-silver text-sm mt-3 ml-1'
+              className='text-silver text-sm ml-1 mt-3'
               id='autofill-values-title'
             >Autofill Values
             </header>

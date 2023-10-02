@@ -33,48 +33,6 @@ const App: FC = () => {
   const [isRenderAddNewField, setIsRenderAddNewField] = useState<boolean>(true)
 
   /*
-  Ensures <NavMenu /> does not block lower region during root overflow
-
-  Problem: the values for height are calculated BEFORE the new render.
-  - Hence, the calculation for body height is based on the previous render of App, not the post-render
-  - How do I solve this issue?
-
-  This is one of those circumstances where I feel I am looking th problem wrong.
-  Shouldn't the DOM automatically add a properly sized scroll bar to handle overflow?
-   - Notice how the scroll bar overlaps NavMenu. This shouldn't occur.
-  What is the real issue that I need to solve? Solution > Remedy
-
-  Maybe lock the shape of root to have it's bottom side to tangent NavMenu.
-    - Then, normal overflow will be handled and there will not be an overlap issue.
-    - Also, consider not using root itself, rather a div wrapper for field data.
-  */
-  const { body } = document
-  const root = document.getElementById('root') as HTMLDivElement
-  const rootHeight = root.clientHeight
-  const bodyHeight = body.clientHeight
-  const navMenuHeight = 96
-  const componentTreeHeight = rootHeight + navMenuHeight
-  const isNavMenuNeedsMoreSpace = componentTreeHeight > bodyHeight
-  const isNavMenuNeedsLessSpace = false
-  const isNavMenuNeedsNoSpace = componentTreeHeight < 600
-  console.log(
-    'rootHeight:',
-    rootHeight,
-    '\nbodyHeight:',
-    bodyHeight,
-    '\ncomponentTreeHeight:',
-    componentTreeHeight
-  )
-  if (isNavMenuNeedsMoreSpace) {
-    console.log('Increasing <body/> height')
-    body.style.height = `${componentTreeHeight}px`
-  }
-  if (isNavMenuNeedsNoSpace) {
-    console.log('Setting <body /> height to 600px')
-    body.style.height = '600px'
-  }
-
-  /*
   Injects fieldData into field <input> elements.
   Ensures fieldData is in sync with browser storage.
   */
@@ -124,20 +82,25 @@ const App: FC = () => {
       <fieldDataDispatchContext.Provider
         value={fieldDataDispatch}
       >
-        <ToggleAutofillHeader />
-        <FieldRenderer
-          setIsRenderAddNewField={setIsRenderAddNewField}
-          setIsUnsavedChanges={setIsUnsavedChanges}
-        />
-        {
-          !!isRenderAddNewField && (
-            <AddNewField
-              isAddingField={isAddingField}
-              setIsAddingField={setIsAddingField}
-              setIsUnsavedChanges={setIsUnsavedChanges}
-            />
-          )
-        }
+        <div
+          className='absolute top-0 bottom-24 overflow-scroll'
+          id='fields-conatiner'
+        >
+          <ToggleAutofillHeader />
+          <FieldRenderer
+            setIsRenderAddNewField={setIsRenderAddNewField}
+            setIsUnsavedChanges={setIsUnsavedChanges}
+          />
+          {
+            !!isRenderAddNewField && (
+              <AddNewField
+                isAddingField={isAddingField}
+                setIsAddingField={setIsAddingField}
+                setIsUnsavedChanges={setIsUnsavedChanges}
+              />
+            )
+          }
+        </div>
         {
           !!isUnsavedChanges && (
             <UnsavedChangesPrompt
