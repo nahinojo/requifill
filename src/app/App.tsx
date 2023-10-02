@@ -38,6 +38,15 @@ const App: FC = () => {
   Problem: the values for height are calculated BEFORE the new render.
   - Hence, the calculation for body height is based on the previous render of App, not the post-render
   - How do I solve this issue?
+
+  This is one of those circumstances where I feel I am looking th problem wrong.
+  Shouldn't the DOM automatically add a properly sized scroll bar to handle overflow?
+   - Notice how the scroll bar overlaps NavMenu. This shouldn't occur.
+  What is the real issue that I need to solve? Solution > Remedy
+
+  Maybe lock the shape of root to have it's bottom side to tangent NavMenu.
+    - Then, normal overflow will be handled and there will not be an overlap issue.
+    - Also, consider not using root itself, rather a div wrapper for field data.
   */
   const { body } = document
   const root = document.getElementById('root') as HTMLDivElement
