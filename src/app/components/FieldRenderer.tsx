@@ -13,13 +13,13 @@ import {
 import { fieldDataContext } from '../hooks'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
-  setIsRenderAddField: Dispatch<SetStateAction<boolean>>
-  toggleIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  setIsRenderAddNewField: Dispatch<SetStateAction<boolean>>
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
 export const FieldRenderer: FC<FieldRendererProps> = ({
-  setIsRenderAddField,
-  toggleIsUnsavedChanges
+  setIsRenderAddNewField,
+  setIsUnsavedChanges
 }) => {
   const fieldData = useContext(fieldDataContext)
   const isActiveFields = Object
@@ -30,7 +30,7 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
     .some(fieldName => { return !fieldName.isActive })
 
   if (isInactiveFields) {
-    setIsRenderAddField(true)
+    setIsRenderAddNewField(true)
   }
 
   return (
@@ -61,7 +61,7 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
                       <SingleValueField
                         id={id}
                         key={key}
-                        toggleIsUnsavedChanges={toggleIsUnsavedChanges}
+                        setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}
                         value={autofill}
                       />
@@ -75,8 +75,8 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
                         id={id}
                         key={key}
                         multiValues={Object.values(data.autofill)}
-                        setIsRenderAddField={setIsRenderAddField}
-                        toggleIsUnsavedChanges={toggleIsUnsavedChanges}
+                        setIsRenderAddNewField={setIsRenderAddNewField}
+                        setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}
                       />
                     )

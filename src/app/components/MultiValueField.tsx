@@ -36,16 +36,16 @@ type InputProps = Pick<InputHTMLAttributes<HTMLInputElement>,
 interface MultiValueFieldProps extends HTMLProps, LabelProps, InputProps {
   id: string
   multiValues: string[]
-  setIsRenderAddField: Dispatch<SetStateAction<boolean>>
-  toggleIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  setIsRenderAddNewField: Dispatch<SetStateAction<boolean>>
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
   title: string
 }
 
 export const MultiValueField: FC<MultiValueFieldProps> = ({
   id,
   multiValues,
-  setIsRenderAddField,
-  toggleIsUnsavedChanges,
+  setIsRenderAddNewField,
+  setIsUnsavedChanges,
   title
 }) => {
   if (id === undefined) {
@@ -53,7 +53,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
   }
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
-  setIsRenderAddField(!isListExpanded)
+  setIsRenderAddNewField(!isListExpanded)
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
     const { id: targetId, value: autofill } = evt.target as HTMLInputElement
@@ -65,7 +65,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
       fieldName,
       type: 'set-autofill'
     })
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
 
   const handleAddItem: MouseEventHandler<HTMLButtonElement> =
@@ -75,7 +75,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
       fieldName,
       type: 'add-item'
     })
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
 
   const handleDeleteItem: MouseEventHandler<HTMLElement> =
@@ -88,7 +88,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
       fieldName,
       type: 'delete-item'
     })
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
 
   return (
@@ -122,7 +122,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
             </div>
             <FieldContextMenu
               id={id}
-              toggleIsUnsavedChanges={toggleIsUnsavedChanges}
+              setIsUnsavedChanges={setIsUnsavedChanges}
               transformSVG='scale(.33)'
             />
           </div>
@@ -157,7 +157,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
               </div>
               <FieldContextMenu
                 id={id}
-                toggleIsUnsavedChanges={toggleIsUnsavedChanges}
+                setIsUnsavedChanges={setIsUnsavedChanges}
                 transformSVG='scale(.33)'
               />
             </div>

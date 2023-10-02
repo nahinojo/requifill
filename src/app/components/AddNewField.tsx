@@ -23,13 +23,13 @@ import type {
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
   isAddingField: boolean
   setIsAddingField: React.Dispatch<React.SetStateAction<boolean>>
-  toggleIsUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>
+  setIsUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const AddNewField: FC<AddNewFieldProps> = ({
   isAddingField,
   setIsAddingField,
-  toggleIsUnsavedChanges
+  setIsUnsavedChanges
 }) => {
   const fieldData = useContext(fieldDataContext)
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
@@ -51,7 +51,7 @@ export const AddNewField: FC<AddNewFieldProps> = ({
       type: 'enable-is-active'
     })
     setIsAddingField(false)
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
   return (
     <>

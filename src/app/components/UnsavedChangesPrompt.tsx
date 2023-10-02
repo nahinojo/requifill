@@ -15,11 +15,11 @@ import type {
 import type { ActionProps } from '../../types'
 
 interface UnsavedChangesPromptProps {
-  toggleIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
 export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
-  toggleIsUnsavedChanges
+  setIsUnsavedChanges
 }) => {
   const fieldData = useContext(fieldDataContext)
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
@@ -31,7 +31,7 @@ export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
       .catch(error => {
         console.error(error)
       })
-    toggleIsUnsavedChanges(false)
+    setIsUnsavedChanges(false)
   }
 
   const handleDiscardChanges: MouseEventHandler<HTMLButtonElement> =
@@ -48,12 +48,12 @@ export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
       .catch(error => {
         console.error(error)
       })
-    toggleIsUnsavedChanges(false)
+    setIsUnsavedChanges(false)
   }
 
   return (
     <div
-      className='bg-aqua w-full h-24 fixed bottom-0'
+      className='bg-aqua w-full h-24 fixed bottom-0 z-10'
       id='unsaved-changes'
     >
       <p
@@ -61,7 +61,7 @@ export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
       >Would you like to save your changes?
       </p>
       <div
-        className='flex justify-around mt-5'
+        className='flex justify-around mt-4'
         id='save-choice-wrapper'
       >
         <button

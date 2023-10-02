@@ -18,12 +18,12 @@ import type { ActionProps } from '../../types'
 interface FieldContextMenuProps extends HTMLAttributes<HTMLElement> {
   id: string // Forces dependency in props
   transformSVG: string
-  toggleIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
+  setIsUnsavedChanges: Dispatch<SetStateAction<boolean>>
 }
 
-export const FieldContextMenu: FC <FieldContextMenuProps> = ({
+export const FieldContextMenu: FC<FieldContextMenuProps> = ({
   id,
-  toggleIsUnsavedChanges,
+  setIsUnsavedChanges,
   transformSVG
 }) => {
   const fieldData = useContext(fieldDataContext)
@@ -59,7 +59,7 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
       fieldName,
       type: 'disable-is-active'
     })
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
 
   const handleSetSingleValue: MouseEventHandler<HTMLButtonElement> =
@@ -71,7 +71,7 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
       fieldName,
       type: 'set-autofill'
     })
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
   const handleSetMultiValue: MouseEventHandler<HTMLButtonElement> =
   (evt: MouseEvent<HTMLButtonElement>) => {
@@ -85,19 +85,19 @@ export const FieldContextMenu: FC <FieldContextMenuProps> = ({
       fieldName,
       type: 'set-autofill'
     })
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
 
   const handleEnableFillToForm: MouseEventHandler<HTMLButtonElement> =
   (evt: MouseEvent<HTMLButtonElement>) => {
     fieldData[fieldName].isFillToForm = true
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
 
   const handleDisableFillToForm: MouseEventHandler<HTMLButtonElement> =
   (evt: MouseEvent<HTMLButtonElement>) => {
     fieldData[fieldName].isFillToForm = false
-    toggleIsUnsavedChanges(true)
+    setIsUnsavedChanges(true)
   }
 
   /*

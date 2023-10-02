@@ -20,6 +20,7 @@ import {
 } from '../utils'
 
 import type { FC } from 'react'
+import { NavMenu } from './components/NavMenu'
 
 const App: FC = () => {
   const [fieldData, fieldDataDispatch] = useReducer(
@@ -29,33 +30,41 @@ const App: FC = () => {
   console.count('App render')
   const [isUnsavedChanges, setIsUnsavedChanges] = useState<boolean>(false)
   const [isAddingField, setIsAddingField] = useState<boolean>(false)
-  const [isRenderAddField, setIsRenderAddField] = useState<boolean>(true)
+  const [isRenderAddNewField, setIsRenderAddNewField] = useState<boolean>(true)
 
-  /* You can somehow listen for if the UnsavedChangesPrompt is onscreen, but set the isUnsavedChanges at the same time
-     This is because the listener/checker will only return true after the app refresh, not on state update.
-     You cannot make changes to <body> on state update becuase you need the size of new root, not prior root.
-     Yet hmmm you also don't want to double render, one root without and one root with.
-     Maybe, wait for the new size of root before adding unsaved changes.
-     How would this work??
+  /*
+  Ensures <NavMenu /> does not block lower region during root overflow
+
+  Problem: the values for height are calculated BEFORE the new render.
+  - Hence, the calculation for body height is based on the previous render of App, not the post-render
+  - How do I solve this issue?
   */
-  const toggleIsUnsavedChanges = (newIsUnsavedChanges: boolean): void => {
-    setIsUnsavedChanges(newIsUnsavedChanges)
-    const { body } = document
-    if (newIsUnsavedChanges) {
-      const root = document.getElementById('root') as HTMLDivElement
-      const rootHeight = root.clientHeight
-      const bodyHeight = body.clientHeight
-      const unsavedChangesHeight = 96
-      const componentTreeHeight = rootHeight + unsavedChangesHeight
-      const isUnsavedChangesNeedsMoreSpace = componentTreeHeight > bodyHeight
-      if (isUnsavedChangesNeedsMoreSpace) {
-        console.log('Increasing <body/> height')
-        body.style.height = `${componentTreeHeight}px`
-      }
-    } else {
-      body.style.height = '600px'
-    }
+  const { body } = document
+  const root = document.getElementById('root') as HTMLDivElement
+  const rootHeight = root.clientHeight
+  const bodyHeight = body.clientHeight
+  const navMenuHeight = 96
+  const componentTreeHeight = rootHeight + navMenuHeight
+  const isNavMenuNeedsMoreSpace = componentTreeHeight > bodyHeight
+  const isNavMenuNeedsLessSpace = false
+  const isNavMenuNeedsNoSpace = componentTreeHeight < 600
+  console.log(
+    'rootHeight:',
+    rootHeight,
+    '\nbodyHeight:',
+    bodyHeight,
+    '\ncomponentTreeHeight:',
+    componentTreeHeight
+  )
+  if (isNavMenuNeedsMoreSpace) {
+    console.log('Increasing <body/> height')
+    body.style.height = `${componentTreeHeight}px`
   }
+  if (isNavMenuNeedsNoSpace) {
+    console.log('Setting <body /> height to 600px')
+    body.style.height = '600px'
+  }
+
   /*
   Injects fieldData into field <input> elements.
   Ensures fieldData is in sync with browser storage.
@@ -108,23 +117,28 @@ const App: FC = () => {
       >
         <ToggleAutofillHeader />
         <FieldRenderer
-          setIsRenderAddField={setIsRenderAddField}
-          toggleIsUnsavedChanges={toggleIsUnsavedChanges}
+          setIsRenderAddNewField={setIsRenderAddNewField}
+          setIsUnsavedChanges={setIsUnsavedChanges}
         />
         {
-          !!isRenderAddField && (
+          !!isRenderAddNewField && (
             <AddNewField
               isAddingField={isAddingField}
               setIsAddingField={setIsAddingField}
-              toggleIsUnsavedChanges={toggleIsUnsavedChanges}
+              setIsUnsavedChanges={setIsUnsavedChanges}
             />
           )
         }
         {
           !!isUnsavedChanges && (
             <UnsavedChangesPrompt
-              toggleIsUnsavedChanges={toggleIsUnsavedChanges}
+              setIsUnsavedChanges={setIsUnsavedChanges}
             />
+          )
+        }
+        {
+          !isUnsavedChanges && (
+            <NavMenu />
           )
         }
       </fieldDataDispatchContext.Provider>
