@@ -2,29 +2,35 @@ import React, { useState, useEffect } from 'react'
 import { Switch } from './icons'
 import {
   syncStorage,
-  getIsAutofill
+  getIsAutofillEnabled
 } from '../../utils'
 
 import type { ReactEventHandler } from 'react'
 
 export const ToggleAutofillHeader: React.FC = () => {
-  const [isAutofill, setIsAutofill] = useState<boolean>(false)
+  const [isAutofillEnabled, setIsAutofillEnabled] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   /*
-  Flips isAutofill for both component state and browser storage
+  Flips Enabled for both component state and browser storage
   */
   const toggleAutofill: ReactEventHandler<HTMLInputElement> = () => {
-    syncStorage.set({
-      settings: {
-        isAutofill: !isAutofill
-      }
-    })
+    console.log('| toggleAutofill() |')
+    console.log(
+      'isAutofillEnabled (before toggle):',
+      isAutofillEnabled
+    )
+    syncStorage
+      .set({
+        settings: {
+          isAutofillEnabled: !isAutofillEnabled
+        }
+      })
       .catch(error => {
         console.error(error)
       })
-    setIsAutofill(isAutofill => {
-      return !isAutofill
+    setIsAutofillEnabled(isAutofillEnabled => {
+      return !isAutofillEnabled
     })
   }
 
@@ -33,9 +39,9 @@ export const ToggleAutofillHeader: React.FC = () => {
   */
   useEffect(
     () => {
-      getIsAutofill()
+      getIsAutofillEnabled()
         .then(isAutofillStorage => {
-          setIsAutofill(isAutofillStorage)
+          setIsAutofillEnabled(isAutofillStorage)
           setIsLoading(false)
         })
         .catch(error => {
@@ -52,7 +58,7 @@ export const ToggleAutofillHeader: React.FC = () => {
       <Switch
         handleToggle={toggleAutofill}
         isLoading={isLoading}
-        isToggled={isAutofill}
+        isToggled={isAutofillEnabled}
       />
       <h1
         className='font-bold ml-2 mt-1'

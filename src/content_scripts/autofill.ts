@@ -7,7 +7,7 @@ import {
   fieldNameToRequisitionFormId,
   isProperURL,
   syncStorage,
-  getIsAutofill
+  getIsAutofillEnabled
 } from '../utils'
 
 import type {
@@ -15,11 +15,15 @@ import type {
   SyncStorageData
 } from '../types'
 
+console.log('Executing autofill.ts')
+
 if (isProperURL) {
+  console.log('URL is proper')
   /*
   Retrieves field data from browser storage to autofill requisition form <input> elements.
   */
   const autofill = (): void => {
+    console.log('Executing autofill()')
     syncStorage
       .get()
       .then((storage: SyncStorageData) => {
@@ -37,7 +41,7 @@ if (isProperURL) {
             // Prevents duplicate injections of adHocUserId.
             const hasSecondaryAdHocUserId = (
               fieldName === 'adHocUserId' &&
-                document.getElementById('adHocRoutePerson[0].id') !== null
+              document.getElementById('adHocRoutePerson[0].id') !== null
             )
             if (
               !isAlreadyAutofilled &&
@@ -82,9 +86,13 @@ if (isProperURL) {
   /*
   Executes on initial page load.
   */
-  getIsAutofill()
-    .then(isAutofill => {
-      if (isAutofill) {
+  getIsAutofillEnabled()
+    .then(isAutofillEnabled => {
+      console.log(
+        'getIsAutofillEnabled().isAutofillEnabled:',
+        isAutofillEnabled
+      )
+      if (isAutofillEnabled) {
         autofill()
       }
     })
@@ -96,9 +104,9 @@ if (isProperURL) {
   Executes when autofill switch is toggled.
   */
   syncStorage.onChanged.addListener(() => {
-    getIsAutofill()
-      .then(isAutofill => {
-        if (isAutofill) {
+    getIsAutofillEnabled()
+      .then(isAutofillEnabled => {
+        if (isAutofillEnabled) {
           autofill()
         } else {
           autoclear()

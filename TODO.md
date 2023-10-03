@@ -2,15 +2,16 @@
 
 ## **Current Issues**
 
-### Popup 
-
-- Save Changes banner needs to be placed below everything; it cannot block fields
-- When creating a new field, ensure autofill is empty
+### Popup
+- (Potential) More space for 3-dot to be clicked for multivalue field
+- Cancel Adding of New Field
+- Autosort values in multifields
+- (Extra) Automatically set isUnsavedChanges to false if changes lead back to original state.
 
 ### Requisition Form Manipulation
 
-- (Potential) If a field is deleted, the value within Requisition input remains on screen
-- Redo enhance.tsx
+- Enhance.tsx may be executed on the wrong page, isProperURL may be permitting a wrong URL.
+
 
 ## **Upcoming Features**
 
@@ -26,15 +27,15 @@
 ### Popup
 
 [ See design on Figma ]
-- (Potential) Clear/Remove all values
 - Field headers demonstrate correspond to Requisition Form headers
 - (Potential) Mouse over highlights corresponding field in dom
-- Cancel Adding of New Field
 
 
 ### Requisition Form Manipulation
 
 - (Potential) finer decimal scroll when holding down the shift key
+- (Potential) Reimplement scroll feature
+- Enusre Datalist is same width as form input
 
 
 ### Other Capabilities
