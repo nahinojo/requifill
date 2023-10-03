@@ -2,6 +2,8 @@ export const fieldNameToRequisitionFormId = {
   adHocUserId: 'newAdHocRoutePerson.id',
   commodityCode: 'newPurchasingItemLine.purchasingCommodityCode',
   description: 'document.documentHeader.documentDescription',
-  phoneNumber: 'document.deliveryToPhoneNumber',
-  roomNumber: 'document.deliveryBuildingRoomNumber'
+  explanation: 'document.documentHeader.explanation',
+  organizationDocumentNumber: 'document.documentHeader.organizationDocumentNumber',
+  roomNumber: 'document.deliveryBuildingRoomNumber',
+  unitOfMeasure: 'newPurchasingItemLine.itemUnitOfMeasureCode'
 } as const

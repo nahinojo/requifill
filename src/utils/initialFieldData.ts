@@ -22,14 +22,26 @@ export const initialFieldData: FieldData = {
     isActive: true,
     isFillToForm: false
   },
-  phoneNumber: {
+  explanation: {
     autofill: '',
     isActive: false,
     isFillToForm: false
+  },
+  organizationDocumentNumber: {
+    autofill: '',
+    isActive: false,
+    isFillToForm: false,
+    title: 'Budget Code'
   },
   roomNumber: {
     autofill: '237',
     isActive: false,
     isFillToForm: true
+  },
+  unitOfMeasure: {
+    autofill: '',
+    isActive: false,
+    isFillToForm: false,
+    title: 'UOM'
   }
 }

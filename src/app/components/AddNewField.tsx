@@ -34,7 +34,7 @@ export const AddNewField: FC<AddNewFieldProps> = ({
   const fieldData = useContext(fieldDataContext)
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const activeFieldNames = Object.keys(fieldData)
-    .filter((key: FieldName) => { return !fieldData[key].isActive })
+    .filter((key: FieldName) => { return !fieldData[key].isActive }) as FieldName[]
   const buttonFieldStylingBase = 'mx-1 text-left bg-night border border-solid border-overcast pl-3 py-2'
 
   const handleActivateField: MouseEventHandler<HTMLButtonElement> =
@@ -54,13 +54,16 @@ export const AddNewField: FC<AddNewFieldProps> = ({
     setIsUnsavedChanges(true)
   }
   return (
-    <>
+    <div
+      className='mb-1'
+      id='add-new-field'
+    >
       {
         !isAddingField &&
           activeFieldNames.length !== 0 && (
           <button
             className='mt-2 w-fit mx-auto cursor-pointer flex justify-center text-sm text-silver'
-            id='new-field'
+            id='add-new-field-initiator'
             type='button'
             onClick={() => { setIsAddingField(true) }}
           >
@@ -72,7 +75,7 @@ export const AddNewField: FC<AddNewFieldProps> = ({
         !!isAddingField && (
           <div
             className='mt-2 flex flex-col'
-            id='field-selector'
+            id='new-field-selector'
           >
             <header
               className='mx-auto font-bold text-sm'
@@ -80,8 +83,11 @@ export const AddNewField: FC<AddNewFieldProps> = ({
             </header>
             {
               activeFieldNames.map((
-                id, index
+                fieldName, index
               ) => {
+                const selectionTitle = fieldData[fieldName].title === undefined
+                  ? camelToTitleCase(fieldName)
+                  : fieldData[fieldName].title as string
                 let buttonFieldStyling: string
                 if (index === 0) {
                   buttonFieldStyling = `${buttonFieldStylingBase} rounded-t-md`
@@ -98,11 +104,11 @@ export const AddNewField: FC<AddNewFieldProps> = ({
                 return (
                   <button
                     className={buttonFieldStyling}
-                    id={id}
-                    key={`${id}.${index}`}
+                    id={fieldName}
+                    key={`${fieldName}.${index}`}
                     type='button'
                     onClick={handleActivateField}
-                  >{camelToTitleCase(id)}
+                  >{selectionTitle}
                   </button>
                 )
               })
@@ -110,6 +116,6 @@ export const AddNewField: FC<AddNewFieldProps> = ({
           </div>
         )
       }
-    </>
+    </div>
   )
 }
