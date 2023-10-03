@@ -3,7 +3,6 @@
 ## **Current Issues**
 
 ### Popup
-- (Potential) More space for 3-dot to be clicked for multivalue field
 - Cancel Adding of New Field
 - Autosort values in multifields
 - (Extra) Automatically set isUnsavedChanges to false if changes lead back to original state.
