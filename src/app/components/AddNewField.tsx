@@ -75,7 +75,7 @@ export const AddNewField: FC<AddNewFieldProps> = ({
         !!isAddingField && (
           <div
             className='mt-2 flex flex-col'
-            id='new-field-selector'
+            id='field-selector'
           >
             <header
               className='mx-auto font-bold text-sm'
@@ -113,6 +113,15 @@ export const AddNewField: FC<AddNewFieldProps> = ({
                 )
               })
             }
+            <button
+              className='font-semibold pt-2 text-sm hover:underline'
+              type='button'
+              onClick={
+                () => { setIsAddingField(false) }
+              }
+            >
+              Cancel
+            </button>
           </div>
         )
       }
