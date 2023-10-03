@@ -19,7 +19,7 @@ export const ChevronPointerWhite: FC<ChevronPointerProps> = ({ id, transformSVG,
 
   return (
     <div
-      className='w-6 h-full flex items-center justify-self-end hover:cursor-pointer'
+      className='w-6 h-4 flex items-center justify-self-end'
       id={id}
       style={{ transform: `${transformDiv}` }}
     >
