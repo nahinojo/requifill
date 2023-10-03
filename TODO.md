@@ -3,7 +3,7 @@
 ## **Current Issues**
 
 ### Popup
-- Cancel Adding of New Field
+- (Potential) undo disabling of add new field when multivalue dropdown
 - Autosort values in multifields
 - (Extra) Automatically set isUnsavedChanges to false if changes lead back to original state.
 
