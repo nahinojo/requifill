@@ -4,14 +4,16 @@
 
 ### Popup
 - (Potential) undo disabling of add new field when multivalue dropdown
-- Autosort values in multifields
+- *Autosort values in multifields. Ensure only one empty value, at top. See alteredFieldData.ts
 - (Extra) Automatically set isUnsavedChanges to false if changes lead back to original state.
 
 ### Requisition Form Manipulation
 
 - Enhance.tsx may be executed on the wrong page, isProperURL may be permitting a wrong URL.
 
-
+### General Schema
+- (Potential) fieldIndex should just be named index
+ 
 ## **Upcoming Features**
 
 ### Storage

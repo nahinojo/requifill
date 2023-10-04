@@ -42,7 +42,7 @@ export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
         const newFieldData = storage.fieldData
         fieldDataDispatch({
           newFieldData,
-          type: 'set-data'
+          type: 'set-field-data'
         })
       })
       .catch(error => {

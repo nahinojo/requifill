@@ -12,7 +12,7 @@ type ActionType =
   'enable-is-active' |
   'enable-is-fill-to-form' |
   'set-autofill' |
-  'set-data' |
+  'set-field-data' |
   'save-changes'
 
 export interface ActionProps {

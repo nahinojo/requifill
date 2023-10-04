@@ -25,30 +25,6 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
     type
   }: ActionProps = action
   switch (type) {
-  case 'set-data': {
-    assertDefined(newFieldData)
-    return newFieldData
-  }
-  case 'set-autofill': {
-    assertDefined(fieldName)
-    assertDefined(autofill)
-    if (fieldIndex === undefined) {
-      return alterFieldData({
-        attributeName: 'autofill',
-        fieldData,
-        fieldName,
-        value: autofill as string
-      })
-    } else {
-      return alterFieldData({
-        attributeIndex: fieldIndex,
-        attributeName: 'autofill',
-        fieldData,
-        fieldName,
-        value: autofill as string
-      })
-    }
-  }
   case 'add-item': {
     assertDefined(fieldName)
     const newIndex = Object.keys(fieldData[fieldName].autofill).length
@@ -88,15 +64,6 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
       })
     }
   }
-  case 'enable-is-active': {
-    assertDefined(fieldName)
-    return alterFieldData({
-      attributeName: 'isActive',
-      fieldData,
-      fieldName,
-      value: true
-    })
-  }
   case 'disable-is-active': {
     assertDefined(fieldName)
     return alterFieldData({
@@ -104,6 +71,24 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
       fieldData,
       fieldName,
       value: false
+    })
+  }
+  case 'disable-is-fill-to-form': {
+    assertDefined(fieldName)
+    return alterFieldData({
+      attributeName: 'isFillToForm',
+      fieldData,
+      fieldName,
+      value: false
+    })
+  }
+  case 'enable-is-active': {
+    assertDefined(fieldName)
+    return alterFieldData({
+      attributeName: 'isActive',
+      fieldData,
+      fieldName,
+      value: true
     })
   }
   case 'enable-is-fill-to-form': {
@@ -115,14 +100,29 @@ export const fieldDataReducer: Reducer<FieldData, ActionProps> = (
       value: true
     })
   }
-  case 'disable-is-fill-to-form': {
+  case 'set-field-data': {
+    assertDefined(newFieldData)
+    return newFieldData
+  }
+  case 'set-autofill': {
     assertDefined(fieldName)
-    return alterFieldData({
-      attributeName: 'isFillToForm',
-      fieldData,
-      fieldName,
-      value: false
-    })
+    assertDefined(autofill)
+    if (fieldIndex === undefined) {
+      return alterFieldData({
+        attributeName: 'autofill',
+        fieldData,
+        fieldName,
+        value: autofill as string
+      })
+    } else {
+      return alterFieldData({
+        attributeIndex: fieldIndex,
+        attributeName: 'autofill',
+        fieldData,
+        fieldName,
+        value: autofill as string
+      })
+    }
   }
   }
   throw new Error('Invalid dispatch id')

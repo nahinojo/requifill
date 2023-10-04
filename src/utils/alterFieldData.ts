@@ -1,10 +1,13 @@
+import { isEmptyString } from './isEmptyString'
+
 import type {
   Field,
   FieldData,
-  FieldName
+  FieldName,
+  IndexableRecord
 } from '../types'
+import { setArrayAsIndexableRecord } from './setArrayAsIndexableRecord'
 type AttributeIndex = number
-type IndexableRecord = Record<number, string>
 type Value = string | boolean | IndexableRecord | Field
 interface alterFieldDataParameters {
   fieldData: FieldData
@@ -13,9 +16,7 @@ interface alterFieldDataParameters {
   attributeIndex?: AttributeIndex
   value: Value
 }
-/*
-Subset of attributes whose value type is Record
-*/
+
 type AttributeNameOfIndexableRecord = Exclude <{
   [K in keyof Field]: Field[K] extends IndexableRecord ? K : never
 }[keyof Field], undefined>
@@ -43,7 +44,35 @@ export const alterFieldData = (params: alterFieldDataParameters): FieldData => {
       }
     }
   }
-  const testFieldData = {
+  if (attributeName === 'autofill') {
+    if (typeof value !== 'string') {
+      throw new Error('alteredFieldData: Non-string value inputted for autofill')
+    }
+    const { autofill } = fieldData[fieldName]
+    const autofillValues = Object.values(autofill)
+    /*
+    Need to fix handling of empty value. Only permit one.
+    */
+    const autofillValuesSorted = autofillValues.filter((str) => {
+      return !isEmptyString(str)
+    })
+    if (!isEmptyString(value)) {
+      autofillValuesSorted.concat([value])
+    }
+    // if () {
+    //   autofillValuesSorted.concat([''])
+    // }
+    autofillValuesSorted.sort()
+    const autofillSorted = setArrayAsIndexableRecord(autofillValuesSorted)
+    return {
+      ...fieldData,
+      [fieldName]: {
+        ...fieldData[fieldName],
+        [attributeName as 'autofill']: autofillSorted
+      }
+    }
+  }
+  return {
     ...fieldData,
     [fieldName]: {
       ...fieldData[fieldName],
@@ -53,5 +82,4 @@ export const alterFieldData = (params: alterFieldDataParameters): FieldData => {
       }
     }
   }
-  return testFieldData
 }

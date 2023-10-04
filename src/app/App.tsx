@@ -52,7 +52,7 @@ const App: FC = () => {
           } else {
             fieldDataDispatch({
               newFieldData: storage.fieldData,
-              type: 'set-data'
+              type: 'set-field-data'
             })
           }
         })
@@ -65,7 +65,7 @@ const App: FC = () => {
           .then(storage => {
             fieldDataDispatch({
               newFieldData: storage.fieldData,
-              type: 'set-data'
+              type: 'set-field-data'
             })
           })
           .catch(error => {

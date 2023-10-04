@@ -1,16 +1,18 @@
 import React, { useContext } from 'react'
-import type {
-  Dispatch,
-  FC,
-  HTMLAttributes,
-  SetStateAction
-} from 'react'
 import { camelToTitleCase } from '../../utils'
 import {
   SingleValueField,
   MultiValueField
 } from './'
 import { fieldDataContext } from '../hooks'
+
+import type {
+  Dispatch,
+  FC,
+  HTMLAttributes,
+  SetStateAction
+} from 'react'
+import type { Field, FieldName } from '../../types'
 
 interface FieldRendererProps extends HTMLAttributes<HTMLElement> {
   setIsRenderAddNewField: Dispatch<SetStateAction<boolean>>
@@ -46,20 +48,20 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
             {
               Object.entries(fieldData)
                 .map((
-                  [id, data], index
+                  [fieldName, field]: [FieldName, Field], index: number
                 ) => {
-                  const title = data.title === undefined
-                    ? camelToTitleCase(id)
-                    : data.title
-                  const key = `${id}.${index}`
-                  const { autofill } = data
+                  const title = field.title === undefined
+                    ? camelToTitleCase(fieldName)
+                    : field.title
+                  const key = `${fieldName}.${index}`
+                  const { autofill } = field
                   if (
-                    data.isActive &&
+                    field.isActive &&
                     typeof autofill === 'string'
                   ) {
                     return (
                       <SingleValueField
-                        id={id}
+                        id={fieldName}
                         key={key}
                         setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}
@@ -67,14 +69,14 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
                       />
                     )
                   } else if (
-                    data.isActive &&
-                    typeof data.autofill === 'object'
+                    field.isActive &&
+                    typeof field.autofill === 'object'
                   ) {
                     return (
                       <MultiValueField
-                        id={id}
+                        id={fieldName}
                         key={key}
-                        multiValues={Object.values(data.autofill)}
+                        multiValues={Object.values(field.autofill)}
                         setIsRenderAddNewField={setIsRenderAddNewField}
                         setIsUnsavedChanges={setIsUnsavedChanges}
                         title={title}

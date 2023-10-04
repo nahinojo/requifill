@@ -1,13 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { FieldContextMenu } from './'
 import {
-  fieldDataDispatchContext
-} from '../hooks'
-import {
   ChevronPointerWhite,
   PlusWhite,
   Trash
 } from './icons'
+import { fieldDataDispatchContext } from '../hooks'
 import {
   getFieldIndex,
   getFieldName
@@ -54,6 +52,18 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const [isListExpanded, setIsListExpanded] = useState<boolean>(false)
   setIsRenderAddNewField(!isListExpanded)
+
+  /*
+    Instead of altering sorting existing autofill values, I should sort/filter inputted values
+  */
+  // const multiValuesSorted: string[] = []
+  // const isEmptyString = (value: string): boolean => {
+  //   return /^\s*$/.test(value)
+  // }
+  // const hasEmptyStringInMultiValues = multiValues.some((value) => { return isEmptyString(value) })
+  // if (hasEmptyStringInMultiValues) {
+  //   multiValuesSorted.concat([''])
+  // }
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt: ChangeEvent<HTMLInputElement>) => {
     const { id: targetId, value: autofill } = evt.target as HTMLInputElement
