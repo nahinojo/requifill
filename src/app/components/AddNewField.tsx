@@ -114,7 +114,7 @@ export const AddNewField: FC<AddNewFieldProps> = ({
               })
             }
             <button
-              className='font-semibold pt-2 text-sm w-fit mx-auto hover:underline flex justify-center'
+              className='font-semibold pt-1 text-sm w-fit mx-auto hover:underline flex justify-center'
               type='button'
               onClick={
                 () => { setIsAddingField(false) }

@@ -106,7 +106,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
               }
             >
               <label
-                className='text-base ml-2'
+                className='text-base ml-2 select-none'
                 htmlFor={`${id}.input`}
                 id={`${id}.label`}
               >{title}
@@ -133,7 +133,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
               id={`${id}.container-contracted`}
             >
               <div
-                className='flex-1 grow h-full items-center grid grid-cols-2 hover:cursor'
+                className='flex-1 grow h-full items-center grid grid-cols-2'
                 id={`${id}-selection`}
                 onClick={
                   () => {
@@ -142,7 +142,7 @@ export const MultiValueField: FC<MultiValueFieldProps> = ({
                 }
               >
                 <label
-                  className='text-base ml-2'
+                  className='text-base ml-2 select-none'
                   htmlFor={`${id}-input`}
                   id={`${id}-label`}
                 >{title}

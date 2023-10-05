@@ -2,14 +2,9 @@
 
 ## **Current Issues**
 
-### Popup
+## Content Scripts
+- Use Mozilla API to execute isProperURL
 
-### Requisition Form Manipulation
-- Explanation cannot be set as datalist. Prevent multivalue if only option
-
-### General Schema
-- (Extra) fieldIndex should just be named index
- 
 ## **Upcoming Features**
 
 ### Storage
@@ -24,14 +19,10 @@
 ### Popup
 
 [ See design on Figma ]
-- (Potential) Mouse over highlights corresponding field in dom
-
 
 ### Requisition Form Manipulation
 
-- (Potential) finer decimal scroll when holding down the shift key
-- (Potential) Reimplement scroll feature
-- Enusre Datalist is same width as form input
+- Reimplement numeric scroll
 
 
 ### Other Capabilities

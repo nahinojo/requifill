@@ -13,7 +13,7 @@ import type {
 } from '../types'
 
 if (isProperURL) {
-  const enhanceRequisitionInput = (
+  const attachAutofillToInput = (
     fieldName: FieldName,
     autofillValues?: string[]
   ): void => {
@@ -70,7 +70,7 @@ if (isProperURL) {
       })
   }
 
-  const enhanceAllRequisitionInputs = (): void => {
+  const attachAutofillToEveryInput = (): void => {
     syncStorage
       .get()
       .then((storage: SyncStorageData) => {
@@ -80,7 +80,7 @@ if (isProperURL) {
             return storage.fieldData[fieldName].isActive
           }) as FieldName[]
         for (const activeFieldName of activeFieldNames) {
-          enhanceRequisitionInput(activeFieldName)
+          attachAutofillToInput(activeFieldName)
         }
       })
       .catch(error => {
@@ -89,7 +89,7 @@ if (isProperURL) {
       })
   }
 
-  const undoEnhanceAllRequisitionInputs = (): void => {
+  const detachAutofillFromEveryInput = (): void => {
     const modifiedInputs = document.querySelectorAll('input.requifill')
     modifiedInputs.forEach((modifiedInput: HTMLInputElement) => {
       modifiedInput.style.borderColor = ''
@@ -98,10 +98,10 @@ if (isProperURL) {
       }
     })
   }
-  enhanceAllRequisitionInputs()
+  attachAutofillToEveryInput()
   syncStorage.onChanged.addListener(() => {
-    undoEnhanceAllRequisitionInputs()
-    enhanceAllRequisitionInputs()
+    detachAutofillFromEveryInput()
+    attachAutofillToEveryInput()
   }
   )
 }

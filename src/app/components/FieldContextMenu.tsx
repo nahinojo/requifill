@@ -29,7 +29,6 @@ export const FieldContextMenu: FC<FieldContextMenuProps> = ({
   const fieldData = useContext(fieldDataContext)
   const fieldDataDispatch = useContext(fieldDataDispatchContext) as Dispatch<ActionProps>
   const fieldName = getFieldName(id)
-  const isFillToForm = fieldData[fieldName].isFillToForm
   const isSingleValueField = typeof fieldData[fieldName].autofill === 'string'
   const [position, setPosition] = useState<{ left: number, top: number } | null>(null)
   const openContextMenuId = `${id}.context-menu-vdots`
@@ -62,8 +61,7 @@ export const FieldContextMenu: FC<FieldContextMenuProps> = ({
     setIsUnsavedChanges(true)
   }
 
-  const handleSetSingleValue: MouseEventHandler<HTMLButtonElement> =
-  (evt: MouseEvent<HTMLButtonElement>) => {
+  const handleSetSingleValue: MouseEventHandler<HTMLButtonElement> = () => {
     const prevAutofillValue = fieldData[fieldName].autofill as Record<string, string>
     const autofill = prevAutofillValue[0]
     fieldDataDispatch({
@@ -73,8 +71,7 @@ export const FieldContextMenu: FC<FieldContextMenuProps> = ({
     })
     setIsUnsavedChanges(true)
   }
-  const handleSetMultiValue: MouseEventHandler<HTMLButtonElement> =
-  (evt: MouseEvent<HTMLButtonElement>) => {
+  const handleSetMultiValue: MouseEventHandler<HTMLButtonElement> = () => {
     const prevAutofillValue = fieldData[fieldName].autofill as string
     const autofill = {
       0: prevAutofillValue,
@@ -85,18 +82,6 @@ export const FieldContextMenu: FC<FieldContextMenuProps> = ({
       fieldName,
       type: 'set-autofill'
     })
-    setIsUnsavedChanges(true)
-  }
-
-  const handleEnableFillToForm: MouseEventHandler<HTMLButtonElement> =
-  (evt: MouseEvent<HTMLButtonElement>) => {
-    fieldData[fieldName].isFillToForm = true
-    setIsUnsavedChanges(true)
-  }
-
-  const handleDisableFillToForm: MouseEventHandler<HTMLButtonElement> =
-  (evt: MouseEvent<HTMLButtonElement>) => {
-    fieldData[fieldName].isFillToForm = false
     setIsUnsavedChanges(true)
   }
 
@@ -137,42 +122,18 @@ export const FieldContextMenu: FC<FieldContextMenuProps> = ({
             {
               !!isSingleValueField &&
               (
-                <>
-                  {
-                    !isFillToForm &&
-                       (
-                         <button
-                           className={buttonToggleValueStyling}
-                           id={`${id}.context-menu-enable-fill-to-form`}
-                           type='button'
-                           onClick={handleEnableFillToForm}
-                         >Enable fill to form
-                         </button>
-                       )
-                  } {
-                    !!isFillToForm &&
-                        (
-                          <button
-                            className={buttonToggleValueStyling}
-                            id={`${id}.context-menu-enable-fill-to-form`}
-                            type='button'
-                            onClick={handleDisableFillToForm}
-                          >Disable fill to form
-                          </button>
-                        )
-                  }
-                  <button
-                    className={buttonToggleValueStyling}
-                    id={`${id}.context-menu-enable-multivalue`}
-                    type='button'
-                    onClick={handleSetMultiValue}
-                  >Set multi-value
-                  </button>
-                </>
+                <button
+                  className={buttonToggleValueStyling}
+                  id={`${id}.context-menu-enable-multivalue`}
+                  type='button'
+                  onClick={handleSetMultiValue}
+                >Set multi-value
+                </button>
               )
             }
             {
-              !isSingleValueField && (
+              !isSingleValueField &&
+              (
                 <button
                   className={buttonToggleValueStyling}
                   id={`${id}.context-menu-disable-multivalue`}

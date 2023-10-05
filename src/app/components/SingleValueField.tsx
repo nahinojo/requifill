@@ -62,7 +62,7 @@ export const SingleValueField: FC<SingleValueFieldProps> = ({
         id={`${id}.selection`}
       >
         <label
-          className='text-base ml-2'
+          className='text-base ml-2 select-none'
           htmlFor={`${id}.input`}
           id={`${id}.label`}
         >{title}

@@ -3,7 +3,7 @@ import {
   fieldDataContext,
   fieldDataDispatchContext
 } from '../hooks'
-import { sortFieldData, syncStorage } from '../../utils'
+import { syncStorage } from '../../utils'
 
 import type {
   Dispatch,
@@ -26,9 +26,8 @@ export const UnsavedChangesPrompt: FC<UnsavedChangesPromptProps> = ({
 
   const handleSaveChanges: ReactEventHandler<HTMLButtonElement> =
   () => {
-    const fieldDataSorted = sortFieldData(fieldData)
     syncStorage
-      .set({ fieldData: fieldDataSorted })
+      .set({ fieldData })
       .catch(error => {
         console.error(error)
       })

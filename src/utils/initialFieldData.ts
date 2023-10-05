@@ -22,11 +22,6 @@ export const initialFieldData: FieldData = {
     isActive: true,
     isFillToForm: false
   },
-  explanation: {
-    autofill: '',
-    isActive: false,
-    isFillToForm: false
-  },
   organizationDocumentNumber: {
     autofill: '',
     isActive: false,
