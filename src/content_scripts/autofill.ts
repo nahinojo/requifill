@@ -15,15 +15,11 @@ import type {
   SyncStorageData
 } from '../types'
 
-console.log('Executing autofill.ts')
-
 if (isProperURL) {
-  console.log('URL is proper')
   /*
   Retrieves field data from browser storage to autofill requisition form <input> elements.
   */
   const autofill = (): void => {
-    console.log('Executing autofill()')
     syncStorage
       .get()
       .then((storage: SyncStorageData) => {
@@ -88,10 +84,6 @@ if (isProperURL) {
   */
   getIsAutofillEnabled()
     .then(isAutofillEnabled => {
-      console.log(
-        'getIsAutofillEnabled().isAutofillEnabled:',
-        isAutofillEnabled
-      )
       if (isAutofillEnabled) {
         autofill()
       }

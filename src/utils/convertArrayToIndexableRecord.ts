@@ -1,6 +1,6 @@
 import type { IndexableRecord } from '../types'
 
-export const setArrayAsIndexableRecord = (arr: string[]): IndexableRecord => {
+export const convertArrayToIndexableRecord = (arr: string[]): IndexableRecord => {
   const newArr: IndexableRecord = {}
   for (let i = 0; i < arr.length; i++) {
     newArr[i] = arr[i]

@@ -27,7 +27,6 @@ const App: FC = () => {
     fieldDataReducer,
     initialFieldData
   )
-  console.count('App render')
   const [isUnsavedChanges, setIsUnsavedChanges] = useState<boolean>(false)
   const [isAddingField, setIsAddingField] = useState<boolean>(false)
   const [isRenderAddNewField, setIsRenderAddNewField] = useState<boolean>(true)
