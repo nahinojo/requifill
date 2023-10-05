@@ -8,6 +8,7 @@ import {
   camelToTitleCase,
   getFieldName
 } from '../../utils'
+
 import type {
   Dispatch,
   FC,
@@ -19,7 +20,6 @@ import type {
   ActionProps,
   FieldName
 } from '../../types'
-
 interface AddNewFieldProps extends HTMLAttributes<HTMLElement> {
   isAddingField: boolean
   setIsAddingField: React.Dispatch<React.SetStateAction<boolean>>
@@ -114,7 +114,7 @@ export const AddNewField: FC<AddNewFieldProps> = ({
               })
             }
             <button
-              className='font-semibold pt-2 text-sm hover:underline'
+              className='font-semibold pt-2 text-sm w-fit mx-auto hover:underline flex justify-center'
               type='button'
               onClick={
                 () => { setIsAddingField(false) }

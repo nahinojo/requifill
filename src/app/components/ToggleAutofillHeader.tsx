@@ -15,11 +15,6 @@ export const ToggleAutofillHeader: React.FC = () => {
   Flips Enabled for both component state and browser storage
   */
   const toggleAutofill: ReactEventHandler<HTMLInputElement> = () => {
-    console.log('| toggleAutofill() |')
-    console.log(
-      'isAutofillEnabled (before toggle):',
-      isAutofillEnabled
-    )
     syncStorage
       .set({
         settings: {
@@ -63,7 +58,7 @@ export const ToggleAutofillHeader: React.FC = () => {
       <h1
         className='font-bold ml-2 mt-1'
         id='toggle-autofill-title'
-      >Enable Autofill
+      >Autofill First Value
       </h1>
     </div>
   )

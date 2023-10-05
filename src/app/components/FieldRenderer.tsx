@@ -43,7 +43,7 @@ export const FieldRenderer: FC<FieldRendererProps> = ({
             <header
               className='text-silver text-sm ml-1 mt-3'
               id='autofill-values-title'
-            >Autofill Values
+            >Default Values
             </header>
             {
               Object.entries(fieldData)

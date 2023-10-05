@@ -3,16 +3,12 @@
 ## **Current Issues**
 
 ### Popup
-- (Potential) undo disabling of add new field when multivalue dropdown
-- *Autosort values in multifields. Ensure only one empty value, at top. See alteredFieldData.ts
-- (Extra) Automatically set isUnsavedChanges to false if changes lead back to original state.
 
 ### Requisition Form Manipulation
-
-- Enhance.tsx may be executed on the wrong page, isProperURL may be permitting a wrong URL.
+- Explanation cannot be set as datalist. Prevent multivalue if only option
 
 ### General Schema
-- (Potential) fieldIndex should just be named index
+- (Extra) fieldIndex should just be named index
  
 ## **Upcoming Features**
 
@@ -28,7 +24,6 @@
 ### Popup
 
 [ See design on Figma ]
-- Field headers demonstrate correspond to Requisition Form headers
 - (Potential) Mouse over highlights corresponding field in dom
 
 

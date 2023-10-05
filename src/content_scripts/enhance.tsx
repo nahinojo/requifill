@@ -12,9 +12,6 @@ import type {
   SyncStorageData
 } from '../types'
 
-// Look into reinstating scroll feature
-// Look into instating feature that shows all options, regardless of input value
-
 if (isProperURL) {
   const enhanceRequisitionInput = (
     fieldName: FieldName,

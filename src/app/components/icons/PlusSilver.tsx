@@ -2,12 +2,22 @@ import React from 'react'
 
 import type { FC } from 'react'
 
-export const PlusSilver: FC = () => {
+interface PlusSilverProps {
+  transform?: string
+}
+
+export const PlusSilver: FC<PlusSilverProps> = ({
+  transform
+}) => {
+  transform = transform !== undefined
+    ? transform
+    : ''
   return (
     <svg
       className='mr-1 mt-0.5'
       height="14"
       id='plus-svg'
+      transform={transform}
       viewBox="0 0 448 512"
       width="14"
       xmlns="http://www.w3.org/2000/svg"
