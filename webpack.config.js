@@ -13,13 +13,17 @@ module.exports = {
     }
   },
   entry: {
-    autofill: {
-      filename: 'content_scripts/autofill.js',
-      import: './src/content_scripts/autofill.ts'
+    addNumericScroller: {
+      filename: 'content_scripts/addNumericScroller.js',
+      import: './src/content_scripts/addNumericScroller.ts'
     },
-    enchance: {
-      filename: 'content_scripts/enhance.js',
-      import: './src/content_scripts/enhance.tsx'
+    attachAutofillList: {
+      filename: 'content_scripts/attachAutofillList.js',
+      import: './src/content_scripts/attachAutofillList.tsx'
+    },
+    autofillFirstValue: {
+      filename: 'content_scripts/autofillFirstValue.js',
+      import: './src/content_scripts/autofillFirstValue.ts'
     },
     main: {
       filename: 'bundle.js',

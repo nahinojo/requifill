@@ -74,6 +74,10 @@ if (isProperURL) {
     syncStorage
       .get()
       .then((storage: SyncStorageData) => {
+        console.log(
+          `${__filename}: attatchAutofillToEveryInput: storage:`,
+          storage
+        )
         const activeFieldNames = Object
           .keys(storage.fieldData)
           .filter((fieldName: FieldName) => {

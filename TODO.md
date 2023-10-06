@@ -3,7 +3,8 @@
 ## **Current Issues**
 
 ## Content Scripts
-- Use Mozilla API to execute isProperURL
+- Figure out why Mozilla API can't standalone determine proper URL
+- Content scripts cannot access field data until popup is initiated.
 
 ## **Upcoming Features**
 
