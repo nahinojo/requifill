@@ -12,7 +12,9 @@
 
 ## **Upcoming Features**
 
-### Storage
+## Product Storage
+
+- Copy/paste from merchandise store (Amazon, Newegg, Digikey) to KFS document.
 
 ### Documentation & Advertise
 
@@ -25,11 +27,8 @@
 
 [ See design on Figma ]
 
-### Requisition Form Manipulation
+### Purchase Logbook Excel
 
-### Other Capabilities
-
-- Copy/paste from merchandise store (Amazon, Newegg, Digikey) to KFS document.
 - Copy/paste from submitted KFS document to purchase logbook.
 
 
