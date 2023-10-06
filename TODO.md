@@ -4,7 +4,11 @@
 
 ## Content Scripts
 - Figure out why Mozilla API can't standalone determine proper URL
+  - Match patterns are not that flexible.
+  - Either: a) Continue as normal or b) Use exact url of form
 - Content scripts cannot access field data until popup is initiated.
+  - Create an extra file that uploads initialFieldData to sync storage.
+  - Remove redundancy of initial upload from App.tsx
 
 ## **Upcoming Features**
 
