@@ -23,9 +23,6 @@
 
 ### Requisition Form Manipulation
 
-- Reimplement numeric scroll
-
-
 ### Other Capabilities
 
 - Copy/paste from merchandise store (Amazon, Newegg, Digikey) to KFS document.
