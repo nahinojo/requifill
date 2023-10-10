@@ -66,7 +66,7 @@ if (isProperURL) {
       })
       .catch(error => {
         console.error(error)
-        throw new Error(`enhance.tsx: Failed to execute enhanceRequisitionInput() for ${fieldName}`)
+        throw new Error(`attachAutofillList.tsk: Failed to execute enhanceRequisitionInput() for ${fieldName}`)
       })
   }
 
@@ -89,7 +89,7 @@ if (isProperURL) {
       })
       .catch(error => {
         console.error(error)
-        throw new Error('enhance.tsx: Failed to execute enhanceAllRequisitionInputs()')
+        throw new Error('attachAutofillList.tsk: Failed to execute enhanceAllRequisitionInputs()')
       })
   }
 

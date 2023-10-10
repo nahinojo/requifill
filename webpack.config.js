@@ -25,6 +25,10 @@ module.exports = {
       filename: 'content_scripts/autofillFirstValue.js',
       import: './src/content_scripts/autofillFirstValue.ts'
     },
+    initiateSyncStorage: {
+      filename: 'background_scripts/initiateSyncStorage.js',
+      import: './src/background_scripts/initiateSyncStorage.ts'
+    },
     main: {
       filename: 'bundle.js',
       import: './src/app/index.tsx'

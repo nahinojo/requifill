@@ -37,27 +37,6 @@ const App: FC = () => {
   */
   useEffect(
     () => {
-      syncStorage
-        .get()
-        .then(storage => {
-          if (Object.keys(storage).length <= 0) {
-            syncStorage
-              .set({
-                fieldData: initialFieldData
-              })
-              .catch(error => {
-                console.error(error)
-              })
-          } else {
-            fieldDataDispatch({
-              newFieldData: storage.fieldData,
-              type: 'set-field-data'
-            })
-          }
-        })
-        .catch(error => {
-          console.error(error)
-        })
       syncStorage.onChanged.addListener(() => {
         syncStorage
           .get()
