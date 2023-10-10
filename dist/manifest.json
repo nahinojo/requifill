@@ -1,5 +1,4 @@
 {
-
   "manifest_version": 2,
   "name": "Requifill",
   "version": "0.0.2",
@@ -9,9 +8,11 @@
       "id": "requifill@example.com"
     }
   },
-
   "browser_action" : {
     "default_popup" : "/index.html"
+  },
+  "background":{
+    "scripts": ["/background_scripts/initiateSyncStorage.js"]
   },
   "content_scripts": [
     {
@@ -23,9 +24,7 @@
       ]
     }
   ],
-
   "permissions" : ["storage"],
-
   "icons" : {
     "48" : "requifill-icon.svg",
     "96" : "requifill-icon.svg"
