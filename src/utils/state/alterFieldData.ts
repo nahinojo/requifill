@@ -3,7 +3,7 @@ import type {
   FieldData,
   FieldName,
   IndexableRecord
-} from '../types'
+} from '../../types'
 type AttributeIndex = number
 type Value = string | boolean | IndexableRecord | Field
 interface alterFieldDataParameters {

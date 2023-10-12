@@ -1,6 +1,6 @@
-import { syncStorage } from '.'
+import { syncStorage } from '..'
 
-import type { SyncStorageData } from '../types'
+import type { SyncStorageData } from '../../types'
 
 export const getIsAutofillEnabled = async (): Promise<boolean> => {
   return await syncStorage.get()

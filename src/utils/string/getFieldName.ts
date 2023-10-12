@@ -3,10 +3,10 @@ Returns index of target field within any InputValueField component
 */
 import {
   fieldNames
-} from '../utils'
+} from '..'
 import type {
   FieldName
-} from '../types'
+} from '../../types'
 
 export const getFieldName = (targetId: string | undefined): FieldName => {
   if (targetId === undefined) {

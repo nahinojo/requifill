@@ -1,4 +1,4 @@
-import type { FieldData } from '../types'
+import type { FieldData } from '../../types'
 
 export const initialFieldData: FieldData = {
   adHocUserId: {
