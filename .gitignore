@@ -5,6 +5,7 @@ node_modules/
 dist/**/**
 !dist/manifest.json
 !dist/requifill-icon.svg
+npm-debug.log
 
 # Sandbox playground
 **/**/*sandbox*
