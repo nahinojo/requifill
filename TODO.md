@@ -2,10 +2,15 @@
 
 ## **Current Issues**
 
-## State management
+### Form Fill
+- Resets all autofill values to first when:
+  - Autofill First Value is on AND
+  - Page refresh OR state change
+
+### State management
 - Fields are sorted alphabetically based on their id, not title. 
 
-## Misc
+### Misc
 - Make icon better in inkscape
 
 ## **Upcoming Features**
