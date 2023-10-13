@@ -2,6 +2,10 @@
 
 ## **Current Issues**
 
+## State management
+- Not properly saving state changes.
+- Fields are sorted alphabetically based on their id, not title. 
+
 ## **Upcoming Features**
 
 ### Documentation & Advertise
