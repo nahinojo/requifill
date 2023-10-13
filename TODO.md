@@ -6,6 +6,9 @@
 - Not properly saving state changes.
 - Fields are sorted alphabetically based on their id, not title. 
 
+## Misc
+- Make icon better in inkscape
+
 ## **Upcoming Features**
 
 ### Documentation & Advertise

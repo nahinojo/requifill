@@ -6,6 +6,7 @@ import React, {
 import {
   AddNewField,
   FieldRenderer,
+  NavMenu,
   ToggleAutofillHeader,
   UnsavedChangesPrompt
 } from './components'
@@ -20,7 +21,7 @@ import {
 } from '../utils'
 
 import type { FC } from 'react'
-import { NavMenu } from './components/NavMenu'
+import type { SyncStorageData } from '../types'
 
 const App: FC = () => {
   const [fieldData, fieldDataDispatch] = useReducer(
@@ -37,10 +38,21 @@ const App: FC = () => {
   */
   useEffect(
     () => {
+      syncStorage
+        .get()
+        .then((storage: SyncStorageData) => {
+          fieldDataDispatch({
+            newFieldData: storage.fieldData,
+            type: 'set-field-data'
+          })
+        })
+        .catch(error => {
+          console.error(error)
+        })
       syncStorage.onChanged.addListener(() => {
         syncStorage
           .get()
-          .then(storage => {
+          .then((storage: SyncStorageData) => {
             fieldDataDispatch({
               newFieldData: storage.fieldData,
               type: 'set-field-data'
